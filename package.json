@@ -6,12 +6,20 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "e2e": "cypress open",
+    "e2e:chrome": "cypress run --browser chrome"
   },
   "dependencies": {
     "next": "12.2.3",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-dom": "18.2.0",
+    "@mui/material": "5.9.3",
+    "@emotion/react": "11.10.0",
+    "@emotion/styled": "11.10.0",
+    "@mui/icons-material": "5.8.4",
+    "@emotion/server": "11.10.0",
+    "react-beautiful-dnd": "13.1.0"
   },
   "devDependencies": {
     "@types/node": "18.6.3",
@@ -19,6 +27,9 @@
     "@types/react-dom": "18.0.6",
     "eslint": "8.21.0",
     "eslint-config-next": "12.2.3",
-    "typescript": "4.7.4"
+    "typescript": "4.7.4",
+    "jest": "28.1.3",
+    "react-test-renderer": "18.2.0",
+    "cypress": "10.4.0"
   }
 }
