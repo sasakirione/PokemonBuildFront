@@ -1,7 +1,8 @@
 import {NextPage} from "next";
 import Pokemon from "../../domain/Pokemon";
 import {useState} from "react";
-import {Button, IconButton, TableCell, TableRow} from "@mui/material";
+import {Box, Button, Collapse, IconButton, TableCell, TableRow} from "@mui/material";
+import React from "react";
 
 interface Props {
     pokemon: Pokemon
@@ -11,7 +12,7 @@ const PokemonList: NextPage<Props> = (props: Props) => {
     const {pokemon} = props
     const [open, setOpen] = useState(false)
     return(
-        <div>
+        <React.Fragment>
             <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
                 <TableCell>
                     <IconButton
@@ -23,13 +24,24 @@ const PokemonList: NextPage<Props> = (props: Props) => {
                     </IconButton>
                 </TableCell>
                 <TableCell>{pokemon.name}</TableCell>
-                <TableCell align="right">{pokemon.tag.map(tag => <Button key={tag}>{tag}</Button>)}</TableCell>
-                <TableCell align="right">{pokemon.ability}</TableCell>
-                <TableCell align="right">{pokemon.good}</TableCell>
-                <TableCell align="right">努力値</TableCell>
-                <TableCell align="right">{pokemon.status.real.s}</TableCell>
+                <TableCell>{pokemon.tag.map(tag => <Button key={tag}>{tag}</Button>)}</TableCell>
+                <TableCell>{pokemon.nature}</TableCell>
+                <TableCell>{pokemon.ability}</TableCell>
+                <TableCell>{pokemon.good}</TableCell>
+                <TableCell>{pokemon.getEffortText()}</TableCell>
+                <TableCell>{pokemon.status.real.s}</TableCell>
             </TableRow>
-        </div>
+            <TableRow>
+                <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={8}>
+                    <Collapse in={open} timeout="auto" unmountOnExit>
+                        <Box>
+                            <h4>わざ</h4>
+                            {pokemon.moves.map(move => <Button variant="contained" color="success" key={move}>{move}</Button>)}
+                        </Box>
+                    </Collapse>
+                </TableCell>
+            </TableRow>
+        </React.Fragment>
     )
 }
 
