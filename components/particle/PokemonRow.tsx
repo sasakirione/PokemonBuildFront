@@ -37,6 +37,7 @@ const PokemonList: NextPage<Props> = (props: Props) => {
                         <Box>
                             <h4>わざ</h4>
                             {pokemon.moves.map(move => <Button variant="contained" color="success" key={move}>{move}</Button>)}
+                            <br />
                         </Box>
                     </Collapse>
                 </TableCell>

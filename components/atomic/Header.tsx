@@ -1,6 +1,7 @@
-import {AppBar, Button, Toolbar, Typography} from "@mui/material";
+import {AppBar, Toolbar, Typography} from "@mui/material";
 import FormatListNumberedIcon from '@mui/icons-material/FormatListNumbered';
 import {NextPage} from "next";
+import AuthButton from "../particle/AuthButton";
 
 const Header: NextPage = () => {
     return (
@@ -15,7 +16,7 @@ const Header: NextPage = () => {
                 >
                     Pokemon Build Management
                 </Typography>
-                <Button color="inherit" className="left">Login</Button>
+                <AuthButton />
             </Toolbar>
         </AppBar>
     )

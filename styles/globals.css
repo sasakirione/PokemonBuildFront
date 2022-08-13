@@ -20,6 +20,10 @@ a {
   margin-right: 0;
 }
 
+.boxContainer{
+  display: flex;
+}
+
 @media (prefers-color-scheme: dark) {
   html {
     color-scheme: dark;
