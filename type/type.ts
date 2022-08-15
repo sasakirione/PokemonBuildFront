@@ -1,3 +1,5 @@
+import React from "react";
+
 export type basicHtmlElements = {
     htmlId: string,
     testElementsId: string
@@ -17,3 +19,19 @@ export type PokemonNature = "さみしがり" | "いじっぱり" | "やんち�
     "おくびょう" | "せっかち" | "ようき" | "むじゃき" | "てれや" | "がんばりや" | "すなお" | "きまぐれ" | "まじめ"
 
 export type Moves = [string, string, string, string]
+
+export type responseGoodList = {
+    goods: responseGood[]
+}
+
+export type responseGood = {
+    id: number,
+    name: string
+}
+
+export type fieldType = React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+
+export type selectItem = {
+    value: string,
+    label: string
+}

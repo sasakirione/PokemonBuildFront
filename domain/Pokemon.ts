@@ -6,15 +6,17 @@ class Pokemon {
     status: PokemonStatus
     nature: PokemonNature
     ability: string
+    abilityList: string[]
     good: string
     tag: string[]
     moves: Moves
 
-    constructor(name: string, status: PokemonStatus, nature: PokemonNature, ability: string, good: string, tag: string[], moves: Moves) {
+    constructor(name: string, status: PokemonStatus, nature: PokemonNature, ability: string, abilityList: string[], good: string, tag: string[], moves: Moves) {
         this.name = name
         this.status = status
         this.nature = nature
         this.ability = ability
+        this.abilityList = abilityList
         this.good = good
         this.tag = tag
         this.moves = moves
