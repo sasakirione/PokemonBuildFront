@@ -6,7 +6,6 @@ import {CircularProgress} from "@mui/material";
 import {useEffect, useState} from "react";
 import Pokemon from "../domain/Pokemon";
 import {pokemon1, pokemon2, pokemon3, pokemon4, pokemon5, pokemon6} from "../mock/PokemonData";
-import pokemon from "../domain/Pokemon";
 
 const BuildPage: NextPage = () => {
     const {isAuthenticated, isLoading} = useAuth0()
@@ -21,7 +20,7 @@ const BuildPage: NextPage = () => {
 
     if (isLoading) {
         return (<div>
-            <CircularProgress color="inherit" />
+            <CircularProgress color="inherit"/>
         </div>)
     }
 

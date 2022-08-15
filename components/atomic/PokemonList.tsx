@@ -86,7 +86,8 @@ const PokemonList: NextPage<PokemonListProps> = (props: PokemonListProps) => {
                 <TableBody>
                     {
                         pokemonList.map((pokemon) =>
-                            <PokemonRow key={pokemon.name} pokemon={pokemon} goodList={goodList!} tagList={tags!} moveList={moves!}/>
+                            <PokemonRow key={pokemon.name} pokemon={pokemon} goodList={goodList!} tagList={tags!}
+                                        moveList={moves!}/>
                         )
                     }
                 </TableBody>

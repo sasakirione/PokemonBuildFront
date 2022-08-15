@@ -1,14 +1,15 @@
 import Pokemon from "../../domain/Pokemon";
 import {
-    Box,
-    Button, Chip,
+    Button,
     Dialog,
     DialogActions,
     DialogContent,
     DialogContentText,
-    DialogTitle, FormControl, InputLabel,
+    DialogTitle,
     List,
-    ListItemButton, ListItemText, MenuItem, OutlinedInput, SelectChangeEvent, TextField
+    ListItemButton,
+    ListItemText,
+    TextField
 } from "@mui/material";
 import React, {useEffect, useState} from "react";
 import {fieldType, PokemonNature, PokemonValue, selectItem} from "../../type/type";
@@ -244,13 +245,17 @@ export function MoveEdit(props: { open: boolean, onClose: () => void, pokemon: P
     >
         <DialogTitle>技を変更する</DialogTitle>
         <DialogContent
-            style={{height:'450px'}}
+            style={{height: '450px'}}
         >
             <List>
-                <Select isSearchable options={props.moveList?.map(move => createOption(move))} value={createOption(move1)} onChange={value => setMove1(value?.value!)} />
-                <Select isSearchable options={props.moveList?.map(move => createOption(move))} value={createOption(move2)} onChange={value => setMove2(value?.value!)} />
-                <Select isSearchable options={props.moveList?.map(move => createOption(move))} value={createOption(move3)} onChange={value => setMove3(value?.value!)} />
-                <Select isSearchable options={props.moveList?.map(move => createOption(move))} value={createOption(move4)} onChange={value => setMove4(value?.value!)} />
+                <Select isSearchable options={props.moveList?.map(move => createOption(move))}
+                        value={createOption(move1)} onChange={value => setMove1(value?.value!)}/>
+                <Select isSearchable options={props.moveList?.map(move => createOption(move))}
+                        value={createOption(move2)} onChange={value => setMove2(value?.value!)}/>
+                <Select isSearchable options={props.moveList?.map(move => createOption(move))}
+                        value={createOption(move3)} onChange={value => setMove3(value?.value!)}/>
+                <Select isSearchable options={props.moveList?.map(move => createOption(move))}
+                        value={createOption(move4)} onChange={value => setMove4(value?.value!)}/>
             </List>
         </DialogContent>
         <DialogActions>

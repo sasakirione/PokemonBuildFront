@@ -7,7 +7,7 @@ const Header: NextPage = () => {
     return (
         <AppBar position="static">
             <Toolbar>
-                <FormatListNumberedIcon />
+                <FormatListNumberedIcon/>
                 <Typography
                     variant="h6"
                     noWrap
@@ -16,7 +16,7 @@ const Header: NextPage = () => {
                 >
                     Pokemon Build Management
                 </Typography>
-                <AuthButton />
+                <AuthButton/>
             </Toolbar>
         </AppBar>
     )

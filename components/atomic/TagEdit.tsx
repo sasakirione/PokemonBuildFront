@@ -1,13 +1,18 @@
 import Pokemon from "../../domain/Pokemon";
 import React, {useState} from "react";
 import {
-    Box, Button, Chip,
-    Dialog, DialogActions,
+    Box,
+    Button,
+    Chip,
+    Dialog,
+    DialogActions,
     DialogContent,
     DialogTitle,
     FormControl,
-    InputLabel, MenuItem,
-    OutlinedInput, Select,
+    InputLabel,
+    MenuItem,
+    OutlinedInput,
+    Select,
     SelectChangeEvent
 } from "@mui/material";
 

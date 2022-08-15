@@ -6,7 +6,7 @@ type HeadLineTextProps = {
 
 export const HeadLineText = (props: HeadLineTextProps) => {
     const {text} = props
-    return(
+    return (
         <Typography
             variant="h4"
             component="h2"

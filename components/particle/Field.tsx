@@ -24,11 +24,11 @@ export const PasswordField: NextPage = () => {
 }
 
 export const PokemonField: NextPage = () => {
-  return(
-      <TextField
-          id="outlined-basic"
-          label="Pokemon Name"
-          variant="outlined"
-          type="text"/>
-  )
+    return (
+        <TextField
+            id="outlined-basic"
+            label="Pokemon Name"
+            variant="outlined"
+            type="text"/>
+    )
 }

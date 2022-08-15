@@ -1,18 +1,7 @@
 import {NextPage} from "next";
 import Pokemon from "../../domain/Pokemon";
-import {useState} from "react";
-import {
-    Box,
-    Button,
-    Collapse,
-    Dialog, DialogActions,
-    DialogContent, DialogContentText,
-    DialogTitle,
-    IconButton,
-    TableCell,
-    TableRow
-} from "@mui/material";
-import React from "react";
+import React, {useState} from "react";
+import {Box, Button, Collapse, IconButton, TableCell, TableRow} from "@mui/material";
 import {AbilityEdit, EffortEdit, GoodEdit, MoveEdit, NatureEdit} from "../atomic/PokemonEdit";
 import {TagEdit} from "../atomic/TagEdit";
 
@@ -81,7 +70,7 @@ const PokemonList: NextPage<Props> = (props: Props) => {
         setOpenMoveEdit(false);
     };
 
-    return(
+    return (
         <React.Fragment>
             <TableRow sx={{'& > *': {borderBottom: 'unset'}}}>
                 <TableCell>
@@ -94,7 +83,8 @@ const PokemonList: NextPage<Props> = (props: Props) => {
                     </IconButton>
                 </TableCell>
                 <TableCell>{pokemon.name}</TableCell>
-                <TableCell onClick={handleClickOpenTagEdit}>{pokemon.tag.map(tag => <Button key={tag}>{tag}</Button>)}</TableCell>
+                <TableCell onClick={handleClickOpenTagEdit}>{pokemon.tag.map(tag => <Button
+                    key={tag}>{tag}</Button>)}</TableCell>
                 <TableCell onClick={handleClickOpenNatureEdit}>{pokemon.nature}</TableCell>
                 <TableCell onClick={handleClickOpenAbilityEdit}>{pokemon.ability}</TableCell>
                 <TableCell onClick={handleClickOpenGoodEdit}>{pokemon.good}</TableCell>
@@ -115,11 +105,11 @@ const PokemonList: NextPage<Props> = (props: Props) => {
                 </TableCell>
             </TableRow>
             <GoodEdit open={openGoodEdit} onClose={handleCloseGoodEdit} pokemon={pokemon} goodList={goodList}/>
-            <EffortEdit open={openEffortEdit} onClose={handleCloseEffortEdit} pokemon={pokemon} />
-            <AbilityEdit open={openAbilityEdit} onClose={handleCloseAbilityEdit} pokemon={pokemon} />
-            <NatureEdit open={openNatureEdit} onClose={handleCloseNatureEdit} pokemon={pokemon} />
-            <TagEdit open={openTagEdit} onClose={handleCloseTagEdit} pokemon={pokemon} tagList={tagList} />
-            <MoveEdit open={openMoveEdit} onClose={handleCloseMoveEdit} pokemon={pokemon} moveList={moveList} />
+            <EffortEdit open={openEffortEdit} onClose={handleCloseEffortEdit} pokemon={pokemon}/>
+            <AbilityEdit open={openAbilityEdit} onClose={handleCloseAbilityEdit} pokemon={pokemon}/>
+            <NatureEdit open={openNatureEdit} onClose={handleCloseNatureEdit} pokemon={pokemon}/>
+            <TagEdit open={openTagEdit} onClose={handleCloseTagEdit} pokemon={pokemon} tagList={tagList}/>
+            <MoveEdit open={openMoveEdit} onClose={handleCloseMoveEdit} pokemon={pokemon} moveList={moveList}/>
         </React.Fragment>
     )
 }

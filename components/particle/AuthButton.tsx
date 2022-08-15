@@ -10,16 +10,16 @@ const AuthButton = () => {
     } = useAuth0();
 
     return (
-        <div className="left" >
-        {isAuthenticated && (
-            <div className="boxContainer">
-                <Button color="inherit" onClick={() => logout()}>Logout</Button>
-                <UserMenu/>
-            </div>
-        )}
-        {!isAuthenticated && (
-            <Button color="inherit" onClick={() => loginWithRedirect()}>Login</Button>
-        )}
+        <div className="left">
+            {isAuthenticated && (
+                <div className="boxContainer">
+                    <Button color="inherit" onClick={() => logout()}>Logout</Button>
+                    <UserMenu/>
+                </div>
+            )}
+            {!isAuthenticated && (
+                <Button color="inherit" onClick={() => loginWithRedirect()}>Login</Button>
+            )}
         </div>
     )
 }

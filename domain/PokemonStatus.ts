@@ -27,12 +27,12 @@ class PokemonStatus {
     }
 
     private calculateRealWithoutH(base: number, effort: number, individual: number, nature: number): number {
-        return Math.floor(((base*2 + individual + effort/4) * 0.5 + 5) * nature)
+        return Math.floor(((base * 2 + individual + effort / 4) * 0.5 + 5) * nature)
 
     }
 
     private calculateRealH(base: number, effort: number, individual: number): number {
-        return Math.floor((base*2 + individual + effort/4) * 0.5 + 60)
+        return Math.floor((base * 2 + individual + effort / 4) * 0.5 + 60)
     }
 
     public changeEffort(effort: PokemonValue) {
