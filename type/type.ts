@@ -29,9 +29,31 @@ export type responseGood = {
     name: string
 }
 
+export type StatusType = "EV" | "IV"
+
 export type fieldType = React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
 
 export type selectItem = {
     value: string,
     label: string
+}
+
+export type selectItem2 = {
+    value: number,
+    label: string
+}
+
+export type PokemonResponse = {
+    id: number,
+    dexNo: number,
+    name: string,
+    formName: string | null,
+    types: string[],
+    abilities: string[],
+    base: number[],
+}
+
+export type KotlinTupleOfIdAndValue = {
+    first: number
+    second: string
 }

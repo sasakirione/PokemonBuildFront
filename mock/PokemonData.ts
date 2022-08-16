@@ -38,6 +38,8 @@ const withoutA = {
 }
 
 export const pokemon1 = new Pokemon("ムゲンダイナ",
+    1000,
+    1,
     new PokemonStatus(
         {
             h: 140,
@@ -58,6 +60,8 @@ export const pokemon1 = new Pokemon("ムゲンダイナ",
     ["禁伝", "特殊アタッカー"],
     ["ダイマックスほう", "かえんほうしゃ", "ヘドロばくだん", "じこさいせい"])
 export const pokemon2 = new Pokemon("レジエレキ",
+    1006,
+    2,
     new PokemonStatus(
         {
             h: 80,
@@ -85,6 +89,8 @@ export const pokemon2 = new Pokemon("レジエレキ",
     ["特殊アタッカー", "壁"],
     ["10まんボルト", "ボルトチェンジ", "ひかりのかべ", "リフレクター"])
 export const pokemon3 = new Pokemon("インテレオン",
+    923,
+    3,
     new PokemonStatus(
         {
             h: 70,

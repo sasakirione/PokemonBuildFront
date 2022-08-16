@@ -2,18 +2,17 @@ import {NextPage} from "next";
 import Pokemon from "../../domain/Pokemon";
 import React, {useState} from "react";
 import {Box, Button, Collapse, IconButton, TableCell, TableRow} from "@mui/material";
-import {AbilityEdit, EffortEdit, GoodEdit, MoveEdit, NatureEdit} from "../atomic/PokemonEdit";
-import {TagEdit} from "../atomic/TagEdit";
+import {AbilityEdit, EffortEdit, GoodEdit, MoveEdit, NatureEdit} from "./PokemonEdit";
+import {TagEdit} from "../ molecule/TagEdit";
+import DeleteIcon from '@mui/icons-material/Delete';
 
 interface Props {
     pokemon: Pokemon
-    goodList: [number, string][]
-    tagList: string[]
-    moveList: string[]
+    removePokemon: (personalId: number) => void
 }
 
 const PokemonList: NextPage<Props> = (props: Props) => {
-    const {pokemon, goodList, tagList, moveList} = props
+    const {pokemon, removePokemon} = props
     const [openMoveList, setOpenMoveList] = useState(false)
     const [openTagEdit, setOpenTagEdit] = useState(false)
     const [openNatureEdit, setOpenNatureEdit] = useState(false)
@@ -70,6 +69,11 @@ const PokemonList: NextPage<Props> = (props: Props) => {
         setOpenMoveEdit(false);
     };
 
+    const clickRemove = () => {
+
+      removePokemon(pokemon.personalId)
+    };
+
     return (
         <React.Fragment>
             <TableRow sx={{'& > *': {borderBottom: 'unset'}}}>
@@ -90,7 +94,11 @@ const PokemonList: NextPage<Props> = (props: Props) => {
                 <TableCell onClick={handleClickOpenGoodEdit}>{pokemon.good}</TableCell>
                 <TableCell onClick={handleClickOpenEffortEdit}>{pokemon.getEffortText()}</TableCell>
                 <TableCell>{pokemon.status.real.s}</TableCell>
-                <TableCell></TableCell>
+                <TableCell>
+                    <DeleteIcon
+                        onClick={clickRemove}
+                    />
+                </TableCell>
             </TableRow>
             <TableRow>
                 <TableCell style={{paddingBottom: 0, paddingTop: 0}} colSpan={8}>
@@ -104,12 +112,12 @@ const PokemonList: NextPage<Props> = (props: Props) => {
                     </Collapse>
                 </TableCell>
             </TableRow>
-            <GoodEdit open={openGoodEdit} onClose={handleCloseGoodEdit} pokemon={pokemon} goodList={goodList}/>
+            <GoodEdit open={openGoodEdit} onClose={handleCloseGoodEdit} pokemon={pokemon}/>
             <EffortEdit open={openEffortEdit} onClose={handleCloseEffortEdit} pokemon={pokemon}/>
             <AbilityEdit open={openAbilityEdit} onClose={handleCloseAbilityEdit} pokemon={pokemon}/>
             <NatureEdit open={openNatureEdit} onClose={handleCloseNatureEdit} pokemon={pokemon}/>
-            <TagEdit open={openTagEdit} onClose={handleCloseTagEdit} pokemon={pokemon} tagList={tagList}/>
-            <MoveEdit open={openMoveEdit} onClose={handleCloseMoveEdit} pokemon={pokemon} moveList={moveList}/>
+            <TagEdit open={openTagEdit} onClose={handleCloseTagEdit} pokemon={pokemon}/>
+            <MoveEdit open={openMoveEdit} onClose={handleCloseMoveEdit} pokemon={pokemon}/>
         </React.Fragment>
     )
 }

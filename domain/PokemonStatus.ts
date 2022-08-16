@@ -45,7 +45,6 @@ class PokemonStatus {
         let nature2 = this.setUpNature(up, nature)
         let nature3 = this.setDownNature(down, nature2)
         this.nature = nature3
-        console.log(this.nature)
         this.real = this.calculateReal(this.base, this.effort, this.individual, nature3)
     }
 

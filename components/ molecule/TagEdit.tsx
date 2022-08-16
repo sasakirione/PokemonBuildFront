@@ -1,5 +1,5 @@
 import Pokemon from "../../domain/Pokemon";
-import React, {useState} from "react";
+import React, {useContext, useState} from "react";
 import {
     Box,
     Button,
@@ -15,9 +15,11 @@ import {
     Select,
     SelectChangeEvent
 } from "@mui/material";
+import {TagListContext} from "../../pages/build";
 
-export function TagEdit(props: { open: boolean, onClose: () => void, pokemon: Pokemon, tagList: string[] }) {
+export function TagEdit(props: { open: boolean, onClose: () => void, pokemon: Pokemon}) {
     const [tag, setTag] = useState<string[]>(props.pokemon.tag);
+    const tagList = useContext(TagListContext)
 
     const handleChange = (event: SelectChangeEvent<typeof tag>) => {
         const {
@@ -49,7 +51,7 @@ export function TagEdit(props: { open: boolean, onClose: () => void, pokemon: Po
         keepMounted
         onClose={props.onClose}
     >
-        <DialogTitle>性格を変更する</DialogTitle>
+        <DialogTitle>タグを変更する</DialogTitle>
         <DialogContent>
             <FormControl sx={{m: 1, width: 300}}>
                 <InputLabel id="demo-multiple-chip-label">タグ</InputLabel>
@@ -69,7 +71,7 @@ export function TagEdit(props: { open: boolean, onClose: () => void, pokemon: Po
                     )}
                     MenuProps={MenuProps}
                 >
-                    {props.tagList?.map((tag) => (
+                    {tagList?.map((tag) => (
                         <MenuItem
                             key={tag}
                             value={tag}

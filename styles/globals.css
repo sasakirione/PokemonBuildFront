@@ -15,9 +15,19 @@ a {
     box-sizing: border-box;
 }
 
+.left_right {
+    display: flex;
+    justify-content: space-between;
+    margin: 10px;
+}
+
 .left {
     margin-left: auto;
     margin-right: 0;
+}
+
+.right {
+    float:right;
 }
 
 .boxContainer {

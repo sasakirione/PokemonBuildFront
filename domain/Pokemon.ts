@@ -3,6 +3,8 @@ import {Moves, PokemonNature} from "../type/type";
 
 class Pokemon {
     name: string
+    id: number
+    personalId: number
     status: PokemonStatus
     nature: PokemonNature
     ability: string
@@ -11,8 +13,10 @@ class Pokemon {
     tag: string[]
     moves: Moves
 
-    constructor(name: string, status: PokemonStatus, nature: PokemonNature, ability: string, abilityList: string[], good: string, tag: string[], moves: Moves) {
+    constructor(name: string, id: number, personalId: number, status: PokemonStatus, nature: PokemonNature, ability: string, abilityList: string[], good: string, tag: string[], moves: Moves) {
         this.name = name
+        this.id = id
+        this.personalId = personalId
         this.status = status
         this.nature = nature
         this.ability = ability
