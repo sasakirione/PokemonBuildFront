@@ -57,3 +57,5 @@ export type KotlinTupleOfIdAndValue = {
     first: number
     second: string
 }
+
+export type SetterOfIdAndValue = (IdAndValue: [number, string]) => void

@@ -147,14 +147,14 @@ export function NatureEdit(props: { open: boolean, onClose: () => void, pokemon:
 }
 
 export function MoveEdit(props: { open: boolean, onClose: () => void, pokemon: Pokemon }) {
-    const [move1, setMove1] = useState<string>(props.pokemon.moves[0])
-    const [move2, setMove2] = useState<string>(props.pokemon.moves[1])
-    const [move3, setMove3] = useState<string>(props.pokemon.moves[2])
-    const [move4, setMove4] = useState<string>(props.pokemon.moves[3])
+    const [move1, setMove1] = useState<[number, string]>([0, props.pokemon.moves[0]])
+    const [move2, setMove2] = useState<[number, string]>([0, props.pokemon.moves[1]])
+    const [move3, setMove3] = useState<[number, string]>([0, props.pokemon.moves[2]])
+    const [move4, setMove4] = useState<[number, string]>([0, props.pokemon.moves[3]])
     const moveList = useContext(MoveListContext)
 
     function saveMove() {
-        props.pokemon.moves = [move1, move2, move3, move4]
+        props.pokemon.moves = [move1[1], move2[1], move3[1], move4[1]]
         props.onClose()
     }
 

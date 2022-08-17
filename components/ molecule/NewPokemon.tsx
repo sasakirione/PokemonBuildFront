@@ -7,7 +7,7 @@ import {
     PokemonNature,
     PokemonResponse,
     PokemonValue,
-    selectItem, selectItem2
+    selectItem2
 } from "../../type/type";
 import StatusForm from "../atomic/StatusForm";
 import {GoodListContext, MoveListContext} from "../../pages/build";
@@ -28,10 +28,10 @@ const NewPokemon = (props: { open: boolean, onClose: () => void, setPokemon: (po
     const [EvSpAttack, setEvSpAttack] = useState<number>(0)
     const [EvSpDefense, setEvSpDefense] = useState<number>(0)
     const [EvSpeed, setEvSpeed] = useState<number>(0)
-    const [move1, setMove1] = useState<string>("選択なし")
-    const [move2, setMove2] = useState<string>("選択なし")
-    const [move3, setMove3] = useState<string>("選択なし")
-    const [move4, setMove4] = useState<string>("選択なし")
+    const [move1, setMove1] = useState<[number, string]>([0, "選択なし"])
+    const [move2, setMove2] = useState<[number, string]>([0, "選択なし"])
+    const [move3, setMove3] = useState<[number, string]>([0, "選択なし"])
+    const [move4, setMove4] = useState<[number, string]>([0, "選択なし"])
     const [pokemonId, setPokemonId] = useState<number>(0)
     const goodList = useContext(GoodListContext)
     const moveList = useContext(MoveListContext)
@@ -70,7 +70,8 @@ const NewPokemon = (props: { open: boolean, onClose: () => void, setPokemon: (po
     function savePokemon() {
         const ev: PokemonValue = {a: EvAttack, b: EvDefense, c: EvSpAttack, d: EvSpDefense, h: EvHp, s: EvSpeed}
         const iv: PokemonValue = {a: IvAttack, b: IvDefense, c: IvSpAttack, d: IvSpDefense, h: IvHp, s: IvSpeed}
-        const moves: Moves = [move1, move2, move3, move4]
+        const moves: Moves = [move1[1], move2[1], move3[1], move4[1]]
+        const movesId = [move1[0], move2[0], move3[0], move4[0]]
         const good = "選択なし"
         const nature: PokemonNature = "まじめ"
         let abilities: string[] = []

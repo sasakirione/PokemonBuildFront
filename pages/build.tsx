@@ -7,9 +7,9 @@ import React, {createContext, useEffect, useState} from "react";
 import Pokemon from "../domain/Pokemon";
 import {pokemon1, pokemon2, pokemon3} from "../mock/PokemonData";
 import NewPokemon from "../components/ molecule/NewPokemon";
-import {responseGoodList} from "../type/type";
+import {KotlinTupleOfIdAndValue, responseGoodList} from "../type/type";
 
-export const MoveListContext = createContext<string[]>(["なし"])
+export const MoveListContext = createContext<[number, string][]>([[0, "なし"]])
 export const TagListContext = createContext<string[]>(["なし"])
 export const GoodListContext = createContext<[number, string][]>([[0, "なし"]])
 
@@ -24,7 +24,7 @@ const BuildPage: NextPage = () => {
     const [isLoading3, setIsLoading3] = useState(false)
     const [goodList, setGoodList] = useState<[number, string][]>()
     const [tagList, setTagList] = useState<string[]>()
-    const [moveList, setMoveList] = useState<string[]>()
+    const [moveList, setMoveList] = useState<[number, string][]>()
 
     useEffect(() => {
         if (pokemonList.length == 0) {
@@ -67,8 +67,8 @@ const BuildPage: NextPage = () => {
         setIsLoading3(true)
         fetch(baseUrl + "/v1/pokemon_data/get_moves")
             .then((res: { json: () => any; }) => res.json())
-            .then((data: string[]) => {
-                setMoveList(data)
+            .then((data: KotlinTupleOfIdAndValue[]) => {
+                setMoveList(data.map(move => [move.first, move.second]))
                 setIsLoading3(false)
             }).catch(
             (reason: any) => {
