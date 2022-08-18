@@ -16,8 +16,11 @@ import {
     SelectChangeEvent
 } from "@mui/material";
 import {TagListContext} from "../../pages/build";
+import {useAuth0} from "@auth0/auth0-react";
 
 export function TagEdit(props: { open: boolean, onClose: () => void, pokemon: Pokemon }) {
+    const {getAccessTokenSilently, getIdTokenClaims} = useAuth0()
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL!
     const [tag, setTag] = useState<string[]>(props.pokemon.tag);
     const tagList = useContext(TagListContext)
 
@@ -41,9 +44,24 @@ export function TagEdit(props: { open: boolean, onClose: () => void, pokemon: Po
         },
     };
 
-    function saveTags() {
+    async function saveTags() {
+        await sendData(tag)
         props.pokemon.tag = tag
         props.onClose()
+    }
+
+    async function sendData(tags: string[]) {
+        await getAccessTokenSilently()
+        let token = await getIdTokenClaims()
+        const parameter = {
+            headers: {
+                Authorization: 'Bearer ' + token?.__raw!,
+                "Content-Type": 'application/json'
+            },
+            method: "POST",
+            body: JSON.stringify({tags: tags, pokemonId: props.pokemon.personalId})
+        }
+        await fetch(baseUrl + "/v1/pokemon_build/post_tag", parameter)
     }
 
     return (<Dialog
