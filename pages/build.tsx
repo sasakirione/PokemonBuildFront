@@ -108,6 +108,7 @@ const BuildPage: NextPage = () => {
     }, [])
 
     function removePokemon(personalId: number) {
+        setPokemonList(intiPokemonList)
         const removedList = pokemonList.filter(pokemon => pokemon.personalId != personalId)
         setPokemonList(removedList)
     }
