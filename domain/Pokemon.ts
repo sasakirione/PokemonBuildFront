@@ -35,6 +35,14 @@ class Pokemon {
         const s = this.status.effort.s != 0 ? " S" + this.status.effort.s : ""
         return h + a + b + c + d + s
     }
+
+    getRealSpeed(): number {
+        const baseSpeed = this.status.real.s
+        if (this.good == "こだわりスカーフ") {
+            return Math.floor(baseSpeed * 1.5)
+        }
+        return baseSpeed
+    }
 }
 
 export default Pokemon
