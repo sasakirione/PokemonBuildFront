@@ -2,14 +2,16 @@ import {fieldType, PokemonValue, StatusType} from "../../type/type";
 import {StatusValueField} from "../particle/Field";
 import React from "react";
 
-function StatusForm(props: { defaultValues: PokemonValue,
+function StatusForm(props: {
+    defaultValues: PokemonValue,
     setHp: (hp: number) => void,
     setAttack: (a: number) => void,
     setDefense: (b: number) => void,
     setSpAttack: (c: number) => void,
     setSpDefense: (d: number) => void,
     setSpeed: (s: number) => void,
-    sum: number, statusType: StatusType }) {
+    sum: number, statusType: StatusType
+}) {
 
     let max: number
     if (props.statusType == "EV") {

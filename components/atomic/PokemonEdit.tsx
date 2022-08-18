@@ -118,7 +118,7 @@ export function AbilityEdit(props: { open: boolean, onClose: () => void, pokemon
 
 export function NatureEdit(props: { open: boolean, onClose: () => void, pokemon: Pokemon }) {
 
-    function onClickItem(nature: [PokemonNature, string, string]) {
+    function onClickItem(nature: [PokemonNature, string, string, PokemonValue]) {
         props.pokemon.nature = nature[0]
         props.pokemon.status.changeNature(nature[1], nature[2])
         props.onClose()
@@ -168,7 +168,8 @@ export function MoveEdit(props: { open: boolean, onClose: () => void, pokemon: P
         <DialogContent
             style={{height: '450px'}}
         >
-            <MoveForm  moveList={moveList} moves={[move1, move2, move3, move4]} setMoves={[setMove1, setMove2, setMove3, setMove4]}/>
+            <MoveForm moveList={moveList} moves={[move1, move2, move3, move4]}
+                      setMoves={[setMove1, setMove2, setMove3, setMove4]}/>
         </DialogContent>
         <DialogActions>
             <Button onClick={props.onClose}>Cancel</Button>

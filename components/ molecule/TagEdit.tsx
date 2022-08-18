@@ -17,7 +17,7 @@ import {
 } from "@mui/material";
 import {TagListContext} from "../../pages/build";
 
-export function TagEdit(props: { open: boolean, onClose: () => void, pokemon: Pokemon}) {
+export function TagEdit(props: { open: boolean, onClose: () => void, pokemon: Pokemon }) {
     const [tag, setTag] = useState<string[]>(props.pokemon.tag);
     const tagList = useContext(TagListContext)
 

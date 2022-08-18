@@ -71,7 +71,7 @@ const PokemonList: NextPage<Props> = (props: Props) => {
 
     const clickRemove = () => {
 
-      removePokemon(pokemon.personalId)
+        removePokemon(pokemon.personalId)
     };
 
     return (

@@ -59,3 +59,29 @@ export type KotlinTupleOfIdAndValue = {
 }
 
 export type SetterOfIdAndValue = (IdAndValue: [number, string]) => void
+
+export type GrownPokemon = {
+    id: number,
+    personalId: number,
+    name: string,
+    iv: number[],
+    ev: number[],
+    nature: number,
+    ability: string,
+    abilityList: string[],
+    bv: number[],
+    moveList: string[],
+    good: string,
+    tag: string[]
+}
+
+export type BuildResponse = {
+    id: number,
+    name: string,
+    pokemons: GrownPokemon[]
+}
+
+export type PostPokemonData = {
+    pokemon: GrownPokemon,
+    buildId: number
+}

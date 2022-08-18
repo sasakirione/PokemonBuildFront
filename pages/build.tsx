@@ -5,31 +5,60 @@ import {useAuth0} from "@auth0/auth0-react";
 import {Button, CircularProgress} from "@mui/material";
 import React, {createContext, useEffect, useState} from "react";
 import Pokemon from "../domain/Pokemon";
-import {pokemon1, pokemon2, pokemon3} from "../mock/PokemonData";
 import NewPokemon from "../components/ molecule/NewPokemon";
-import {KotlinTupleOfIdAndValue, responseGoodList} from "../type/type";
+import {BuildResponse, KotlinTupleOfIdAndValue, responseGoodList} from "../type/type";
+import {getPokemonFromGrownPokemonResponse} from "../util/converter";
 
 export const MoveListContext = createContext<[number, string][]>([[0, "なし"]])
 export const TagListContext = createContext<string[]>(["なし"])
 export const GoodListContext = createContext<[number, string][]>([[0, "なし"]])
+export const BuildIdContext = createContext(0)
 
 const BuildPage: NextPage = () => {
-    const {isAuthenticated, isLoading} = useAuth0()
+    const {isAuthenticated, isLoading, getAccessTokenSilently, getIdTokenClaims} = useAuth0()
     let intiPokemonList: Pokemon[] = []
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL!
+    const audience = process.env.NEXT_PUBLIC_AUTH0_AUDIENCE!
     const [pokemonList, setPokemonList] = useState<Pokemon[]>(intiPokemonList)
     const [isNewPokemon, setIsNewPokemon] = useState(false)
     const [isLoading1, setIsLoading1] = useState(false)
     const [isLoading2, setIsLoading2] = useState(false)
     const [isLoading3, setIsLoading3] = useState(false)
+    const [isLoading4, setIsLoading4] = useState(false)
+    const [buildName, setBuildName] = useState("構築")
+    const [buildId, setBuildId] = useState(0)
     const [goodList, setGoodList] = useState<[number, string][]>()
     const [tagList, setTagList] = useState<string[]>()
     const [moveList, setMoveList] = useState<[number, string][]>()
 
     useEffect(() => {
-        if (pokemonList.length == 0) {
-            setPokemonList([...pokemonList, pokemon1, pokemon2, pokemon3])
-        }
+        (async () => {
+            if (pokemonList.length == 0) {
+                setIsLoading4(true)
+                await getAccessTokenSilently()
+                let test = await getIdTokenClaims()
+                const parameter = {
+                    headers: {
+                        Authorization: 'Bearer ' + test?.__raw!
+                    }
+                }
+                fetch(baseUrl + "/v1/pokemon_build/get_build", parameter)
+                    .then((res: { json: () => any; }) => res.json())
+                    .then((data: BuildResponse) => {
+                            setBuildName(data.name)
+                            setBuildId(data.id)
+                            setPokemonList(data.pokemons.map(pokemon => getPokemonFromGrownPokemonResponse(pokemon)))
+                            setIsLoading4(false)
+                            console.log("aa!")
+                        }
+                    ).catch(
+                    (reason: any) => {
+                        console.log(reason)
+                        setIsLoading4(false)
+                    }
+                )
+            }
+        })()
     }, [])
 
     useEffect(() => {
@@ -95,7 +124,7 @@ const BuildPage: NextPage = () => {
         setPokemonList([...pokemonList, newPokemon])
     }
 
-    if (isLoading || isLoading1 || isLoading2 || isLoading3) {
+    if (isLoading || isLoading1 || isLoading2 || isLoading3 || isLoading4) {
         return (<div>
             <CircularProgress color="inherit"/>
         </div>)
@@ -110,14 +139,16 @@ const BuildPage: NextPage = () => {
             <MoveListContext.Provider value={moveList!}>
                 <TagListContext.Provider value={tagList!}>
                     <GoodListContext.Provider value={goodList!}>
-                        <div className="left_right">
-                            <HeadLineText text={"構築1"}/>
-                            <Button variant="outlined" color="success"
-                                    onClick={handleClickOpenNewPokemon}>ポケモンを追加</Button>
-                        </div>
-                        <PokemonList pokemonList={pokemonList} pokemonListFunc={setPokemonList}
-                                     removePokemon={removePokemon}></PokemonList>
-                        <NewPokemon open={isNewPokemon} onClose={handleCloseNewPokemon} setPokemon={addPokemon}/>
+                        <BuildIdContext.Provider value={buildId!}>
+                            <div className="left_right">
+                                <HeadLineText text={buildName}/>
+                                <Button variant="outlined" color="success"
+                                        onClick={handleClickOpenNewPokemon}>ポケモンを追加</Button>
+                            </div>
+                            <PokemonList pokemonList={pokemonList} pokemonListFunc={setPokemonList}
+                                         removePokemon={removePokemon}></PokemonList>
+                            <NewPokemon open={isNewPokemon} onClose={handleCloseNewPokemon} setPokemon={addPokemon}/>
+                        </BuildIdContext.Provider>
                     </GoodListContext.Provider>
                 </TagListContext.Provider>
             </MoveListContext.Provider>
