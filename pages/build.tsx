@@ -107,10 +107,25 @@ const BuildPage: NextPage = () => {
         )
     }, [])
 
-    function removePokemon(personalId: number) {
+    async function removePokemon(personalId: number) {
         setPokemonList(intiPokemonList)
+        await sendDate(personalId)
         const removedList = pokemonList.filter(pokemon => pokemon.personalId != personalId)
         setPokemonList(removedList)
+    }
+
+    async function sendDate(personalId: number) {
+        await getAccessTokenSilently()
+        let token = await getIdTokenClaims()
+        const parameter = {
+            headers: {
+                Authorization: 'Bearer ' + token?.__raw!,
+                "Content-Type": 'application/json'
+            },
+            method: "DELETE",
+            body: JSON.stringify({pokemonId: personalId})
+        }
+        await fetch(baseUrl + "/v1/pokemon_build/delete_pokemon", parameter)
     }
 
     const handleClickOpenNewPokemon = () => {
