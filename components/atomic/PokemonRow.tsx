@@ -93,7 +93,7 @@ const PokemonList: NextPage<Props> = (props: Props) => {
                 <TableCell onClick={handleClickOpenAbilityEdit}>{pokemon.ability}</TableCell>
                 <TableCell onClick={handleClickOpenGoodEdit}>{pokemon.good}</TableCell>
                 <TableCell onClick={handleClickOpenEffortEdit}>{pokemon.getEffortText()}</TableCell>
-                <TableCell>{pokemon.status.real.s}</TableCell>
+                <TableCell>{pokemon.getRealSpeed()}</TableCell>
                 <TableCell>
                     <DeleteIcon
                         onClick={clickRemove}
