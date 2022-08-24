@@ -159,26 +159,27 @@ const NewPokemon = (props: { open: boolean, onClose: () => void, setPokemon: (po
                 <DialogContent
                     style={{height: '450px'}}
                 >
-                    <div>
+                    <div className="new-pokemon-contents">
                         <DialogContentText>ポケモンの選択</DialogContentText>
-                        <Select isSearchable options={pokemonList!.map(pokemon => createOption(pokemon[0], pokemon[1]))}
+                        <Select className="pokemon-select" isSearchable
+                                options={pokemonList!.map(pokemon => createOption(pokemon[0], pokemon[1]))}
                                 onChange={row => setPokemonId(row?.value!)}></Select>
                     </div>
-                    <div>
+                    <div className="new-pokemon-contents">
                         <DialogContentText>個体値</DialogContentText>
                         <StatusForm defaultValues={Iv6V} setHp={setIvHp} setAttack={setIvAttack}
                                     setDefense={setIvDefense}
                                     setSpAttack={setIvSpAttack} setSpDefense={setIvSpDefense} setSpeed={setIvSpeed}
                                     sum={0} statusType={"IV"}/>
                     </div>
-                    <div>
+                    <div className="new-pokemon-contents">
                         <DialogContentText>努力値</DialogContentText>
                         <StatusForm defaultValues={zeroValue} setHp={setEvHp} setAttack={setEvAttack}
                                     setDefense={setEvDefense}
                                     setSpAttack={setEvSpAttack} setSpDefense={setEvSpDefense} setSpeed={setEvSpeed}
                                     sum={sum} statusType={"EV"}/>
                     </div>
-                    <div>
+                    <div className="new-pokemon-contents">
                         <DialogContentText>わざ</DialogContentText>
                         <MoveForm moveList={moveList} moves={[move1, move2, move3, move4]}
                                   setMoves={[setMove1, setMove2, setMove3, setMove4]}/>

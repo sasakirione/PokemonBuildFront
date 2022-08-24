@@ -20,7 +20,7 @@ export const PresetValueButton = (props: {
     }
 
     return (
-        <Button onClick={setValue}>
+        <Button variant="outlined" onClick={setValue} className="value-preset-button">
             {props.Label}
         </Button>
     )
