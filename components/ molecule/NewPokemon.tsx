@@ -18,7 +18,7 @@ import Pokemon from "../../domain/Pokemon";
 import PokemonStatus from "../../domain/PokemonStatus";
 import {useAuth0} from "@auth0/auth0-react";
 import {Loading} from "../particle/Loading";
-import {Iv6V} from "../../domain/PokemonData";
+import {Iv6V, zeroValue} from "../../domain/PokemonData";
 
 const NewPokemon = (props: { open: boolean, onClose: () => void, setPokemon: (pokemon: Pokemon) => void }) => {
     const {getAccessTokenSilently, getIdTokenClaims} = useAuth0()
@@ -45,13 +45,9 @@ const NewPokemon = (props: { open: boolean, onClose: () => void, setPokemon: (po
     const sum = EvHp + EvAttack + EvDefense + EvSpAttack + EvSpDefense + EvSpeed
     const [pokemonList, setPokemonList] = useState<[number, string][]>([])
     const [isLoading, setIsLoading] = useState(false)
-    const defaultValue2: PokemonValue = {
-        a: 0, b: 0, c: 0, d: 0, h: 0, s: 0
-    }
     const defaultValue3: PokemonValue = {
         a: 1, b: 1, c: 1, d: 1, h: 1, s: 1
     }
-    const [valueOfEv, setValueOfEv] = useState<PokemonValue>(defaultValue2)
 
     const createOption = (value: number, label: string): selectItem2 => ({
         value,
@@ -153,7 +149,6 @@ const NewPokemon = (props: { open: boolean, onClose: () => void, setPokemon: (po
     }
     return (
         <>
-            <Loading isLoading={isLoading}/>
             <Dialog
                 open={props.open}
                 keepMounted
@@ -178,11 +173,10 @@ const NewPokemon = (props: { open: boolean, onClose: () => void, setPokemon: (po
                     </div>
                     <div>
                         <DialogContentText>努力値</DialogContentText>
-                        <StatusForm defaultValues={valueOfEv} setHp={setEvHp} setAttack={setEvAttack}
+                        <StatusForm defaultValues={zeroValue} setHp={setEvHp} setAttack={setEvAttack}
                                     setDefense={setEvDefense}
                                     setSpAttack={setEvSpAttack} setSpDefense={setEvSpDefense} setSpeed={setEvSpeed}
                                     sum={sum} statusType={"EV"}/>
-
                     </div>
                     <div>
                         <DialogContentText>わざ</DialogContentText>
@@ -195,6 +189,7 @@ const NewPokemon = (props: { open: boolean, onClose: () => void, setPokemon: (po
                     <Button onClick={savePokemon} disabled={isLoading}>OK</Button>
                 </DialogActions>
             </Dialog>
+            <Loading isLoading={isLoading}/>
         </>
     )
 }

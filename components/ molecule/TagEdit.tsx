@@ -17,11 +17,13 @@ import {
 } from "@mui/material";
 import {TagListContext} from "../../pages/build";
 import {useAuth0} from "@auth0/auth0-react";
+import {Loading} from "../particle/Loading";
 
 export function TagEdit(props: { open: boolean, onClose: () => void, pokemon: Pokemon }) {
     const {getAccessTokenSilently, getIdTokenClaims} = useAuth0()
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL!
     const [tag, setTag] = useState<string[]>(props.pokemon.tag);
+    const [isLoading, setIsLoading] = useState(false)
     const tagList = useContext(TagListContext)
 
     const handleChange = (event: SelectChangeEvent<typeof tag>) => {
@@ -51,6 +53,7 @@ export function TagEdit(props: { open: boolean, onClose: () => void, pokemon: Po
     }
 
     async function sendData(tags: string[]) {
+        setIsLoading(true)
         await getAccessTokenSilently()
         let token = await getIdTokenClaims()
         const parameter = {
@@ -62,19 +65,21 @@ export function TagEdit(props: { open: boolean, onClose: () => void, pokemon: Po
             body: JSON.stringify({tags: tags, pokemonId: props.pokemon.personalId})
         }
         await fetch(baseUrl + "/v1/pokemon_build/post_tag", parameter)
+        setIsLoading(false)
     }
 
-    return (<Dialog
-        open={props.open}
-        keepMounted
-        onClose={props.onClose}
-    >
-        <DialogTitle>タグを変更する</DialogTitle>
-        <DialogContent>
-            <FormControl sx={{m: 1, width: 300}}>
-                <InputLabel id="demo-multiple-chip-label">タグ</InputLabel>
-                <Select
-                    labelId="demo-multiple-chip-label"
+    return (<>
+        <Dialog
+            open={props.open}
+            keepMounted
+            onClose={props.onClose}
+        >
+            <DialogTitle>タグを変更する</DialogTitle>
+            <DialogContent>
+                <FormControl sx={{m: 1, width: 300}}>
+                    <InputLabel id="demo-multiple-chip-label">タグ</InputLabel>
+                    <Select
+                        labelId="demo-multiple-chip-label"
                     id="demo-multiple-chip"
                     multiple
                     value={tag}
@@ -97,12 +102,14 @@ export function TagEdit(props: { open: boolean, onClose: () => void, pokemon: Po
                             {tag}
                         </MenuItem>
                     ))}
-                </Select>
-            </FormControl>
-        </DialogContent>
-        <DialogActions>
-            <Button onClick={props.onClose}>Cancel</Button>
-            <Button onClick={saveTags}>OK</Button>
-        </DialogActions>
-    </Dialog>);
+                    </Select>
+                </FormControl>
+            </DialogContent>
+            <DialogActions>
+                <Button onClick={props.onClose}>Cancel</Button>
+                <Button onClick={saveTags}>OK</Button>
+            </DialogActions>
+        </Dialog>
+        <Loading isLoading={isLoading}/>
+    </>);
 }

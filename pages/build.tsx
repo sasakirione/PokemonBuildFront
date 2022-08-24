@@ -2,13 +2,14 @@ import {NextPage} from "next";
 import PokemonList from "../components/ molecule/PokemonList";
 import {HeadLineText} from "../components/particle/Text";
 import {useAuth0} from "@auth0/auth0-react";
-import {Button, CircularProgress, Tooltip} from "@mui/material";
+import {Button, Tooltip} from "@mui/material";
 import React, {createContext, useEffect, useState} from "react";
 import Pokemon from "../domain/Pokemon";
 import NewPokemon from "../components/ molecule/NewPokemon";
 import {BuildResponse, KotlinTupleOfIdAndValue, responseGoodList} from "../type/type";
 import {getPokemonFromGrownPokemonResponse} from "../util/converter";
 import {PokeBuildHead} from "../components/atomic/PokeBuildHead";
+import {Loading} from "../components/particle/Loading";
 
 export const MoveListContext = createContext<[number, string][]>([[0, "なし"]])
 export const TagListContext = createContext<string[]>(["なし"])
@@ -25,6 +26,7 @@ const BuildPage: NextPage = () => {
     const [isLoading2, setIsLoading2] = useState(false)
     const [isLoading3, setIsLoading3] = useState(false)
     const [isLoading4, setIsLoading4] = useState(false)
+    const [isLoading5, setIsLoading5] = useState(false)
     const [buildName, setBuildName] = useState("構築")
     const [buildComment, setBuildComment] = useState("てすとてすと")
     const [buildId, setBuildId] = useState(0)
@@ -108,10 +110,12 @@ const BuildPage: NextPage = () => {
     }, [])
 
     async function removePokemon(personalId: number) {
+        setIsLoading5(true)
         setPokemonList(intiPokemonList)
         await sendDate(personalId)
         const removedList = pokemonList.filter(pokemon => pokemon.personalId != personalId)
         setPokemonList(removedList)
+        setIsLoading5(false)
     }
 
     async function sendDate(personalId: number) {
@@ -140,10 +144,8 @@ const BuildPage: NextPage = () => {
         setPokemonList([...pokemonList, newPokemon])
     }
 
-    if (isLoading || isLoading1 || isLoading2 || isLoading3 || isLoading4) {
-        return (<div>
-            <CircularProgress color="inherit"/>
-        </div>)
+    if (isLoading || isLoading1 || isLoading2 || isLoading3 || isLoading4 || isLoading5) {
+        return (<Loading isLoading={true}/>)
     }
 
     if (!isAuthenticated) {
