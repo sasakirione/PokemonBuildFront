@@ -87,8 +87,8 @@ const PokemonList: NextPage<Props> = (props: Props) => {
                     </IconButton>
                 </TableCell>
                 <TableCell>{pokemon.name}</TableCell>
-                <TableCell onClick={handleClickOpenTagEdit}>{pokemon.tag.map(tag => <Button
-                    key={tag}>{tag}</Button>)}</TableCell>
+                <TableCell onClick={handleClickOpenTagEdit}>{pokemon.tag.map(tag => <Button variant="outlined"
+                                                                                            key={tag}>{tag}</Button>)}</TableCell>
                 <TableCell onClick={handleClickOpenNatureEdit}>{pokemon.nature}</TableCell>
                 <TableCell onClick={handleClickOpenAbilityEdit}>{pokemon.ability}</TableCell>
                 <TableCell onClick={handleClickOpenGoodEdit}>{pokemon.good}</TableCell>
@@ -104,9 +104,10 @@ const PokemonList: NextPage<Props> = (props: Props) => {
                 <TableCell style={{paddingBottom: 0, paddingTop: 0}} colSpan={8}>
                     <Collapse in={openMoveList} timeout="auto" unmountOnExit>
                         <Box>
-                            <h4 onClick={handleClickOpenMoveEdit}>わざ</h4>
-                            {pokemon.moves.map(move => <Button variant="contained" color="success"
+                            <h4>わざ</h4>
+                            {pokemon.moves.map(move => <Button variant="outlined" color="success"
                                                                key={move}>{move}</Button>)}
+                            <Button onClick={handleClickOpenMoveEdit}>編集</Button>
                             <br/>
                         </Box>
                     </Collapse>

@@ -17,6 +17,7 @@ import StatusForm from "./StatusForm";
 import {GoodListContext, MoveListContext} from "../../pages/build";
 import {MoveForm} from "./MoveForm";
 import {useAuth0} from "@auth0/auth0-react";
+import {Loading} from "../particle/Loading";
 
 export function GoodEdit(props: { open: boolean, onClose: () => void, pokemon: Pokemon }) {
     const {getAccessTokenSilently, getIdTokenClaims} = useAuth0()
@@ -123,10 +124,13 @@ export function EffortEdit(props: { open: boolean, onClose: () => void, pokemon:
 export function AbilityEdit(props: { open: boolean, onClose: () => void, pokemon: Pokemon }) {
     const {getAccessTokenSilently, getIdTokenClaims} = useAuth0()
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL!
+    const [isLoading, setIsLoading] = useState(false)
 
     async function onClickItem(ability: string) {
+        setIsLoading(true)
         await sendData(ability)
         props.pokemon.ability = ability
+        setIsLoading(false)
         props.onClose()
     }
 
@@ -145,26 +149,30 @@ export function AbilityEdit(props: { open: boolean, onClose: () => void, pokemon
     }
 
 
-    return <Dialog
-        open={props.open}
-        keepMounted
-        onClose={props.onClose}
-    >
-        <DialogTitle>特性を変更する</DialogTitle>
-        <DialogContent>
-            <DialogContentText>現在の特性：{props.pokemon.ability}</DialogContentText>
-            <List>
-                {props.pokemon.abilityList.map((ability, index) =>
-                    <ListItemButton key={index} onClick={() => onClickItem(ability)}>
-                        <ListItemText primary={ability}></ListItemText>
-                    </ListItemButton>
-                )}
-            </List>
-        </DialogContent>
-        <DialogActions>
-            <Button onClick={props.onClose}>Cancel</Button>
-        </DialogActions>
-    </Dialog>;
+    return (
+        <>
+            <Dialog
+                open={props.open}
+                keepMounted
+                onClose={props.onClose}
+            >
+                <DialogTitle>特性を変更する</DialogTitle>
+                <DialogContent>
+                    <DialogContentText>現在の特性：{props.pokemon.ability}</DialogContentText>
+                    <List>
+                        {props.pokemon.abilityList.map((ability, index) =>
+                            <ListItemButton key={index} onClick={() => onClickItem(ability)}>
+                                <ListItemText primary={ability}></ListItemText>
+                            </ListItemButton>
+                        )}
+                    </List>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={props.onClose}>Cancel</Button>
+                </DialogActions>
+            </Dialog>
+            <Loading isLoading={isLoading}/>
+        </>);
 }
 
 export function NatureEdit(props: { open: boolean, onClose: () => void, pokemon: Pokemon }) {

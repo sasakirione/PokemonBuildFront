@@ -2,12 +2,13 @@ import {NextPage} from "next";
 import PokemonList from "../components/ molecule/PokemonList";
 import {HeadLineText} from "../components/particle/Text";
 import {useAuth0} from "@auth0/auth0-react";
-import {Button, CircularProgress} from "@mui/material";
+import {Button, CircularProgress, Tooltip} from "@mui/material";
 import React, {createContext, useEffect, useState} from "react";
 import Pokemon from "../domain/Pokemon";
 import NewPokemon from "../components/ molecule/NewPokemon";
 import {BuildResponse, KotlinTupleOfIdAndValue, responseGoodList} from "../type/type";
 import {getPokemonFromGrownPokemonResponse} from "../util/converter";
+import {PokeBuildHead} from "../components/atomic/PokeBuildHead";
 
 export const MoveListContext = createContext<[number, string][]>([[0, "なし"]])
 export const TagListContext = createContext<string[]>(["なし"])
@@ -18,7 +19,6 @@ const BuildPage: NextPage = () => {
     const {isAuthenticated, isLoading, getAccessTokenSilently, getIdTokenClaims} = useAuth0()
     let intiPokemonList: Pokemon[] = []
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL!
-    const audience = process.env.NEXT_PUBLIC_AUTH0_AUDIENCE!
     const [pokemonList, setPokemonList] = useState<Pokemon[]>(intiPokemonList)
     const [isNewPokemon, setIsNewPokemon] = useState(false)
     const [isLoading1, setIsLoading1] = useState(false)
@@ -26,6 +26,7 @@ const BuildPage: NextPage = () => {
     const [isLoading3, setIsLoading3] = useState(false)
     const [isLoading4, setIsLoading4] = useState(false)
     const [buildName, setBuildName] = useState("構築")
+    const [buildComment, setBuildComment] = useState("てすとてすと")
     const [buildId, setBuildId] = useState(0)
     const [goodList, setGoodList] = useState<[number, string][]>()
     const [tagList, setTagList] = useState<string[]>()
@@ -46,10 +47,9 @@ const BuildPage: NextPage = () => {
                     .then((res: { json: () => any; }) => res.json())
                     .then((data: BuildResponse) => {
                             setBuildName(data.name)
-                            setBuildId(data.id)
-                            setPokemonList(data.pokemons.map(pokemon => getPokemonFromGrownPokemonResponse(pokemon)))
-                            setIsLoading4(false)
-                            console.log("aa!")
+                        setBuildId(data.id)
+                        setPokemonList(data.pokemons.map(pokemon => getPokemonFromGrownPokemonResponse(pokemon)).sort(pokemon => pokemon.personalId))
+                        setIsLoading4(false)
                         }
                     ).catch(
                     (reason: any) => {
@@ -156,8 +156,11 @@ const BuildPage: NextPage = () => {
                 <TagListContext.Provider value={tagList!}>
                     <GoodListContext.Provider value={goodList!}>
                         <BuildIdContext.Provider value={buildId!}>
+                            <PokeBuildHead title="構築"/>
                             <div className="left_right">
-                                <HeadLineText text={buildName}/>
+                                <Tooltip title={buildComment}>
+                                    <HeadLineText text={buildName}/>
+                                </Tooltip>
                                 <Button variant="outlined" color="success"
                                         onClick={handleClickOpenNewPokemon}>ポケモンを追加</Button>
                             </div>

@@ -1,8 +1,13 @@
 import type {NextPage} from 'next'
+import {PokeBuildHead} from "../components/atomic/PokeBuildHead";
 
 const Home: NextPage = () => {
     return (
-        <div>こんばんはこんばんは</div>
+        <>
+            <PokeBuildHead title="TOP"/>
+            <div>こんばんはこんばんは</div>
+        </>
+
     )
 }
 
