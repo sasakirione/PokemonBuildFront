@@ -22,14 +22,12 @@ import {Loading} from "../particle/Loading";
 export function GoodEdit(props: { open: boolean, onClose: () => void, pokemon: Pokemon }) {
     const {getAccessTokenSilently, getIdTokenClaims} = useAuth0()
     const goodList = useContext(GoodListContext)
-    const [goodId, setGoodId] = useState<number>(goodList?.filter(good => good[1] == props.pokemon.good).map(good => good[0])[0])
     const [isLoading, setIsLoading] = useState(false)
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL!
 
     async function onClickItem(id: number, name: string) {
         props.pokemon.good = name
         await sendData(id)
-        setGoodId(id)
         props.onClose()
     }
 
