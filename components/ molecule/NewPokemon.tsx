@@ -17,6 +17,8 @@ import {MoveForm} from "../atomic/MoveForm";
 import Pokemon from "../../domain/Pokemon";
 import PokemonStatus from "../../domain/PokemonStatus";
 import {useAuth0} from "@auth0/auth0-react";
+import {Loading} from "../particle/Loading";
+import {Iv6V, zeroValue} from "../../domain/PokemonData";
 
 const NewPokemon = (props: { open: boolean, onClose: () => void, setPokemon: (pokemon: Pokemon) => void }) => {
     const {getAccessTokenSilently, getIdTokenClaims} = useAuth0()
@@ -42,12 +44,7 @@ const NewPokemon = (props: { open: boolean, onClose: () => void, setPokemon: (po
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL!
     const sum = EvHp + EvAttack + EvDefense + EvSpAttack + EvSpDefense + EvSpeed
     const [pokemonList, setPokemonList] = useState<[number, string][]>([])
-    const defaultValue: PokemonValue = {
-        a: 31, b: 31, c: 31, d: 31, h: 31, s: 31
-    }
-    const defaultValue2: PokemonValue = {
-        a: 0, b: 0, c: 0, d: 0, h: 0, s: 0
-    }
+    const [isLoading, setIsLoading] = useState(false)
     const defaultValue3: PokemonValue = {
         a: 1, b: 1, c: 1, d: 1, h: 1, s: 1
     }
@@ -72,12 +69,13 @@ const NewPokemon = (props: { open: boolean, onClose: () => void, setPokemon: (po
     }, [])
 
     async function savePokemon() {
+        setIsLoading(true)
         const ev: PokemonValue = {a: EvAttack, b: EvDefense, c: EvSpAttack, d: EvSpDefense, h: EvHp, s: EvSpeed}
         const iv: PokemonValue = {a: IvAttack, b: IvDefense, c: IvSpAttack, d: IvSpDefense, h: IvHp, s: IvSpeed}
         const moves: Moves = [move1[1], move2[1], move3[1], move4[1]]
         const good = "選択なし"
         const nature: PokemonNature = "まじめ"
-        let abilities: string[] = []
+        let abilities: string[]
         let ability: string = ""
         let bv: PokemonValue = {a: 0, b: 0, c: 0, d: 0, h: 0, s: 0}
         let name: string = ""
@@ -102,6 +100,7 @@ const NewPokemon = (props: { open: boolean, onClose: () => void, setPokemon: (po
                 }
             )
         if (abilities[0] == "") {
+            setIsLoading(false)
             return
         }
         ability = abilities[0]
@@ -139,55 +138,60 @@ const NewPokemon = (props: { open: boolean, onClose: () => void, setPokemon: (po
                 return 0
             })
         if (personalId == 0) {
+            setIsLoading(false)
             return
         }
         const status = new PokemonStatus(bv, ev, iv, defaultValue3)
         const newPokemon = new Pokemon(name, pokemonId, personalId!, status, nature, ability, abilities, good, [], moves)
         props.setPokemon(newPokemon)
         props.onClose()
+        setIsLoading(false)
     }
-
     return (
-        <Dialog
-            open={props.open}
-            keepMounted
-            onClose={props.onClose}
-            fullWidth={true}
-        >
-            <DialogTitle>ポケモンを新規登録する</DialogTitle>
-            <DialogContent
-                style={{height: '450px'}}
+        <>
+            <Dialog
+                open={props.open}
+                keepMounted
+                onClose={props.onClose}
+                fullWidth={true}
             >
-                <div>
-                    <DialogContentText>ポケモンの選択</DialogContentText>
-                    <Select isSearchable options={pokemonList!.map(pokemon => createOption(pokemon[0], pokemon[1]))}
-                            onChange={row => setPokemonId(row?.value!)}></Select>
-                </div>
-                <div>
-                    <DialogContentText>個体値</DialogContentText>
-                    <StatusForm defaultValues={defaultValue} setHp={setIvHp} setAttack={setIvAttack}
-                                setDefense={setIvDefense}
-                                setSpAttack={setIvSpAttack} setSpDefense={setIvSpDefense} setSpeed={setIvSpeed}
-                                sum={0} statusType={"IV"}/>
-                </div>
-                <div>
-                    <DialogContentText>努力値</DialogContentText>
-                    <StatusForm defaultValues={defaultValue2} setHp={setEvHp} setAttack={setEvAttack}
-                                setDefense={setEvDefense}
-                                setSpAttack={setEvSpAttack} setSpDefense={setEvSpDefense} setSpeed={setEvSpeed}
-                                sum={sum} statusType={"EV"}/>
-                </div>
-                <div>
-                    <DialogContentText>わざ</DialogContentText>
-                    <MoveForm moveList={moveList} moves={[move1, move2, move3, move4]}
-                              setMoves={[setMove1, setMove2, setMove3, setMove4]}/>
-                </div>
-            </DialogContent>
-            <DialogActions>
-                <Button onClick={props.onClose}>Cancel</Button>
-                <Button onClick={savePokemon}>OK</Button>
-            </DialogActions>
-        </Dialog>
+                <DialogTitle>ポケモンを新規登録する</DialogTitle>
+                <DialogContent
+                    style={{height: '450px'}}
+                >
+                    <div className="new-pokemon-contents">
+                        <DialogContentText>ポケモンの選択</DialogContentText>
+                        <Select className="pokemon-select" isSearchable
+                                options={pokemonList!.map(pokemon => createOption(pokemon[0], pokemon[1]))}
+                                onChange={row => setPokemonId(row?.value!)}></Select>
+                    </div>
+                    <div className="new-pokemon-contents">
+                        <DialogContentText>個体値</DialogContentText>
+                        <StatusForm defaultValues={Iv6V} setHp={setIvHp} setAttack={setIvAttack}
+                                    setDefense={setIvDefense}
+                                    setSpAttack={setIvSpAttack} setSpDefense={setIvSpDefense} setSpeed={setIvSpeed}
+                                    sum={0} statusType={"IV"}/>
+                    </div>
+                    <div className="new-pokemon-contents">
+                        <DialogContentText>努力値</DialogContentText>
+                        <StatusForm defaultValues={zeroValue} setHp={setEvHp} setAttack={setEvAttack}
+                                    setDefense={setEvDefense}
+                                    setSpAttack={setEvSpAttack} setSpDefense={setEvSpDefense} setSpeed={setEvSpeed}
+                                    sum={sum} statusType={"EV"}/>
+                    </div>
+                    <div className="new-pokemon-contents">
+                        <DialogContentText>わざ</DialogContentText>
+                        <MoveForm moveList={moveList} moves={[move1, move2, move3, move4]}
+                                  setMoves={[setMove1, setMove2, setMove3, setMove4]}/>
+                    </div>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={props.onClose}>Cancel</Button>
+                    <Button onClick={savePokemon} disabled={isLoading}>OK</Button>
+                </DialogActions>
+            </Dialog>
+            <Loading isLoading={isLoading}/>
+        </>
     )
 }
 
