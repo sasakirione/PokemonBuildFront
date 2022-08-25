@@ -43,6 +43,10 @@ a {
     margin-right: 5px;
 }
 
+.logo {
+    margin-right: 15px;
+}
+
 .left_right {
     display: flex;
     justify-content: space-between;
