@@ -62,8 +62,21 @@ a {
     float: right;
 }
 
+.boxItem {
+    width: 100%;
+    justify-content: center;
+}
+
 .boxContainer {
     display: flex;
+}
+
+.mainPage {
+    margin-top: 10%;
+    width: 85%;
+    margin-left: auto;
+    margin-right: auto;
+    justify-content: center;
 }
 
 @media (prefers-color-scheme: dark) {
