@@ -62,6 +62,12 @@ a {
     float: right;
 }
 
+.center {
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
 .boxItem {
     width: 100%;
     justify-content: center;
@@ -72,11 +78,19 @@ a {
 }
 
 .mainPage {
-    margin-top: 10%;
+    margin-top: 5%;
     width: 85%;
     margin-left: auto;
     margin-right: auto;
     justify-content: center;
+}
+
+.footer {
+    color: #ebf6f7;
+    background: #a9ceec;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
 }
 
 @media (prefers-color-scheme: dark) {

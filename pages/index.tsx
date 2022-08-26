@@ -2,11 +2,13 @@ import Card from '@mui/material/Card';
 import type {NextPage} from 'next'
 import {PokeBuildHead} from "../components/atomic/PokeBuildHead";
 import {CardContent, Typography} from "@mui/material";
+import Image from "next/image";
 
 const Home: NextPage = () => {
     return (
         <>
             <PokeBuildHead title="TOP"/>
+            <Image src={"/back1.png"} width="1980px" height="400px" alt="山の上にぽけもんこうちくしえんの文字" layout='responsive'/>
             <div className="boxContainer mainPage">
                 <Card className="boxItem" variant="outlined">
                     <CardContent>
@@ -53,7 +55,12 @@ const Home: NextPage = () => {
                             連絡先等
                         </Typography>
                         <div>
-                            Twitter：sasakirione2
+                            管理人Twitter：@sasakirione2<br/>
+                            Git(Front)：<a
+                            href="https://github.com/sasakirione/PokemonBuildFront">PokemonBuildFront</a><br/>
+                            Git(Back)：<a
+                            href="https://github.com/sasakirione/PokemonBuildBack">PokemonBuildBack</a><br/>
+                            ドキュメント：<a href="https://www.notion.so/9b55f8e9212c42c89be59e61b622b1fa">ぽけっとビルド</a><br/>
                         </div>
                     </CardContent>
                 </Card>

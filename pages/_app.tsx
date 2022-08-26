@@ -2,6 +2,7 @@ import '../styles/globals.css'
 import type {AppProps} from 'next/app'
 import Header from "../components/atomic/Header";
 import {Auth0Provider} from "@auth0/auth0-react";
+import {Footer} from "../components/atomic/Footer";
 
 function MyApp({Component, pageProps}: AppProps) {
     const redirectUrl = process.env.NEXT_PUBLIC_AUTH0_REDIRECT_URL!
@@ -16,6 +17,7 @@ function MyApp({Component, pageProps}: AppProps) {
         >
             <Header/>
             <Component {...pageProps} />
+            <Footer/>
         </Auth0Provider>
     )
 }
