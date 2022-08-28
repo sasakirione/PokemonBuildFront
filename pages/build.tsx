@@ -36,7 +36,7 @@ const BuildPage: NextPage = () => {
 
     useEffect(() => {
         (async () => {
-            if (pokemonList.length == 0) {
+            if (pokemonList.length == 0 && isAuthenticated) {
                 setIsLoading4(true)
                 await getAccessTokenSilently()
                 let test = await getIdTokenClaims()
@@ -51,7 +51,7 @@ const BuildPage: NextPage = () => {
                             setBuildName(data.name)
                         setBuildId(data.id)
                         setPokemonList(data.pokemons.map(pokemon => getPokemonFromGrownPokemonResponse(pokemon)).sort(pokemon => pokemon.personalId))
-                        setIsLoading4(false)
+                            setIsLoading4(false)
                         }
                     ).catch(
                     (reason: any) => {
@@ -61,7 +61,7 @@ const BuildPage: NextPage = () => {
                 )
             }
         })()
-    }, [])
+    }, [isAuthenticated])
 
     useEffect(() => {
         setIsLoading1(true)
