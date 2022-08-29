@@ -43,6 +43,10 @@ a {
     margin-right: 5px;
 }
 
+.logo {
+    margin-right: 15px;
+}
+
 .left_right {
     display: flex;
     justify-content: space-between;
@@ -58,8 +62,35 @@ a {
     float: right;
 }
 
+.center {
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+.boxItem {
+    width: 100%;
+    justify-content: center;
+}
+
 .boxContainer {
     display: flex;
+}
+
+.mainPage {
+    margin-top: 5%;
+    width: 85%;
+    margin-left: auto;
+    margin-right: auto;
+    justify-content: center;
+}
+
+.footer {
+    color: #ebf6f7;
+    background: #a9ceec;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
 }
 
 @media (prefers-color-scheme: dark) {

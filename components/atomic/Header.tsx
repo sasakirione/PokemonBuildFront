@@ -1,5 +1,4 @@
 import {AppBar, Button, Toolbar, Typography} from "@mui/material";
-import FormatListNumberedIcon from '@mui/icons-material/FormatListNumbered';
 import {NextPage} from "next";
 import AuthButton from "../particle/AuthButton";
 
@@ -7,14 +6,14 @@ const Header: NextPage = () => {
     return (
         <AppBar position="static">
             <Toolbar>
-                <FormatListNumberedIcon/>
                 <Typography
                     variant="h6"
                     noWrap
                     component="a"
                     href="/"
+                    className="logo"
                 >
-                    Pokemon Build Management
+                    ぽけっとビルド
                 </Typography>
                 <div className="boxContainer">
                     <Button href="./build" color="inherit">編成</Button>
