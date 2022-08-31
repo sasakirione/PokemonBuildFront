@@ -120,3 +120,18 @@ export type Effort =
     | 236
     | 244
     | 252
+
+export type BuildObject = {
+    id: number,
+    name: string,
+    comment: string
+}
+
+export type RestType = "GET" | "POST"
+
+export type PokemonConst = {
+    goodList: [number, string][],
+    tagList: string[],
+    pokemonList: [number, string][],
+    isLoading: boolean
+}

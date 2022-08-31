@@ -10,18 +10,18 @@ import {
     ListItemButton,
     ListItemText
 } from "@mui/material";
-import React, {useContext, useState} from "react";
+import React, {useState} from "react";
 import {Moves, PokemonNature, PokemonValue} from "../../type/type";
 import {getNatureList} from "../../domain/PokemonData";
 import StatusForm from "./StatusForm";
-import {GoodListContext, MoveListContext} from "../../pages/build";
 import {MoveForm} from "./MoveForm";
 import {useAuth0} from "@auth0/auth0-react";
 import {Loading} from "../particle/Loading";
+import usePokemonConst from "../hook/usePokemonConst";
 
 export function GoodEdit(props: { open: boolean, onClose: () => void, pokemon: Pokemon }) {
     const {getAccessTokenSilently, getIdTokenClaims} = useAuth0()
-    const goodList = useContext(GoodListContext)
+    const {goodList} = usePokemonConst()
     const [isLoading, setIsLoading] = useState(false)
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL!
 
@@ -246,7 +246,7 @@ export function MoveEdit(props: { open: boolean, onClose: () => void, pokemon: P
     const [move3, setMove3] = useState<[number, string]>([0, props.pokemon.moves[2]])
     const [move4, setMove4] = useState<[number, string]>([0, props.pokemon.moves[3]])
     const [isLoading, setIsLoading] = useState(false)
-    const moveList = useContext(MoveListContext)
+    const {moveList} = usePokemonConst()
 
     async function saveMove() {
         const moves: Moves = [move1[1], move2[1], move3[1], move4[1]]

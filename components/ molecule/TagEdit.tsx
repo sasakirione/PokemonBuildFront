@@ -1,5 +1,5 @@
 import Pokemon from "../../domain/Pokemon";
-import React, {useContext, useState} from "react";
+import React, {useState} from "react";
 import {
     Box,
     Button,
@@ -15,16 +15,16 @@ import {
     Select,
     SelectChangeEvent
 } from "@mui/material";
-import {TagListContext} from "../../pages/build";
 import {useAuth0} from "@auth0/auth0-react";
 import {Loading} from "../particle/Loading";
+import usePokemonConst from "../hook/usePokemonConst";
 
 export function TagEdit(props: { open: boolean, onClose: () => void, pokemon: Pokemon }) {
     const {getAccessTokenSilently, getIdTokenClaims} = useAuth0()
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL!
     const [tag, setTag] = useState<string[]>(props.pokemon.tag);
     const [isLoading, setIsLoading] = useState(false)
-    const tagList = useContext(TagListContext)
+    const {tagList} = usePokemonConst()
 
     const handleChange = (event: SelectChangeEvent<typeof tag>) => {
         const {

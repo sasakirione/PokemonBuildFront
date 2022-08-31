@@ -1,6 +1,6 @@
 import {Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle} from "@mui/material";
 import Select from "react-select";
-import React, {useContext, useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {
     GrownPokemon,
     KotlinTupleOfIdAndValue,
@@ -12,13 +12,14 @@ import {
     selectItem2
 } from "../../type/type";
 import StatusForm from "../atomic/StatusForm";
-import {BuildIdContext, MoveListContext} from "../../pages/build";
 import {MoveForm} from "../atomic/MoveForm";
 import Pokemon from "../../domain/Pokemon";
 import PokemonStatus from "../../domain/PokemonStatus";
 import {useAuth0} from "@auth0/auth0-react";
 import {Loading} from "../particle/Loading";
 import {Iv6V, zeroValue} from "../../domain/PokemonData";
+import usePokemonConst from "../hook/usePokemonConst";
+import useBuilds from "../hook/useBuilds";
 
 const NewPokemon = (props: { open: boolean, onClose: () => void, setPokemon: (pokemon: Pokemon) => void }) => {
     const {getAccessTokenSilently, getIdTokenClaims} = useAuth0()
@@ -39,8 +40,8 @@ const NewPokemon = (props: { open: boolean, onClose: () => void, setPokemon: (po
     const [move3, setMove3] = useState<[number, string]>([0, "選択なし"])
     const [move4, setMove4] = useState<[number, string]>([0, "選択なし"])
     const [pokemonId, setPokemonId] = useState<number>(0)
-    const moveList = useContext(MoveListContext)
-    const buildId = useContext(BuildIdContext)
+    const {moveList} = usePokemonConst()
+    const {selectedBuild} = useBuilds()
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL!
     const sum = EvHp + EvAttack + EvDefense + EvSpAttack + EvSpDefense + EvSpeed
     const [pokemonList, setPokemonList] = useState<[number, string][]>([])
@@ -66,7 +67,7 @@ const NewPokemon = (props: { open: boolean, onClose: () => void, setPokemon: (po
                 }
             )
         }
-    }, [])
+    }, [baseUrl, pokemonList])
 
     async function savePokemon() {
         setIsLoading(true)
@@ -120,7 +121,7 @@ const NewPokemon = (props: { open: boolean, onClose: () => void, setPokemon: (po
             personalId: 0,
             tag: []
         }
-        const sendData: PostPokemonData = {buildId: buildId, pokemon: newPokemon2}
+        const sendData: PostPokemonData = {buildId: selectedBuild.id, pokemon: newPokemon2}
         const parameter = {
             headers: {
                 Authorization: 'Bearer ' + test?.__raw!,
