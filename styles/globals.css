@@ -69,8 +69,7 @@ a {
 }
 
 .boxItem {
-    width: 100%;
-    justify-content: center;
+    height: 300px;
 }
 
 .boxContainer {
