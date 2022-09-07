@@ -89,7 +89,7 @@ a {
     color: #ebf6f7;
     background: #a9ceec;
     width: 100%;
-    position: absolute;
+    position: fixed;
     bottom: 0;
 }
 

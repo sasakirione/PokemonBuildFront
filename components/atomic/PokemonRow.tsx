@@ -2,9 +2,13 @@ import {NextPage} from "next";
 import Pokemon from "../../domain/Pokemon";
 import React, {useState} from "react";
 import {Box, Button, Collapse, IconButton, TableCell, TableRow} from "@mui/material";
-import {AbilityEdit, EffortEdit, GoodEdit, MoveEdit, NatureEdit} from "./PokemonEdit";
+import {MoveEdit} from "../ molecule/MoveEdit";
 import {TagEdit} from "../ molecule/TagEdit";
 import DeleteIcon from '@mui/icons-material/Delete';
+import {GoodEdit} from "../ molecule/GoodEdit";
+import {EffortEdit} from "../ molecule/EffortEdit";
+import {AbilityEdit} from "../ molecule/AbilityEdit";
+import {NatureEdit} from "../ molecule/NatureEdit";
 
 interface Props {
     pokemon: Pokemon

@@ -18,8 +18,8 @@ import PokemonStatus from "../../domain/PokemonStatus";
 import {useAuth0} from "@auth0/auth0-react";
 import {Loading} from "../particle/Loading";
 import {Iv6V, zeroValue} from "../../domain/PokemonData";
-import usePokemonConst from "../hook/usePokemonConst";
 import useBuilds from "../hook/useBuilds";
+import {usePokemonConst} from "../hook/PokemonConst";
 
 const NewPokemon = (props: { open: boolean, onClose: () => void, setPokemon: (pokemon: Pokemon) => void }) => {
     const {getAccessTokenSilently, getIdTokenClaims} = useAuth0()
@@ -56,18 +56,16 @@ const NewPokemon = (props: { open: boolean, onClose: () => void, setPokemon: (po
     })
 
     useEffect(() => {
-        if (pokemonList == null || pokemonList.length == 0) {
-            fetch(baseUrl + "/v1/pokemon_data/pokemon_list")
-                .then((res: { json: () => any; }) => res.json())
-                .then((data: KotlinTupleOfIdAndValue[]) => {
-                        setPokemonList(data.map(pokemon => [pokemon.first, pokemon.second]))
-                    }
-                ).catch((reason: any) => {
-                    console.log(reason)
+        fetch(baseUrl + "/v1/pokemon-data/pokemons")
+            .then((res: { json: () => any; }) => res.json())
+            .then((data: KotlinTupleOfIdAndValue[]) => {
+                    setPokemonList(data.map(pokemon => [pokemon.first, pokemon.second]))
                 }
-            )
-        }
-    }, [baseUrl, pokemonList])
+            ).catch((reason: any) => {
+                console.log(reason)
+            }
+        )
+    }, [baseUrl])
 
     async function savePokemon() {
         setIsLoading(true)
@@ -81,17 +79,17 @@ const NewPokemon = (props: { open: boolean, onClose: () => void, setPokemon: (po
         let bv: PokemonValue = {a: 0, b: 0, c: 0, d: 0, h: 0, s: 0}
         let name: string = ""
 
-        abilities = await fetch(baseUrl + "/v1/pokemon_data/" + pokemonId.toString())
+        abilities = await fetch(baseUrl + "/v1/pokemon-data/pokemons/" + pokemonId.toString())
             .then((res: { json: () => any; }) => res.json())
             .then((data: PokemonResponse) => {
-                    name = data.name
-                    bv = {
-                        a: data.base[1],
-                        b: data.base[2],
-                        c: data.base[3],
-                        d: data.base[4],
-                        h: data.base[0],
-                        s: data.base[5]
+                name = data.name
+                bv = {
+                    a: data.base[1],
+                    b: data.base[2],
+                    c: data.base[3],
+                    d: data.base[4],
+                    h: data.base[0],
+                    s: data.base[5]
                     }
                     return data.abilities
                 }
@@ -148,6 +146,7 @@ const NewPokemon = (props: { open: boolean, onClose: () => void, setPokemon: (po
         props.onClose()
         setIsLoading(false)
     }
+
     return (
         <>
             <Dialog

@@ -1,18 +1,25 @@
-import {useEffect, useState} from "react";
-import {KotlinTupleOfIdAndValue, responseGoodList} from "../../type/type";
+import React, {createContext, ReactNode, useContext, useEffect, useState} from "react";
+import {KotlinTupleOfIdAndValue, PokemonConst, responseGoodList} from "../../type/type";
 
-const usePokemonConst = () => {
+const PokemonConstContext = createContext<PokemonConst>({
+    goodList: [[0, "初期表示"]],
+    tagList: ["初期表示"],
+    moveList: [[0, "初期表示"]],
+    isLoadingConst: false
+})
+
+export const PokemonConstProvider = ({children}: { children: ReactNode }) => {
     const [goodList, setGoodList] = useState<[number, string][]>([[0, "なし"]])
     const [tagList, setTagList] = useState<string[]>([""])
     const [moveList, setMoveList] = useState<[number, string][]>([[0, "なし"]])
     const [isLoadingGood, setIsLoadingGood] = useState(false)
     const [isLoadingTag, setIsLoadingTag] = useState(false)
-    const [isLoadingPokemon, setIsLoadingPokemon] = useState(false)
+    const [isLoadingMove, setIsLoadingMove] = useState(false)
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL!
 
     useEffect(() => {
         setIsLoadingGood(true)
-        fetch(baseUrl + "/v1/pokemon_data/get_goods")
+        fetch(baseUrl + "/v1/pokemon-data/goods")
             .then((res: { json: () => any; }) => res.json())
             .then((data: responseGoodList) => {
                     setGoodList(data.goods.map(good => [good.id, good.name]))
@@ -28,7 +35,7 @@ const usePokemonConst = () => {
 
     useEffect(() => {
         setIsLoadingTag(true)
-        fetch(baseUrl + "/v1/pokemon_data/get_tags")
+        fetch(baseUrl + "/v1/pokemon-data/tags")
             .then((res: { json: () => any; }) => res.json())
             .then((data: string[]) => {
                 setTagList(data)
@@ -42,26 +49,36 @@ const usePokemonConst = () => {
     }, [baseUrl])
 
     useEffect(() => {
-        setIsLoadingPokemon(true)
-        fetch(baseUrl + "/v1/pokemon_data/get_moves")
+        setIsLoadingMove(true)
+        fetch(baseUrl + "/v1/pokemon-data/moves")
             .then((res: { json: () => any; }) => res.json())
             .then((data: KotlinTupleOfIdAndValue[]) => {
                 setMoveList(data.map(move => [move.first, move.second]))
-                setIsLoadingPokemon(false)
+                setIsLoadingMove(false)
             }).catch(
             (reason: any) => {
                 console.log(reason)
-                setIsLoadingPokemon(false)
+                setIsLoadingMove(false)
             }
         )
     }, [baseUrl])
 
-    return {
-        goodList: goodList,
-        tagList: tagList,
-        moveList: moveList,
-        isLoadingConst: (isLoadingGood || isLoadingTag || isLoadingPokemon)
-    }
+    return (
+        <PokemonConstContext.Provider value={{
+            goodList: goodList,
+            tagList: tagList,
+            moveList: moveList,
+            isLoadingConst: (isLoadingGood || isLoadingTag || isLoadingMove)
+        }}>
+            {children}
+        </PokemonConstContext.Provider>
+    )
 }
 
-export default usePokemonConst
+export const usePokemonConst = (): PokemonConst => {
+    const pokemonConst = useContext(PokemonConstContext)
+
+    if (pokemonConst == null) throw new Error("PokemonConstProvider でラップしてください。");
+
+    return pokemonConst
+}

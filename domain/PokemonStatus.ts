@@ -15,6 +15,19 @@ class PokemonStatus {
         this.real = this.calculateReal(base, effort, individual, nature)
     }
 
+    public changeEffort(effort: PokemonValue) {
+        this.effort = effort
+        this.real = this.calculateReal(this.base, effort, this.individual, this.nature)
+    }
+
+    public changeNature(up: string, down: string) {
+        let nature: PokemonValue = {a: 1, b: 1, c: 1, d: 1, h: 1, s: 1}
+        let nature2 = this.setUpNature(up, nature)
+        let nature3 = this.setDownNature(down, nature2)
+        this.nature = nature3
+        this.real = this.calculateReal(this.base, this.effort, this.individual, nature3)
+    }
+
     private calculateReal(base: PokemonValue, effort: PokemonValue, individual: PokemonValue, nature: PokemonValue): PokemonValue {
         return {
             h: this.calculateRealH(base.h, effort.h, individual.h),
@@ -33,19 +46,6 @@ class PokemonStatus {
 
     private calculateRealH(base: number, effort: number, individual: number): number {
         return Math.floor((base * 2 + individual + effort / 4) * 0.5 + 60)
-    }
-
-    public changeEffort(effort: PokemonValue) {
-        this.effort = effort
-        this.real = this.calculateReal(this.base, effort, this.individual, this.nature)
-    }
-
-    public changeNature(up: string, down: string) {
-        let nature: PokemonValue = {a: 1, b: 1, c: 1, d: 1, h: 1, s: 1}
-        let nature2 = this.setUpNature(up, nature)
-        let nature3 = this.setDownNature(down, nature2)
-        this.nature = nature3
-        this.real = this.calculateReal(this.base, this.effort, this.individual, nature3)
     }
 
     private setUpNature(up: string, base: PokemonValue): PokemonValue {

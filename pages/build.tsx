@@ -3,27 +3,28 @@ import PokemonList from "../components/ molecule/PokemonList";
 import {HeadLineText} from "../components/particle/Text";
 import {useAuth0} from "@auth0/auth0-react";
 import {Button} from "@mui/material";
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import Pokemon from "../domain/Pokemon";
 import NewPokemon from "../components/ molecule/NewPokemon";
 import {PokeBuildHead} from "../components/atomic/PokeBuildHead";
 import {Loading} from "../components/particle/Loading";
-import useBuildPokemon from "../components/hook/useBuildPokemon";
-import usePokemonConst from "../components/hook/usePokemonConst";
+import {PokemonConstProvider} from "../components/hook/PokemonConst";
 import useBuilds from "../components/hook/useBuilds";
+import {BuildList} from "../components/ molecule/BuildList";
+
 
 const BuildPage: NextPage = () => {
     const {isAuthenticated, isLoading} = useAuth0()
-    const {selectedBuild, setSelectedBuild} = useBuilds()
-    const {currentBuild, pokemonList, setPokemonList, removePokemon, isLoadingPokemon} = useBuildPokemon(selectedBuild)
+    const {
+        builds,
+        selectedBuild,
+        setSelectedBuild,
+        pokemonList,
+        setPokemonList,
+        removePokemon,
+        isLoadingPokemon
+    } = useBuilds()
     const [isOpenNewPokemonScreen, setIsOpenNewPokemonScreen] = useState(false)
-    const {isLoadingConst} = usePokemonConst()
-
-    useEffect(() => {
-        if (selectedBuild.id != currentBuild.id) {
-            setSelectedBuild(currentBuild)
-        }
-    }, [selectedBuild, currentBuild, setSelectedBuild])
 
     const handleClickOpenNewPokemon = () => {
         setIsOpenNewPokemonScreen(true);
@@ -37,7 +38,7 @@ const BuildPage: NextPage = () => {
         setPokemonList([...pokemonList, newPokemon])
     }
 
-    if (isLoading || isLoadingConst || isLoadingPokemon) {
+    if (isLoading || isLoadingPokemon) {
         return (<Loading isLoading={true}/>)
     }
 
@@ -46,17 +47,21 @@ const BuildPage: NextPage = () => {
             ログインが必要です！
         </div>)
     } else {
-        return (<>
+        return (
+            <PokemonConstProvider>
                 <PokeBuildHead title="構築"/>
                 <div className="left_right">
-                    <HeadLineText text={selectedBuild.name}/>
+                    <div className="boxContainer">
+                        <HeadLineText text={selectedBuild.name}/>
+                        <BuildList selectBuild={selectedBuild} setSelectBuild={setSelectedBuild} builds={builds}/>
+                    </div>
                     <Button variant="outlined" color="success"
                             onClick={handleClickOpenNewPokemon}>ポケモンを追加</Button>
                 </div>
                 <PokemonList pokemonList={pokemonList} pokemonListFunc={setPokemonList}
-                             removePokemon={removePokemon}></PokemonList>
-                <NewPokemon open={isOpenNewPokemonScreen} onClose={handleCloseNewPokemon} setPokemon={addPokemon}/>
-            </>
+                             removePokemon={removePokemon}></PokemonList><NewPokemon
+                open={isOpenNewPokemonScreen} onClose={handleCloseNewPokemon} setPokemon={addPokemon}/>
+            </PokemonConstProvider>
         )
     }
 }

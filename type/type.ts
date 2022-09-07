@@ -132,6 +132,6 @@ export type RestType = "GET" | "POST"
 export type PokemonConst = {
     goodList: [number, string][],
     tagList: string[],
-    pokemonList: [number, string][],
-    isLoading: boolean
+    moveList: [number, string][],
+    isLoadingConst: boolean
 }

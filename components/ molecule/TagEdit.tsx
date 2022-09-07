@@ -15,12 +15,12 @@ import {
     Select,
     SelectChangeEvent
 } from "@mui/material";
-import {useAuth0} from "@auth0/auth0-react";
 import {Loading} from "../particle/Loading";
-import usePokemonConst from "../hook/usePokemonConst";
+import {usePokemonConst} from "../hook/PokemonConst";
+import useToken from "../hook/useToken";
 
 export function TagEdit(props: { open: boolean, onClose: () => void, pokemon: Pokemon }) {
-    const {getAccessTokenSilently, getIdTokenClaims} = useAuth0()
+    const {token} = useToken()
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL!
     const [tag, setTag] = useState<string[]>(props.pokemon.tag);
     const [isLoading, setIsLoading] = useState(false)
@@ -54,17 +54,15 @@ export function TagEdit(props: { open: boolean, onClose: () => void, pokemon: Po
 
     async function sendData(tags: string[]) {
         setIsLoading(true)
-        await getAccessTokenSilently()
-        let token = await getIdTokenClaims()
         const parameter = {
             headers: {
-                Authorization: 'Bearer ' + token?.__raw!,
+                Authorization: 'Bearer ' + token,
                 "Content-Type": 'application/json'
             },
-            method: "POST",
-            body: JSON.stringify({tags: tags, pokemonId: props.pokemon.personalId})
+            method: "PUT",
+            body: JSON.stringify({values: tags, itemSelect: 6})
         }
-        await fetch(baseUrl + "/v1/pokemon_build/post_tag", parameter)
+        await fetch(baseUrl + "/v1/pokemon-build/grown-pokemons/" + props.pokemon.personalId + "/value", parameter)
         setIsLoading(false)
     }
 
@@ -80,28 +78,28 @@ export function TagEdit(props: { open: boolean, onClose: () => void, pokemon: Po
                     <InputLabel id="demo-multiple-chip-label">タグ</InputLabel>
                     <Select
                         labelId="demo-multiple-chip-label"
-                    id="demo-multiple-chip"
-                    multiple
-                    value={tag}
-                    onChange={handleChange}
-                    input={<OutlinedInput id="select-multiple-chip" label="Chip"/>}
-                    renderValue={(selected) => (
-                        <Box sx={{display: 'flex', flexWrap: 'wrap', gap: 0.5}}>
-                            {selected.map((value) => (
-                                <Chip key={value} label={value}/>
-                            ))}
-                        </Box>
-                    )}
-                    MenuProps={MenuProps}
-                >
-                    {tagList?.map((tag) => (
-                        <MenuItem
-                            key={tag}
-                            value={tag}
-                        >
-                            {tag}
-                        </MenuItem>
-                    ))}
+                        id="demo-multiple-chip"
+                        multiple
+                        value={tag}
+                        onChange={handleChange}
+                        input={<OutlinedInput id="select-multiple-chip" label="Chip"/>}
+                        renderValue={(selected) => (
+                            <Box sx={{display: 'flex', flexWrap: 'wrap', gap: 0.5}}>
+                                {selected.map((value) => (
+                                    <Chip key={value} label={value}/>
+                                ))}
+                            </Box>
+                        )}
+                        MenuProps={MenuProps}
+                    >
+                        {tagList?.map((tag) => (
+                            <MenuItem
+                                key={tag}
+                                value={tag}
+                            >
+                                {tag}
+                            </MenuItem>
+                        ))}
                     </Select>
                 </FormControl>
             </DialogContent>
