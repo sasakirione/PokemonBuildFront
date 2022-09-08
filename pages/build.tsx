@@ -59,8 +59,10 @@ const BuildPage: NextPage = () => {
                             onClick={handleClickOpenNewPokemon}>ポケモンを追加</Button>
                 </div>
                 <PokemonList pokemonList={pokemonList} pokemonListFunc={setPokemonList}
-                             removePokemon={removePokemon}></PokemonList><NewPokemon
-                open={isOpenNewPokemonScreen} onClose={handleCloseNewPokemon} setPokemon={addPokemon}/>
+                             removePokemon={removePokemon}></PokemonList>
+                <NewPokemon
+                    open={isOpenNewPokemonScreen} onClose={handleCloseNewPokemon} setPokemon={addPokemon} isBuild={true}
+                    buildId={selectedBuild.id}/>
             </PokemonConstProvider>
         )
     }

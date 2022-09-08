@@ -15,14 +15,13 @@ import StatusForm from "../atomic/StatusForm";
 import {MoveForm} from "../atomic/MoveForm";
 import Pokemon from "../../domain/Pokemon";
 import PokemonStatus from "../../domain/PokemonStatus";
-import {useAuth0} from "@auth0/auth0-react";
 import {Loading} from "../particle/Loading";
 import {Iv6V, zeroValue} from "../../domain/PokemonData";
-import useBuilds from "../hook/useBuilds";
 import {usePokemonConst} from "../hook/PokemonConst";
+import useToken from "../hook/useToken";
 
-const NewPokemon = (props: { open: boolean, onClose: () => void, setPokemon: (pokemon: Pokemon) => void }) => {
-    const {getAccessTokenSilently, getIdTokenClaims} = useAuth0()
+const NewPokemon = (props: { open: boolean, onClose: () => void, setPokemon: (pokemon: Pokemon) => void, isBuild: boolean, buildId: number }) => {
+    const {token} = useToken()
     const [IvHp, setIvHp] = useState<number>(31)
     const [IvAttack, setIvAttack] = useState<number>(31)
     const [IvDefense, setIvDefense] = useState<number>(31)
@@ -41,7 +40,6 @@ const NewPokemon = (props: { open: boolean, onClose: () => void, setPokemon: (po
     const [move4, setMove4] = useState<[number, string]>([0, "選択なし"])
     const [pokemonId, setPokemonId] = useState<number>(0)
     const {moveList} = usePokemonConst()
-    const {selectedBuild} = useBuilds()
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL!
     const sum = EvHp + EvAttack + EvDefense + EvSpAttack + EvSpDefense + EvSpeed
     const [pokemonList, setPokemonList] = useState<[number, string][]>([])
@@ -103,8 +101,6 @@ const NewPokemon = (props: { open: boolean, onClose: () => void, setPokemon: (po
             return
         }
         ability = abilities[0]
-        await getAccessTokenSilently()
-        let test = await getIdTokenClaims()
         const newPokemon2: GrownPokemon = {
             ability: ability,
             abilityList: [],
@@ -119,16 +115,20 @@ const NewPokemon = (props: { open: boolean, onClose: () => void, setPokemon: (po
             personalId: 0,
             tag: []
         }
-        const sendData: PostPokemonData = {buildId: selectedBuild.id, pokemon: newPokemon2}
+        const sendData: PostPokemonData | GrownPokemon = props.isBuild ? {
+            buildId: props.buildId,
+            pokemon: newPokemon2
+        } : newPokemon2
         const parameter = {
             headers: {
-                Authorization: 'Bearer ' + test?.__raw!,
+                Authorization: 'Bearer ' + token,
                 "Content-Type": 'application/json'
             },
             method: "POST",
             body: JSON.stringify(sendData)
         }
-        let personalId = await fetch(baseUrl + "/v1/pokemon_build/post_pokemon", parameter).then(
+        const apiUrl = props.isBuild ? baseUrl + "/v1/pokemon-build/builds/" + props.buildId + "/pokemon" : baseUrl + "/v1/pokemon-build/grown-pokemons"
+        let personalId = await fetch(apiUrl, parameter).then(
             (res: { json: () => any; }) => res.json()).then((data: { pokemonId: number }) =>
             data.pokemonId
         )

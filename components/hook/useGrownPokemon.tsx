@@ -8,10 +8,11 @@ export const useGrownPokemon = () => {
     const {isAuthenticated, token} = useToken()
     const [isLoadingPokemonList, setIsLoadingPokemonList] = useState(false)
     const [pokemonList, setPokemonList] = useState<Pokemon[]>([])
+    const [canReload, setCanReload] = useState(true)
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL!
 
     useEffect(() => {
-        if (isAuthenticated && token != "" && pokemonList.length < 1) {
+        if (isAuthenticated && token != "" && canReload) {
             setIsLoadingPokemonList(true)
             const parameter = {
                 headers: {
@@ -23,6 +24,7 @@ export const useGrownPokemon = () => {
                 .then((data: GrownPokemon[]) => {
                     setPokemonList(data.map(pokemon => getPokemonFromGrownPokemonResponse(pokemon)))
                     setIsLoadingPokemonList(false)
+                    setCanReload(false)
                 })
                 .catch((reason: any) => {
                         console.log(reason)
@@ -31,7 +33,11 @@ export const useGrownPokemon = () => {
                 )
         }
 
-    }, [baseUrl, isAuthenticated, pokemonList.length, token])
+    }, [baseUrl, canReload, isAuthenticated, token])
 
-    return {isLoadingPokemonList, pokemonList}
+    function reloadPokemon() {
+        setCanReload(true)
+    }
+
+    return {isLoadingPokemonList, pokemonList, reloadPokemon}
 }

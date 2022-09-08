@@ -61,7 +61,7 @@ const grownPokemonTable = (props: { pokemons: Pokemon[] }) => {
     return (
         <>
             <MUIDataTable
-                title={"ポケモン一覧"}
+                title={"育成済みポケモン一覧"}
                 data={props.pokemons}
                 columns={columns}
             />
