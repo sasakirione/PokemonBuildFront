@@ -24,14 +24,14 @@ const grownPokemonTable = (props: { pokemons: Pokemon[] }) => {
                 sort: true,
             }
         },
-        // {
-        //   name: "effortText",
-        //   label: "努力値",
-        //   options: {
-        //     filter: true,
-        //     sort: false,
-        //   }
-        // },
+        {
+            name: "effortText",
+            label: "努力値",
+            options: {
+                filter: true,
+                sort: false,
+            }
+        },
         {
             name: "good",
             label: "道具",
