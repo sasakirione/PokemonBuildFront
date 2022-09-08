@@ -38,7 +38,7 @@ const BuildPage: NextPage = () => {
         setPokemonList([...pokemonList, newPokemon])
     }
 
-    if (isLoading || isLoadingPokemon) {
+    if (isLoading || isLoadingPokemon || selectedBuild.id == 0) {
         return (<Loading isLoading={true}/>)
     }
 
