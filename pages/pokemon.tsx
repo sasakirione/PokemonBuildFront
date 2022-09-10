@@ -47,6 +47,7 @@ const PokemonPage: NextPage = () => {
                 {pokemonList.length > 0 &&
                     <GrownPokemonTable pokemons={pokemonList}/>
                 }
+                <br/>
             </PokemonConstProvider>
         )
     }

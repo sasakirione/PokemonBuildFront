@@ -1,5 +1,5 @@
 import Pokemon from "../../domain/Pokemon";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {
     Box,
     Button,
@@ -25,6 +25,11 @@ export function TagEdit(props: { open: boolean, onClose: () => void, pokemon: Po
     const [tag, setTag] = useState<string[]>(props.pokemon.tag);
     const [isLoading, setIsLoading] = useState(false)
     const {tagList} = usePokemonConst()
+
+    useEffect(() => {
+            setTag(props.pokemon.tag)
+        }, [props.pokemon.tag]
+    )
 
     const handleChange = (event: SelectChangeEvent<typeof tag>) => {
         const {
