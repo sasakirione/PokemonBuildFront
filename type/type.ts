@@ -133,5 +133,8 @@ export type PokemonConst = {
     goodList: [number, string][],
     tagList: string[],
     moveList: [number, string][],
-    isLoadingConst: boolean
+    isLoadingConst: boolean,
+    setToast: (message: string, type: ToastType) => void
 }
+
+export type ToastType = "error" | "warning" | "normal"

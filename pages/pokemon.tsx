@@ -8,7 +8,6 @@ import {Loading} from "../components/particle/Loading";
 import GrownPokemonTable from "../components/ molecule/GrownPokemonTable";
 import NewPokemon from "../components/ molecule/NewPokemon";
 import {Button} from "@mui/material";
-import {PokemonConstProvider} from "../components/hook/PokemonConst";
 
 const PokemonPage: NextPage = () => {
     const {isAuthenticated, isLoading} = useAuth0()
@@ -33,7 +32,7 @@ const PokemonPage: NextPage = () => {
         </div>)
     } else {
         return (
-            <PokemonConstProvider>
+            <>
                 <PokeBuildHead title="育成済みポケモン一覧"/>
                 <div className="left_right">
                     <div className="boxContainer">
@@ -48,7 +47,7 @@ const PokemonPage: NextPage = () => {
                     <GrownPokemonTable pokemons={pokemonList}/>
                 }
                 <br/>
-            </PokemonConstProvider>
+            </>
         )
     }
 }

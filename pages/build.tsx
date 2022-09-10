@@ -8,7 +8,6 @@ import Pokemon from "../domain/Pokemon";
 import NewPokemon from "../components/ molecule/NewPokemon";
 import {PokeBuildHead} from "../components/atomic/PokeBuildHead";
 import {Loading} from "../components/particle/Loading";
-import {PokemonConstProvider} from "../components/hook/PokemonConst";
 import useBuilds from "../components/hook/useBuilds";
 import {BuildList} from "../components/ molecule/BuildList";
 
@@ -48,7 +47,7 @@ const BuildPage: NextPage = () => {
         </div>)
     } else {
         return (
-            <PokemonConstProvider>
+            <>
                 <PokeBuildHead title="構築"/>
                 <div className="left_right">
                     <div className="boxContainer">
@@ -63,7 +62,7 @@ const BuildPage: NextPage = () => {
                 <NewPokemon
                     open={isOpenNewPokemonScreen} onClose={handleCloseNewPokemon} setPokemon={addPokemon} isBuild={true}
                     buildId={selectedBuild.id}/>
-            </PokemonConstProvider>
+            </>
         )
     }
 }

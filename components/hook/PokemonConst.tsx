@@ -1,11 +1,21 @@
 import React, {createContext, ReactNode, useContext, useEffect, useState} from "react";
-import {KotlinTupleOfIdAndValue, PokemonConst, responseGoodList} from "../../type/type";
+import {KotlinTupleOfIdAndValue, PokemonConst, responseGoodList, ToastType} from "../../type/type";
+import toast from "react-hot-toast";
+
+const setToast = (message: string, type: ToastType) => {
+    if (type == "error") {
+        toast.error(message)
+    } else {
+        toast(message)
+    }
+}
 
 const PokemonConstContext = createContext<PokemonConst>({
     goodList: [[0, "初期表示"]],
     tagList: ["初期表示"],
     moveList: [[0, "初期表示"]],
-    isLoadingConst: false
+    isLoadingConst: false,
+    setToast: setToast
 })
 
 export const PokemonConstProvider = ({children}: { children: ReactNode }) => {
@@ -68,7 +78,8 @@ export const PokemonConstProvider = ({children}: { children: ReactNode }) => {
             goodList: goodList,
             tagList: tagList,
             moveList: moveList,
-            isLoadingConst: (isLoadingGood || isLoadingTag || isLoadingMove)
+            isLoadingConst: (isLoadingGood || isLoadingTag || isLoadingMove),
+            setToast: setToast
         }}>
             {children}
         </PokemonConstContext.Provider>

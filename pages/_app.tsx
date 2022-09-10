@@ -3,6 +3,8 @@ import type {AppProps} from 'next/app'
 import Header from "../components/atomic/Header";
 import {Auth0Provider} from "@auth0/auth0-react";
 import {Footer} from "../components/atomic/Footer";
+import {PokemonConstProvider} from "../components/hook/PokemonConst";
+import {Toaster} from "react-hot-toast";
 
 function MyApp({Component, pageProps}: AppProps) {
     const redirectUrl = process.env.NEXT_PUBLIC_AUTH0_REDIRECT_URL!
@@ -15,9 +17,12 @@ function MyApp({Component, pageProps}: AppProps) {
             clientId={clientId}
             redirectUri={redirectUrl}
         >
-            <Header/>
-            <Component {...pageProps} />
-            <Footer/>
+            <PokemonConstProvider>
+                <Header/>
+                <Component {...pageProps} />
+                <Footer/>
+                <Toaster/>
+            </PokemonConstProvider>
         </Auth0Provider>
     )
 }
