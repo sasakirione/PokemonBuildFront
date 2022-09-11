@@ -7,6 +7,7 @@ import {EffortEdit} from "./EffortEdit";
 import {GoodEdit} from "./GoodEdit";
 import {AbilityEdit} from "./AbilityEdit";
 import {NatureEdit} from "./NatureEdit";
+import {GrownPokemonTableSelectMenu} from "../atomic/GrownPokemonTableSelectMenu";
 
 const GrownPokemonTable = (props: { pokemons: Pokemon[] }) => {
     const [isOpenTagEdit, setIsOpenTagEdit] = useState(false)
@@ -171,12 +172,21 @@ const GrownPokemonTable = (props: { pokemons: Pokemon[] }) => {
         },
     ]
 
+    const options = {
+        sortOrder: {name: "personalId" as any, direction: "asc" as any},
+        customToolbarSelect: (selectedRow: any, displayData: any) =>
+            (
+                <GrownPokemonTableSelectMenu displayData={displayData} selectedRows={selectedRow}/>
+            )
+    }
+
     return (
         <>
             <MUIDataTable
                 title={""}
                 data={props.pokemons}
                 columns={columns}
+                options={options}
             />
             {selectedPokemon != undefined &&
                 <div>
