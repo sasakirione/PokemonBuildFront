@@ -51,6 +51,7 @@ export const BuildEdit = (props: {
                     props.builds.push(newBuild)
                     props.setSelectBuild(newBuild)
                     setToast("構築の新規追加が完了しました！", "normal")
+                props.onClose()
                 }
             )
             .catch((reason: any) => {
@@ -71,7 +72,8 @@ export const BuildEdit = (props: {
         await fetch(apiUrl, parameter)
             .then(() => {
                     props.setSelectBuild(newBuild)
-                    setToast("構築の編集が完了しました！", "normal")
+                setToast("構築の編集が完了しました！", "normal")
+                props.onClose()
                 }
             )
             .catch((reason: any) => {
