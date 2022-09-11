@@ -5,6 +5,7 @@ import {useEffect, useState} from "react";
 import {DeleteDialog} from "./DeleteDialog";
 import useToken from "../hook/useToken";
 import {usePokemonConst} from "../hook/PokemonConst";
+import {BuildListOfAddPokemon} from "../molecule/BuildListOfAddPokemon";
 
 export const GrownPokemonTableSelectMenu = (props: { selectedRows: any, displayData: any }) => {
     const [idList, setIdList] = useState<number[]>([])
@@ -36,6 +37,10 @@ export const GrownPokemonTableSelectMenu = (props: { selectedRows: any, displayD
 
     const closeDeleteDialog = () => {
         setIsOpenDelete(false)
+    }
+
+    const closeAddBuild = () => {
+        setIsOpenBuild(false)
     }
 
     const deletePokemons = async () => {
@@ -76,6 +81,7 @@ export const GrownPokemonTableSelectMenu = (props: { selectedRows: any, displayD
             </div>
             <DeleteDialog target={"育成済みポケモン"} isOpen={isOpenDelete} onClose={closeDeleteDialog}
                           deleteFunction={deletePokemons}/>
+            <BuildListOfAddPokemon isOpen={isOpenBuild} onClose={closeAddBuild} idList={idList}/>
         </>
     )
 }
