@@ -5,9 +5,9 @@ import React, {useState} from "react";
 import {HeadLineText} from "../components/particle/Text";
 import {useGrownPokemon} from "../components/hook/useGrownPokemon";
 import {Loading} from "../components/particle/Loading";
-import GrownPokemonTable from "../components/ molecule/GrownPokemonTable";
-import NewPokemon from "../components/ molecule/NewPokemon";
 import {Button} from "@mui/material";
+import NewPokemon from "../components/molecule/NewPokemon";
+import GrownPokemonTable from "../components/molecule/GrownPokemonTable";
 
 const PokemonPage: NextPage = () => {
     const {isAuthenticated, isLoading} = useAuth0()

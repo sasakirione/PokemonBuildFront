@@ -1,15 +1,15 @@
 import {NextPage} from "next";
-import PokemonList from "../components/ molecule/PokemonList";
 import {HeadLineText} from "../components/particle/Text";
 import {useAuth0} from "@auth0/auth0-react";
 import {Button} from "@mui/material";
 import React, {useState} from "react";
 import Pokemon from "../domain/Pokemon";
-import NewPokemon from "../components/ molecule/NewPokemon";
 import {PokeBuildHead} from "../components/atomic/PokeBuildHead";
 import {Loading} from "../components/particle/Loading";
 import useBuilds from "../components/hook/useBuilds";
-import {BuildList} from "../components/ molecule/BuildList";
+import {BuildList} from "../components/molecule/BuildList";
+import NewPokemon from "../components/molecule/NewPokemon";
+import PokemonList from "../components/molecule/PokemonList";
 
 
 const BuildPage: NextPage = () => {

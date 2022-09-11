@@ -80,14 +80,14 @@ const NewPokemon = (props: { open: boolean, onClose: () => void, setPokemon: (po
         abilities = await fetch(baseUrl + "/v1/pokemon-data/pokemons/" + pokemonId.toString())
             .then((res: { json: () => any; }) => res.json())
             .then((data: PokemonResponse) => {
-                name = data.name
-                bv = {
-                    a: data.base[1],
-                    b: data.base[2],
-                    c: data.base[3],
-                    d: data.base[4],
-                    h: data.base[0],
-                    s: data.base[5]
+                    name = data.name
+                    bv = {
+                        a: data.base[1],
+                        b: data.base[2],
+                        c: data.base[3],
+                        d: data.base[4],
+                        h: data.base[0],
+                        s: data.base[5]
                     }
                     return data.abilities
                 }
