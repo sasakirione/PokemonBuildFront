@@ -117,12 +117,13 @@ const PokemonList: NextPage<Props> = (props: Props) => {
                     </Collapse>
                 </TableCell>
             </TableRow>
-            <GoodEdit open={openGoodEdit} onClose={handleCloseGoodEdit} pokemon={pokemon}/>
-            <EffortEdit open={openEffortEdit} onClose={handleCloseEffortEdit} pokemon={pokemon}/>
-            <AbilityEdit open={openAbilityEdit} onClose={handleCloseAbilityEdit} pokemon={pokemon}/>
-            <NatureEdit open={openNatureEdit} onClose={handleCloseNatureEdit} pokemon={pokemon}/>
-            <TagEdit open={openTagEdit} onClose={handleCloseTagEdit} pokemon={pokemon}/>
-            <MoveEdit open={openMoveEdit} onClose={handleCloseMoveEdit} pokemon={pokemon}/>
+            {openGoodEdit && <GoodEdit open={openGoodEdit} onClose={handleCloseGoodEdit} pokemon={pokemon}/>}
+            {openEffortEdit && <EffortEdit open={openEffortEdit} onClose={handleCloseEffortEdit} pokemon={pokemon}/>}
+            {openAbilityEdit &&
+                <AbilityEdit open={openAbilityEdit} onClose={handleCloseAbilityEdit} pokemon={pokemon}/>}
+            {openNatureEdit && <NatureEdit open={openNatureEdit} onClose={handleCloseNatureEdit} pokemon={pokemon}/>}
+            {openTagEdit && <TagEdit open={openTagEdit} onClose={handleCloseTagEdit} pokemon={pokemon}/>}
+            {openMoveEdit && <MoveEdit open={openMoveEdit} onClose={handleCloseMoveEdit} pokemon={pokemon}/>}
         </React.Fragment>
     )
 }

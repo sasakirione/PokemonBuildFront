@@ -78,7 +78,7 @@ export function EffortEdit(props: { open: boolean, onClose: () => void, pokemon:
             keepMounted
             onClose={props.onClose}
         >
-            <DialogTitle>努力値を変更する</DialogTitle>
+            <DialogTitle>{props.pokemon.name}の努力値を変更する</DialogTitle>
             <DialogContent>
                 <TabContext value={tabIndex}>
                     <Box sx={{borderBottom: 1, borderColor: 'divider'}}>
