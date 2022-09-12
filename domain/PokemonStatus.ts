@@ -28,6 +28,23 @@ class PokemonStatus {
         this.real = this.calculateReal(this.base, this.effort, this.individual, nature3)
     }
 
+    public calculationRealSpeed(effortOfSpeed: number): number {
+        return this.calculateRealWithoutH(this.base.s, effortOfSpeed, this.individual.s, this.nature.s)
+    }
+
+    public calculationNoItemSpeed(real: number): [number, number, number] {
+        const latestSpeed = Math.floor((real / 0.9) - 5) + 2
+        const semiSpeed = real - 52
+        const fastSpeed = Math.floor((real / 1.1) - 52)
+        return [latestSpeed, semiSpeed, fastSpeed]
+    }
+
+    calculationScarfSpeed(real: number): [number, number] {
+        const semiSpeed = Math.floor((real - 52) / 1.5)
+        const fastSpeed = Math.floor(((real / 1.1) - 52) / 1.5)
+        return [semiSpeed, fastSpeed]
+    }
+
     private calculateReal(base: PokemonValue, effort: PokemonValue, individual: PokemonValue, nature: PokemonValue): PokemonValue {
         return {
             h: this.calculateRealH(base.h, effort.h, individual.h),
@@ -95,6 +112,7 @@ class PokemonStatus {
         }
         return nature
     }
+
 
 }
 

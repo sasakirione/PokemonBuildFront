@@ -138,3 +138,16 @@ export type PokemonConst = {
 }
 
 export type ToastType = "error" | "warning" | "normal"
+
+export type SpeedComparison = {
+    realSpeed: number,
+    noItem: {
+        latestSpeed: number,
+        semiSpeed: number,
+        fastSpeed: number
+    }
+    scarf: {
+        semiSpeed: number,
+        fastSpeed: number
+    }
+}

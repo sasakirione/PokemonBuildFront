@@ -1,6 +1,6 @@
 import {fieldType, PokemonValue, StatusType} from "../../type/type";
 import {StatusValueField} from "../particle/Field";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import EffortPresetButtons from "./EffortPresetButtons";
 import IndividualPresetButton from "./IndividualPresetButton";
 
@@ -12,11 +12,16 @@ function StatusForm(props: {
     setSpAttack: (c: number) => void,
     setSpDefense: (d: number) => void,
     setSpeed: (s: number) => void,
+    speed: number,
     sum: number, statusType: StatusType
 }) {
     const [value, setValue] = useState<PokemonValue>(props.defaultValues)
 
     let max = props.statusType == "EV" ? 252 : 31
+
+    useEffect(() => {
+        value.s = props.speed
+    }, [props.speed, value])
 
     function setHpHandler(e: fieldType) {
         props.setHp(Number(e.target.value))

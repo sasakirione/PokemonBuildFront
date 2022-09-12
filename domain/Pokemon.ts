@@ -1,5 +1,5 @@
 import PokemonStatus from "./PokemonStatus";
-import {Moves, PokemonNature} from "../type/type";
+import {Moves, PokemonNature, SpeedComparison} from "../type/type";
 
 class Pokemon {
     name: string
@@ -44,6 +44,17 @@ class Pokemon {
             return Math.floor(baseSpeed * 1.5)
         }
         return baseSpeed
+    }
+
+    getSpeedComparison(effort: number): SpeedComparison {
+        const real = this.status.calculationRealSpeed(effort)
+        const noItem = this.status.calculationNoItemSpeed(real)
+        const scarf = this.status.calculationScarfSpeed(real)
+        return {
+            noItem: {fastSpeed: noItem[2], latestSpeed: noItem[0], semiSpeed: noItem[1]},
+            realSpeed: real,
+            scarf: {fastSpeed: scarf[1], semiSpeed: scarf[0]}
+        }
     }
 }
 
