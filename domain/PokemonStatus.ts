@@ -40,8 +40,8 @@ class PokemonStatus {
     }
 
     calculationScarfSpeed(real: number): [number, number] {
-        const semiSpeed = Math.floor((real - 52) / 1.5)
-        const fastSpeed = Math.floor(((real / 1.1) - 52) / 1.5)
+        const semiSpeed = Math.floor((real / 1.5) - 52)
+        const fastSpeed = Math.floor((real / (1.5 * 1.1)) - 52)
         return [semiSpeed, fastSpeed]
     }
 
