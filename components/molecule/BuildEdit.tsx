@@ -5,11 +5,12 @@ import useToken from "../hook/useToken";
 import {usePokemonConst} from "../hook/PokemonConst";
 
 export const BuildEdit = (props: {
-    selectBuild: BuildObject,
+    selectBuild: BuildObject
     setSelectBuild: React.Dispatch<React.SetStateAction<BuildObject>>
-    builds: BuildObject[],
+    editBuilds: (build: BuildObject) => void
+    builds: BuildObject[]
     isOpen: boolean
-    onClose: () => void,
+    onClose: () => void
     isNew: boolean
 }) => {
     const {token} = useToken()
@@ -47,9 +48,9 @@ export const BuildEdit = (props: {
             .then(
                 (res: { json: () => any; }) => res.json())
             .then((data: number) => {
-                    newBuild.id = data
-                    props.builds.push(newBuild)
-                    props.setSelectBuild(newBuild)
+                newBuild.id = data
+                props.editBuilds(newBuild)
+                props.setSelectBuild(newBuild)
                     setToast("構築の新規追加が完了しました！", "normal")
                 props.onClose()
                 }

@@ -1,5 +1,5 @@
 import {Button, Dialog, DialogActions, DialogContent, DialogTitle, List} from "@mui/material";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {BuildObject} from "../../type/type";
 import {BuildRow} from "../atomic/BuildRow";
 import {usePokemonConst} from "../hook/PokemonConst";
@@ -9,17 +9,23 @@ import {BuildEdit} from "./BuildEdit";
 export const BuildList = (
     props: {
         selectBuild: BuildObject,
-        setSelectBuild: React.Dispatch<React.SetStateAction<BuildObject>>
+        setSelectBuild: React.Dispatch<React.SetStateAction<BuildObject>>,
+        setBuilds: React.Dispatch<React.SetStateAction<BuildObject[]>>,
         builds: BuildObject[]
     }
 ) => {
     const [isOpen, setIsOpen] = useState(false)
-    let {builds} = props
+    const [builds, setBuilds] = useState<BuildObject[]>(props.builds)
     const [isOpenEdit, setIsOpenEdit] = useState(false)
     const [isEditNew, setIsEditNew] = useState(true)
     const {setToast} = usePokemonConst()
     const {token} = useToken()
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL!
+
+    useEffect(() => {
+            setBuilds(props.builds)
+        }, [props.builds]
+    )
 
     const onClose = () => setIsOpen(false)
     const onOpen = () => setIsOpen(true)
@@ -43,8 +49,13 @@ export const BuildList = (
         setIsOpenEdit(false)
     }
 
+    const editBuilds = (build: BuildObject) => {
+        setBuilds([...builds, build])
+        props.setBuilds([...builds, build])
+    }
+
     const clickDelete = async () => {
-        if (props.builds.length == 1) {
+        if (builds.length == 1) {
             setToast("構築が1つの場合は削除することができません！", "error")
             return
         } else {
@@ -59,7 +70,9 @@ export const BuildList = (
                 .then((res: any) => {
                         setToast("構築「" + props.selectBuild.name + "」の削除成功しました。", "normal")
                         const id = props.selectBuild.id
-                        builds = builds.filter(build => build.id == id)
+                        const newBuilds = builds.filter(build => build.id != id)
+                        setBuilds(newBuilds)
+                        props.setBuilds(newBuilds)
                         props.setSelectBuild(builds[0])
                         return res
                     }
@@ -83,7 +96,7 @@ export const BuildList = (
                     <Button variant="outlined" color="primary" onClick={clickDelete}>現在の構築を削除する</Button>
                     <Button variant="outlined" color="primary" onClick={clickNew}>新規構築を追加する</Button>
                     <List>
-                        {props.builds.map(build =>
+                        {builds.map(build =>
                             <BuildRow key={build.id} build={build} onClick={clickBuild}/>
                         )}
                     </List>
@@ -93,7 +106,7 @@ export const BuildList = (
                 </DialogActions>
             </Dialog>
             <BuildEdit selectBuild={props.selectBuild} setSelectBuild={props.setSelectBuild} builds={builds}
-                       isOpen={isOpenEdit} onClose={closeEdit} isNew={isEditNew}/>
+                       isOpen={isOpenEdit} onClose={closeEdit} isNew={isEditNew} editBuilds={editBuilds}/>
             <Button hidden={isOpen} onClick={onOpen}>構築選択</Button>
         </>
     )

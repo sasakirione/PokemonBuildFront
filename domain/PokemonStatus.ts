@@ -33,15 +33,15 @@ class PokemonStatus {
     }
 
     public calculationNoItemSpeed(real: number): [number, number, number] {
-        const latestSpeed = Math.floor((real / 0.9) - 5) + 2
-        const semiSpeed = real - 52
-        const fastSpeed = Math.floor((real / 1.1) - 52)
+        const latestSpeed = Math.floor((real + 1 / 0.9) - 5)
+        const semiSpeed = real - 53
+        const fastSpeed = Math.floor((real - 1 / 1.1) - 52)
         return [latestSpeed, semiSpeed, fastSpeed]
     }
 
     calculationScarfSpeed(real: number): [number, number] {
-        const semiSpeed = Math.floor((real / 1.5) - 52)
-        const fastSpeed = Math.floor((real / (1.5 * 1.1)) - 52)
+        const semiSpeed = Math.floor((real - 1 / 1.5) - 52)
+        const fastSpeed = Math.floor((real - 1 / (1.5 * 1.1)) - 52)
         return [semiSpeed, fastSpeed]
     }
 
