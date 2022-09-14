@@ -1,4 +1,5 @@
 import {PokemonValue} from "../type/type";
+import Decimal from "decimal.js";
 
 class PokemonStatus {
     real: PokemonValue
@@ -33,10 +34,27 @@ class PokemonStatus {
     }
 
     public calculationNoItemSpeed(real: number): [number, number, number] {
+        const realDecimal = new Decimal(real)
         const latestSpeed = Math.floor((real + 1 / 0.9) - 5)
         const semiSpeed = real - 53
-        const fastSpeed = Math.floor((real - 1 / 1.1) - 52)
-        return [latestSpeed, semiSpeed, fastSpeed]
+        const fastSpeedSuggest = realDecimal.dividedBy(1.1).round().toNumber() - 53
+        return [latestSpeed, semiSpeed, this.calculationFastSpeedOfSuggest(real, fastSpeedSuggest)]
+    }
+
+    private calculationFastSpeedOfSuggest(real: number, suggest: number): number {
+        const suggestHigh = this.calculateRealWithoutH(suggest + 1, 252, 31, 1.1)
+        const suggestMiddle = this.calculateRealWithoutH(suggest, 252, 31, 1.1)
+        const suggestLow = this.calculateRealWithoutH(suggest - 1, 252, 31, 1.1)
+
+        if (suggestHigh < real) {
+            return suggest + 1
+        } else if (suggestMiddle < real) {
+            return suggest
+        } else if (suggestLow < real) {
+            return suggest - 1
+        } else {
+            return suggest - 2
+        }
     }
 
     calculationScarfSpeed(real: number): [number, number] {
@@ -57,8 +75,12 @@ class PokemonStatus {
     }
 
     private calculateRealWithoutH(base: number, effort: number, individual: number, nature: number): number {
-        return Math.floor(((base * 2 + individual + effort / 4) * 0.5 + 5) * nature)
-
+        const effortDecimal = new Decimal(effort)
+        const individualDecimal = new Decimal(individual)
+        const baseDecimal = new Decimal(base)
+        const natureDecimal = new Decimal(nature)
+        return baseDecimal.times(2).plus(individualDecimal).plus(effortDecimal.dividedBy(4)).dividedBy(2).floor().plus(5).times(natureDecimal).floor().toNumber()
+        // Math.floor(((base * 2 + individual + effort / 4) * 0.5 + 5) * nature)
     }
 
     private calculateRealH(base: number, effort: number, individual: number): number {
