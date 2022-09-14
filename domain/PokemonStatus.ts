@@ -84,7 +84,10 @@ class PokemonStatus {
     }
 
     private calculateRealH(base: number, effort: number, individual: number): number {
-        return Math.floor((base * 2 + individual + effort / 4) * 0.5 + 60)
+        const effortDecimal = new Decimal(effort)
+        const individualDecimal = new Decimal(individual)
+        const baseDecimal = new Decimal(base)
+        return baseDecimal.times(2).plus(individualDecimal).plus(effortDecimal.dividedBy(4)).dividedBy(2).floor().plus(60).toNumber()
     }
 
     private setUpNature(up: string, base: PokemonValue): PokemonValue {

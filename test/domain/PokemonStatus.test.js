@@ -24,7 +24,7 @@ const eternatus = new PokemonStatus(
     cowardice
 )
 
-describe("ムゲンダイナでS調整機能", () => {
+describe("ムゲンダイナでS調整", () => {
     test.each([
         [252, 129],
         [220, 125],
@@ -61,7 +61,7 @@ describe("ムゲンダイナでS調整機能", () => {
     })
 })
 
-describe("ムゲンダイナでS計算", () => {
+describe("ムゲンダイナで実数値計算", () => {
     test.each([
         [252, 200],
         [220, 195],
@@ -75,5 +75,10 @@ describe("ムゲンダイナでS計算", () => {
     ])('%i振りののときは実数値%s', (effort, exceptReal) => {
         const real = eternatus.calculationRealSpeed(effort)
         expect(real).toBe(exceptReal)
+    })
+
+    test('ムゲンダイナのHP計算', () => {
+        const real = eternatus.real.h
+        expect(real).toBe(216)
     })
 })
