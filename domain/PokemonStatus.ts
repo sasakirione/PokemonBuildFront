@@ -35,10 +35,29 @@ class PokemonStatus {
 
     public calculationNoItemSpeed(real: number): [number, number, number] {
         const realDecimal = new Decimal(real)
-        const latestSpeed = Math.floor((real + 1 / 0.9) - 5)
+        //const latestSpeed = Math.floor((real + 1 / 0.9) - 5)
+        const latestSpeed = realDecimal.dividedBy(0.9).minus(5).round().toNumber() + 1
         const semiSpeed = real - 53
         const fastSpeedSuggest = realDecimal.dividedBy(1.1).round().toNumber() - 53
-        return [latestSpeed, semiSpeed, this.calculationFastSpeedOfSuggest(real, fastSpeedSuggest)]
+        return [this.calculationLatestSpeedOfSuggest(real, latestSpeed),
+            semiSpeed,
+            this.calculationFastSpeedOfSuggest(real, fastSpeedSuggest)]
+    }
+
+    private calculationLatestSpeedOfSuggest(real: number, suggest: number): number {
+        const suggestHigh = this.calculateRealWithoutH(suggest + 1, 0, 0, 0.9)
+        const suggestMiddle = this.calculateRealWithoutH(suggest, 0, 0, 0.9)
+        const suggestLow = this.calculateRealWithoutH(suggest - 1, 0, 0, 0.9)
+
+        if (real < suggestLow) {
+            return suggest - 1
+        } else if (real < suggestMiddle) {
+            return suggest
+        } else if (real < suggestHigh) {
+            return suggest + 1
+        } else {
+            return suggest + 2
+        }
     }
 
     private calculationFastSpeedOfSuggest(real: number, suggest: number): number {

@@ -24,6 +24,20 @@ const eternatus = new PokemonStatus(
     cowardice
 )
 
+const polteageist = new PokemonStatus(
+    {
+        h: 60,
+        a: 65,
+        b: 65,
+        c: 134,
+        d: 114,
+        s: 70
+    },
+    EffortCS,
+    Iv5VA,
+    cowardice
+)
+
 describe("ムゲンダイナでS調整", () => {
     test.each([
         [252, 129],
@@ -87,6 +101,21 @@ describe("ムゲンダイナでS調整", () => {
     ])('%i振りののときは準速スカーフ%s族抜き', (effort, base) => {
         const real = eternatus.calculationRealSpeed(effort)
         const fastSpeed = eternatus.calculationScarfSpeed(real)[0]
+        expect(fastSpeed).toBe(base)
+    })
+})
+
+describe("ポットデスでS調整", () => {
+    test.each([
+        [252, 145],
+        [140, 128],
+        [108, 123],
+        [68, 117],
+        [4, 108],
+        [0, 107]
+    ])('%i振りののときは最遅%s族抜かれ', (effort, base) => {
+        const real = polteageist.calculationRealSpeed(effort)
+        const fastSpeed = polteageist.calculationNoItemSpeed(real)[0]
         expect(fastSpeed).toBe(base)
     })
 })
