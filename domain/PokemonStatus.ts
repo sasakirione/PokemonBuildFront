@@ -57,10 +57,29 @@ class PokemonStatus {
         }
     }
 
-    calculationScarfSpeed(real: number): [number, number] {
-        const semiSpeed = Math.floor((real - 1 / 1.5) - 52)
-        const fastSpeed = Math.floor((real - 1 / (1.5 * 1.1)) - 52)
-        return [semiSpeed, fastSpeed]
+    public calculationScarfSpeed(real: number): [number, number] {
+        const realDecimal = new Decimal(real)
+        const semiSpeed = realDecimal.dividedBy(1.5).round().toNumber() - 53
+        const fastSpeed = realDecimal.dividedBy(1.65).round().toNumber() - 53
+        return [
+            this.calculationScarfSpeedOfSuggest(real, semiSpeed, 1),
+            this.calculationScarfSpeedOfSuggest(real, fastSpeed, 1.1)]
+    }
+
+    private calculationScarfSpeedOfSuggest(real: number, suggest: number, nature: number): number {
+        const suggestHigh = new Decimal(this.calculateRealWithoutH(suggest + 1, 252, 31, nature)).times(1.5).floor().toNumber()
+        const suggestMiddle = new Decimal(this.calculateRealWithoutH(suggest, 252, 31, nature)).times(1.5).floor().toNumber()
+        const suggestLow = new Decimal(this.calculateRealWithoutH(suggest - 1, 252, 31, nature)).times(1.5).floor().toNumber()
+
+        if (suggestHigh < real) {
+            return suggest + 1
+        } else if (suggestMiddle < real) {
+            return suggest
+        } else if (suggestLow < real) {
+            return suggest - 1
+        } else {
+            return suggest - 2
+        }
     }
 
     private calculateReal(base: PokemonValue, effort: PokemonValue, individual: PokemonValue, nature: PokemonValue): PokemonValue {

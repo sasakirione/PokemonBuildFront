@@ -44,6 +44,20 @@ describe("ムゲンダイナでS調整", () => {
     })
 
     test.each([
+        [244, 68],
+        [204, 65],
+        [156, 61],
+        [148, 60],
+        [124, 58],
+        [76, 55],
+        [28, 50]
+    ])('%i振りののときは最速スカーフ%s族抜き', (effort, base) => {
+        const real = eternatus.calculationRealSpeed(effort)
+        const fastSpeed = eternatus.calculationScarfSpeed(real)[1]
+        expect(fastSpeed).toBe(base)
+    })
+
+    test.each([
         [244, 146],
         [228, 143],
         [180, 137],
@@ -57,6 +71,22 @@ describe("ムゲンダイナでS調整", () => {
     ])('%i振りののときは準速%s族抜き', (effort, base) => {
         const real = eternatus.calculationRealSpeed(effort)
         const fastSpeed = eternatus.calculationNoItemSpeed(real)[1]
+        expect(fastSpeed).toBe(base)
+    })
+
+    test.each([
+        [252, 81],
+        [236, 79],
+        [188, 75],
+        [156, 72],
+        [148, 71],
+        [116, 68],
+        [76, 65],
+        [28, 60],
+        [4, 58]
+    ])('%i振りののときは準速スカーフ%s族抜き', (effort, base) => {
+        const real = eternatus.calculationRealSpeed(effort)
+        const fastSpeed = eternatus.calculationScarfSpeed(real)[0]
         expect(fastSpeed).toBe(base)
     })
 })
@@ -80,5 +110,10 @@ describe("ムゲンダイナで実数値計算", () => {
     test('ムゲンダイナのHP計算', () => {
         const real = eternatus.real.h
         expect(real).toBe(216)
+    })
+
+    test('ムゲンダイナ特攻計算', () => {
+        const real = eternatus.real.c
+        expect(real).toBe(197)
     })
 })
