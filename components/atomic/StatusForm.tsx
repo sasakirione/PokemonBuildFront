@@ -30,6 +30,11 @@ function StatusForm(props: {
         }, realSpeed: 0, scarf: {fastSpeed: 0, semiSpeed: 0}
     })
 
+    useEffect(() => {
+            setValue(props.defaultValues)
+        }, [props.defaultValues]
+    )
+
     let max = props.statusType == "EV" ? 252 : 31
 
     useEffect(() => {

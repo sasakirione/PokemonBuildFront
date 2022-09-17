@@ -25,6 +25,17 @@ export function EffortEdit(props: { open: boolean, onClose: () => void, pokemon:
         }, [h, a, b, c, d, s]
     )
 
+    useEffect(() => {
+            setDefaultValue(props.pokemon.status.effort)
+            setHp(props.pokemon.status.effort.h)
+            setAttack(props.pokemon.status.effort.a)
+            setDefense(props.pokemon.status.effort.b)
+            setSpAttack(props.pokemon.status.effort.c)
+            setSpDefense(props.pokemon.status.effort.d)
+            setSpeed(props.pokemon.status.effort.s)
+        }, [props.pokemon]
+    )
+
     async function saveEffort() {
         const effortStatus: PokemonValue = {h: hp, a: attack, b: defense, c: spAttack, d: spDefense, s: speed}
         await sendData()
