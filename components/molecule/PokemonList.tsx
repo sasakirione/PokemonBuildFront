@@ -1,4 +1,3 @@
-import {NextPage} from "next";
 import {Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
 import PokemonRow from "../atomic/PokemonRow";
 import Pokemon from "../../domain/Pokemon";
@@ -11,7 +10,7 @@ interface PokemonListProps {
 }
 
 
-const PokemonList: NextPage<PokemonListProps> = (props: PokemonListProps) => {
+const PokemonList = (props: PokemonListProps) => {
     const pokemonList = props.pokemonList
 
     return (

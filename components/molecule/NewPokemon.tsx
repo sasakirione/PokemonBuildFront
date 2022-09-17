@@ -1,6 +1,6 @@
 import {Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle} from "@mui/material";
 import Select from "react-select";
-import React, {useContext, useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {
     GrownPokemon,
     KotlinTupleOfIdAndValue,
@@ -12,16 +12,16 @@ import {
     selectItem2
 } from "../../type/type";
 import StatusForm from "../atomic/StatusForm";
-import {BuildIdContext, MoveListContext} from "../../pages/build";
 import {MoveForm} from "../atomic/MoveForm";
 import Pokemon from "../../domain/Pokemon";
 import PokemonStatus from "../../domain/PokemonStatus";
-import {useAuth0} from "@auth0/auth0-react";
 import {Loading} from "../particle/Loading";
 import {Iv6V, zeroValue} from "../../domain/PokemonData";
+import {usePokemonConst} from "../hook/PokemonConst";
+import useToken from "../hook/useToken";
 
-const NewPokemon = (props: { open: boolean, onClose: () => void, setPokemon: (pokemon: Pokemon) => void }) => {
-    const {getAccessTokenSilently, getIdTokenClaims} = useAuth0()
+const NewPokemon = (props: { open: boolean, onClose: () => void, setPokemon: (pokemon: Pokemon) => void, isBuild: boolean, buildId: number }) => {
+    const {token} = useToken()
     const [IvHp, setIvHp] = useState<number>(31)
     const [IvAttack, setIvAttack] = useState<number>(31)
     const [IvDefense, setIvDefense] = useState<number>(31)
@@ -39,8 +39,7 @@ const NewPokemon = (props: { open: boolean, onClose: () => void, setPokemon: (po
     const [move3, setMove3] = useState<[number, string]>([0, "選択なし"])
     const [move4, setMove4] = useState<[number, string]>([0, "選択なし"])
     const [pokemonId, setPokemonId] = useState<number>(0)
-    const moveList = useContext(MoveListContext)
-    const buildId = useContext(BuildIdContext)
+    const {moveList} = usePokemonConst()
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL!
     const sum = EvHp + EvAttack + EvDefense + EvSpAttack + EvSpDefense + EvSpeed
     const [pokemonList, setPokemonList] = useState<[number, string][]>([])
@@ -55,18 +54,16 @@ const NewPokemon = (props: { open: boolean, onClose: () => void, setPokemon: (po
     })
 
     useEffect(() => {
-        if (pokemonList == null || pokemonList.length == 0) {
-            fetch(baseUrl + "/v1/pokemon_data/pokemon_list")
-                .then((res: { json: () => any; }) => res.json())
-                .then((data: KotlinTupleOfIdAndValue[]) => {
-                        setPokemonList(data.map(pokemon => [pokemon.first, pokemon.second]))
-                    }
-                ).catch((reason: any) => {
-                    console.log(reason)
+        fetch(baseUrl + "/v1/pokemon-data/pokemons")
+            .then((res: { json: () => any; }) => res.json())
+            .then((data: KotlinTupleOfIdAndValue[]) => {
+                    setPokemonList(data.map(pokemon => [pokemon.first, pokemon.second]))
                 }
-            )
-        }
-    }, [])
+            ).catch((reason: any) => {
+                console.log(reason)
+            }
+        )
+    }, [baseUrl])
 
     async function savePokemon() {
         setIsLoading(true)
@@ -80,7 +77,7 @@ const NewPokemon = (props: { open: boolean, onClose: () => void, setPokemon: (po
         let bv: PokemonValue = {a: 0, b: 0, c: 0, d: 0, h: 0, s: 0}
         let name: string = ""
 
-        abilities = await fetch(baseUrl + "/v1/pokemon_data/" + pokemonId.toString())
+        abilities = await fetch(baseUrl + "/v1/pokemon-data/pokemons/" + pokemonId.toString())
             .then((res: { json: () => any; }) => res.json())
             .then((data: PokemonResponse) => {
                     name = data.name
@@ -104,8 +101,6 @@ const NewPokemon = (props: { open: boolean, onClose: () => void, setPokemon: (po
             return
         }
         ability = abilities[0]
-        await getAccessTokenSilently()
-        let test = await getIdTokenClaims()
         const newPokemon2: GrownPokemon = {
             ability: ability,
             abilityList: [],
@@ -120,16 +115,20 @@ const NewPokemon = (props: { open: boolean, onClose: () => void, setPokemon: (po
             personalId: 0,
             tag: []
         }
-        const sendData: PostPokemonData = {buildId: buildId, pokemon: newPokemon2}
+        const sendData: PostPokemonData | GrownPokemon = props.isBuild ? {
+            buildId: props.buildId,
+            pokemon: newPokemon2
+        } : newPokemon2
         const parameter = {
             headers: {
-                Authorization: 'Bearer ' + test?.__raw!,
+                Authorization: 'Bearer ' + token,
                 "Content-Type": 'application/json'
             },
             method: "POST",
             body: JSON.stringify(sendData)
         }
-        let personalId = await fetch(baseUrl + "/v1/pokemon_build/post_pokemon", parameter).then(
+        const apiUrl = props.isBuild ? baseUrl + "/v1/pokemon-build/builds/" + props.buildId + "/pokemon" : baseUrl + "/v1/pokemon-build/grown-pokemons"
+        let personalId = await fetch(apiUrl, parameter).then(
             (res: { json: () => any; }) => res.json()).then((data: { pokemonId: number }) =>
             data.pokemonId
         )
@@ -147,6 +146,7 @@ const NewPokemon = (props: { open: boolean, onClose: () => void, setPokemon: (po
         props.onClose()
         setIsLoading(false)
     }
+
     return (
         <>
             <Dialog
@@ -170,14 +170,14 @@ const NewPokemon = (props: { open: boolean, onClose: () => void, setPokemon: (po
                         <StatusForm defaultValues={Iv6V} setHp={setIvHp} setAttack={setIvAttack}
                                     setDefense={setIvDefense}
                                     setSpAttack={setIvSpAttack} setSpDefense={setIvSpDefense} setSpeed={setIvSpeed}
-                                    sum={0} statusType={"IV"}/>
+                                    sum={0} statusType={"IV"} isTab={false} pokemon={null}/>
                     </div>
                     <div className="new-pokemon-contents">
                         <DialogContentText>努力値</DialogContentText>
                         <StatusForm defaultValues={zeroValue} setHp={setEvHp} setAttack={setEvAttack}
                                     setDefense={setEvDefense}
                                     setSpAttack={setEvSpAttack} setSpDefense={setEvSpDefense} setSpeed={setEvSpeed}
-                                    sum={sum} statusType={"EV"}/>
+                                    sum={sum} statusType={"EV"} isTab={false} pokemon={null}/>
                     </div>
                     <div className="new-pokemon-contents">
                         <DialogContentText>わざ</DialogContentText>

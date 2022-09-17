@@ -2,8 +2,10 @@ import Head from "next/head";
 import React from "react";
 
 export const PokeBuildHead = (props: { title: string }) => {
+    const title = props.title + " - ぽけっとビルド"
+
     return <Head>
-        <title>{props.title} - ぽけっとビルド</title>
+        <title>{title}</title>
         <link rel="icon" href="/favicon.ico"/>
     </Head>;
 }

@@ -120,3 +120,34 @@ export type Effort =
     | 236
     | 244
     | 252
+
+export type BuildObject = {
+    id: number,
+    name: string,
+    comment: string
+}
+
+export type RestType = "GET" | "POST"
+
+export type PokemonConst = {
+    goodList: [number, string][],
+    tagList: string[],
+    moveList: [number, string][],
+    isLoadingConst: boolean,
+    setToast: (message: string, type: ToastType) => void
+}
+
+export type ToastType = "error" | "warning" | "normal"
+
+export type SpeedComparison = {
+    realSpeed: number,
+    noItem: {
+        latestSpeed: number,
+        semiSpeed: number,
+        fastSpeed: number
+    }
+    scarf: {
+        semiSpeed: number,
+        fastSpeed: number
+    }
+}
