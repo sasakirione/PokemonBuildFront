@@ -21,7 +21,8 @@ const BuildPage: NextPage = () => {
         pokemonList,
         setPokemonList,
         removePokemon,
-        isLoadingPokemon
+        isLoadingPokemon,
+        setBuilds
     } = useBuilds()
     const [isOpenNewPokemonScreen, setIsOpenNewPokemonScreen] = useState(false)
 
@@ -52,7 +53,8 @@ const BuildPage: NextPage = () => {
                 <div className="left_right">
                     <div className="boxContainer">
                         <HeadLineText text={selectedBuild.name}/>
-                        <BuildList selectBuild={selectedBuild} setSelectBuild={setSelectedBuild} builds={builds}/>
+                        <BuildList selectBuild={selectedBuild} setSelectBuild={setSelectedBuild} builds={builds}
+                                   setBuilds={setBuilds}/>
                     </div>
                     <Button variant="outlined" color="success"
                             onClick={handleClickOpenNewPokemon}>ポケモンを追加</Button>

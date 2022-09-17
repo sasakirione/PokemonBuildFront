@@ -43,7 +43,8 @@ const useBuilds = () => {
         pokemonList,
         setPokemonList,
         removePokemon,
-        isLoadingPokemon
+        isLoadingPokemon,
+        setBuilds
     }
 }
 

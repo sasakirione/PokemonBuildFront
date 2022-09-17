@@ -170,14 +170,14 @@ const NewPokemon = (props: { open: boolean, onClose: () => void, setPokemon: (po
                         <StatusForm defaultValues={Iv6V} setHp={setIvHp} setAttack={setIvAttack}
                                     setDefense={setIvDefense}
                                     setSpAttack={setIvSpAttack} setSpDefense={setIvSpDefense} setSpeed={setIvSpeed}
-                                    sum={0} statusType={"IV"} speed={IvSpeed}/>
+                                    sum={0} statusType={"IV"} isTab={false} pokemon={null}/>
                     </div>
                     <div className="new-pokemon-contents">
                         <DialogContentText>努力値</DialogContentText>
                         <StatusForm defaultValues={zeroValue} setHp={setEvHp} setAttack={setEvAttack}
                                     setDefense={setEvDefense}
                                     setSpAttack={setEvSpAttack} setSpDefense={setEvSpDefense} setSpeed={setEvSpeed}
-                                    sum={sum} statusType={"EV"} speed={EvSpeed}/>
+                                    sum={sum} statusType={"EV"} isTab={false} pokemon={null}/>
                     </div>
                     <div className="new-pokemon-contents">
                         <DialogContentText>わざ</DialogContentText>

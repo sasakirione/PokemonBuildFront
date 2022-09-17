@@ -35,7 +35,6 @@ class PokemonStatus {
 
     public calculationNoItemSpeed(real: number): [number, number, number] {
         const realDecimal = new Decimal(real)
-        //const latestSpeed = Math.floor((real + 1 / 0.9) - 5)
         const latestSpeed = realDecimal.dividedBy(0.9).minus(5).round().toNumber() + 1
         const semiSpeed = real - 53
         const fastSpeedSuggest = realDecimal.dividedBy(1.1).round().toNumber() - 53
