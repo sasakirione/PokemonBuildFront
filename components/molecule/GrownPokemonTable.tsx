@@ -19,6 +19,7 @@ const GrownPokemonTable = (props: { pokemons: Pokemon[] }) => {
     const [pokemonIndex, setPokemonIndex] = useState(0)
     const [selectedPokemon, setSelectedPokemon] = useState<Pokemon>()
     const {setting} = usePokemonConst()
+    const isOpenEditMenu = isOpenNatureEdit || isOpenAbilityEdit || isOpenTagEdit || isOpenEvEdit || isOpenGoodEdit;
 
     useEffect(() => {
             setSelectedPokemon(props.pokemons[pokemonIndex])
@@ -197,7 +198,7 @@ const GrownPokemonTable = (props: { pokemons: Pokemon[] }) => {
                 columns={columns}
                 options={options}
             />
-            {selectedPokemon != undefined &&
+            {(selectedPokemon != undefined && isOpenEditMenu) &&
                 <div>
                     <EffortEdit open={isOpenEvEdit} onClose={closeEvEdit} pokemon={selectedPokemon!}/>
                     <TagEdit open={isOpenTagEdit} onClose={closeTagEdit} pokemon={selectedPokemon!}/>
