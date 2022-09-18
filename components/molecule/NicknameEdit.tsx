@@ -1,7 +1,7 @@
 import Pokemon from "../../domain/Pokemon";
 import {Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField} from "@mui/material";
 import useToken from "../hook/useToken";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Loading} from "../particle/Loading";
 
 export const NicknameEdit = (props: { open: boolean, onClose: () => void, pokemon: Pokemon }) => {
@@ -10,10 +10,14 @@ export const NicknameEdit = (props: { open: boolean, onClose: () => void, pokemo
     const [nickname, setNickname] = useState(props.pokemon.nickname)
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL!
 
+    useEffect(() => {
+        setNickname(props.pokemon.nickname)
+    }, [props.open, props.pokemon.nickname])
+
     async function onClickItem() {
         await sendData()
         props.pokemon.nickname = nickname
-        props.onClose()
+        close()
     }
 
     async function sendData() {
@@ -28,6 +32,11 @@ export const NicknameEdit = (props: { open: boolean, onClose: () => void, pokemo
         }
         await fetch(baseUrl + "/v1/pokemon-build/grown-pokemons/" + props.pokemon.personalId + "/value", parameter)
         setIsLoading(false)
+    }
+
+    function close() {
+        setNickname("")
+        props.onClose()
     }
 
     return (<>
@@ -52,7 +61,7 @@ export const NicknameEdit = (props: { open: boolean, onClose: () => void, pokemo
                 />
             </DialogContent>
             <DialogActions>
-                <Button onClick={props.onClose}>キャンセル</Button>
+                <Button onClick={close}>キャンセル</Button>
                 <Button onClick={onClickItem}>OK</Button>
             </DialogActions>
         </Dialog>
