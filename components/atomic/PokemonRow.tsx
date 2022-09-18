@@ -10,6 +10,7 @@ import {EffortEdit} from "../molecule/EffortEdit";
 import {AbilityEdit} from "../molecule/AbilityEdit";
 import {NatureEdit} from "../molecule/NatureEdit";
 import {usePokemonConst} from "../hook/PokemonConst";
+import {NicknameEdit} from "../molecule/NicknameEdit";
 
 interface Props {
     pokemon: Pokemon
@@ -25,6 +26,7 @@ const PokemonList: NextPage<Props> = (props: Props) => {
     const [openGoodEdit, setOpenGoodEdit] = useState(false)
     const [openEffortEdit, setOpenEffortEdit] = useState(false)
     const [openMoveEdit, setOpenMoveEdit] = useState(false)
+    const [openNicknameEdit, setOpenNicknameEdit] = useState(false)
     const {setting} = usePokemonConst()
     const nickname = pokemon.nickname == "" ? pokemon.name : pokemon.nickname
     const name = setting.isUsedNickname ? nickname : pokemon.name
@@ -77,6 +79,14 @@ const PokemonList: NextPage<Props> = (props: Props) => {
         setOpenMoveEdit(false);
     };
 
+    const handleClickOpenNicknameEdit = () => {
+        setOpenNicknameEdit(true);
+    }
+
+    const handleCloseNicknameEdit = () => {
+        setOpenNicknameEdit(false);
+    }
+
     const clickRemove = () => {
 
         removePokemon(pokemon.personalId)
@@ -94,7 +104,7 @@ const PokemonList: NextPage<Props> = (props: Props) => {
                         {openMoveList ? "↑" : "↓"}
                     </IconButton>
                 </TableCell>
-                <TableCell>{name}</TableCell>
+                <TableCell onClick={handleClickOpenNicknameEdit}>{name}</TableCell>
                 <TableCell onClick={handleClickOpenTagEdit}>{pokemon.tag.map(tag => <Button variant="outlined"
                                                                                             key={tag}>{tag}</Button>)}</TableCell>
                 <TableCell onClick={handleClickOpenNatureEdit}>{pokemon.nature}</TableCell>
@@ -121,6 +131,8 @@ const PokemonList: NextPage<Props> = (props: Props) => {
                     </Collapse>
                 </TableCell>
             </TableRow>
+            {openNicknameEdit &&
+                <NicknameEdit pokemon={pokemon} onClose={handleCloseNicknameEdit} open={openNicknameEdit}/>}
             {openGoodEdit && <GoodEdit open={openGoodEdit} onClose={handleCloseGoodEdit} pokemon={pokemon}/>}
             {openEffortEdit && <EffortEdit open={openEffortEdit} onClose={handleCloseEffortEdit} pokemon={pokemon}/>}
             {openAbilityEdit &&
