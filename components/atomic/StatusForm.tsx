@@ -142,7 +142,8 @@ function StatusForm(props: {
                         <SpeedTribeValue speedValue={speedComparison.scarf.fastSpeed} label={"スカーフ(S+1)最速"}/>
                     </Grid>
                 </Grid>
-                <Slider step={4} marks min={0} max={252} value={value.s} onChange={changeSpeed} valueLabelDisplay="on"/>
+                <Slider step={4} marks min={0} max={252} value={value.s} onChange={changeSpeed}
+                        valueLabelDisplay="auto"/>
             </TabPanel>
         </TabContext>
     ) : (<>

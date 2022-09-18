@@ -3,7 +3,7 @@ import {useAuth0} from "@auth0/auth0-react";
 import React, {useEffect} from "react";
 import {PokeBuildHead} from "../components/atomic/PokeBuildHead";
 import {HeadLineText} from "../components/particle/Text";
-import {Button, FormControlLabel, FormGroup, Switch} from "@mui/material";
+import {Button, FormControlLabel, Switch} from "@mui/material";
 import {Loading} from "../components/particle/Loading";
 import {usePokemonConst} from "../components/hook/PokemonConst";
 import useToken from "../components/hook/useToken";
@@ -61,11 +61,9 @@ const SettingPage: NextPage = () => {
             <div>ユーザー名：</div>
             <div>{user?.name ?? "デフォルトユーザー"}</div>
             <div>ユーザー名：</div>
-            <FormGroup>
-                <FormControlLabel
-                    control={<Switch defaultChecked value={isUsedNickname} onChange={changeUsedNickname}/>}
-                    label="ニックネームを使う"/>
-            </FormGroup>
+            <FormControlLabel
+                control={<Switch checked={isUsedNickname} onChange={changeUsedNickname}/>}
+                label="ニックネームを使う"/>
             <Button onClick={clickSave}>Save</Button>
         </>)
     } else {
