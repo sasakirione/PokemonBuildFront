@@ -2,6 +2,7 @@ import {Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow}
 import PokemonRow from "../atomic/PokemonRow";
 import Pokemon from "../../domain/Pokemon";
 import React, {Dispatch, SetStateAction} from "react";
+import {usePokemonConst} from "../hook/PokemonConst";
 
 interface PokemonListProps {
     pokemonList: Pokemon[],
@@ -12,6 +13,7 @@ interface PokemonListProps {
 
 const PokemonList = (props: PokemonListProps) => {
     const pokemonList = props.pokemonList
+    const {setting} = usePokemonConst()
 
     return (
         <TableContainer component={Paper}>
@@ -19,7 +21,7 @@ const PokemonList = (props: PokemonListProps) => {
                 <TableHead>
                     <TableRow>
                         <TableCell/>
-                        <TableCell>ポケモン名</TableCell>
+                        <TableCell>{setting.isUsedNickname ? "ニックネーム" : "ポケモン名"}</TableCell>
                         <TableCell>役割</TableCell>
                         <TableCell>性格</TableCell>
                         <TableCell>特性</TableCell>

@@ -7,7 +7,7 @@ const UserMenu = () => {
     return (
         <Box sx={{flexGrow: 0}}>
             <Tooltip title="Open user settings">
-                <IconButton sx={{p: 0}}>
+                <IconButton sx={{p: 0}} href="./setting">
                     <Avatar alt="Remy Sharp" src={user?.picture}/>
                 </IconButton>
             </Tooltip>

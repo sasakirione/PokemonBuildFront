@@ -9,6 +9,7 @@ import {GoodEdit} from "../molecule/GoodEdit";
 import {EffortEdit} from "../molecule/EffortEdit";
 import {AbilityEdit} from "../molecule/AbilityEdit";
 import {NatureEdit} from "../molecule/NatureEdit";
+import {usePokemonConst} from "../hook/PokemonConst";
 
 interface Props {
     pokemon: Pokemon
@@ -24,6 +25,9 @@ const PokemonList: NextPage<Props> = (props: Props) => {
     const [openGoodEdit, setOpenGoodEdit] = useState(false)
     const [openEffortEdit, setOpenEffortEdit] = useState(false)
     const [openMoveEdit, setOpenMoveEdit] = useState(false)
+    const {setting} = usePokemonConst()
+    const nickname = pokemon.nickname == "" ? pokemon.name : pokemon.nickname
+    const name = setting.isUsedNickname ? nickname : pokemon.name
 
     const handleClickOpenGoodEdit = () => {
         setOpenGoodEdit(true);
@@ -90,7 +94,7 @@ const PokemonList: NextPage<Props> = (props: Props) => {
                         {openMoveList ? "↑" : "↓"}
                     </IconButton>
                 </TableCell>
-                <TableCell>{pokemon.name}</TableCell>
+                <TableCell>{name}</TableCell>
                 <TableCell onClick={handleClickOpenTagEdit}>{pokemon.tag.map(tag => <Button variant="outlined"
                                                                                             key={tag}>{tag}</Button>)}</TableCell>
                 <TableCell onClick={handleClickOpenNatureEdit}>{pokemon.nature}</TableCell>

@@ -50,7 +50,7 @@ export type PokemonResponse = {
     formName: string | null,
     types: string[],
     abilities: string[],
-    base: number[],
+    base: number[]
 }
 
 export type KotlinTupleOfIdAndValue = {
@@ -72,7 +72,8 @@ export type GrownPokemon = {
     bv: number[],
     moveList: string[],
     good: string,
-    tag: string[]
+    tag: string[],
+    nickname: string
 }
 
 export type BuildResponse = {
@@ -134,6 +135,8 @@ export type PokemonConst = {
     tagList: string[],
     moveList: [number, string][],
     isLoadingConst: boolean,
+    setting: Setting,
+    setSetting: React.Dispatch<React.SetStateAction<Setting>> | null,
     setToast: (message: string, type: ToastType) => void
 }
 
@@ -150,4 +153,8 @@ export type SpeedComparison = {
         semiSpeed: number,
         fastSpeed: number
     }
+}
+
+export type Setting = {
+    isUsedNickname: boolean
 }

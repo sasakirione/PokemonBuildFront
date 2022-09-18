@@ -8,6 +8,7 @@ import {GoodEdit} from "./GoodEdit";
 import {AbilityEdit} from "./AbilityEdit";
 import {NatureEdit} from "./NatureEdit";
 import {GrownPokemonTableSelectMenu} from "../atomic/GrownPokemonTableSelectMenu";
+import {usePokemonConst} from "../hook/PokemonConst";
 
 const GrownPokemonTable = (props: { pokemons: Pokemon[] }) => {
     const [isOpenTagEdit, setIsOpenTagEdit] = useState(false)
@@ -17,6 +18,7 @@ const GrownPokemonTable = (props: { pokemons: Pokemon[] }) => {
     const [isOpenNatureEdit, setIsOpenNatureEdit] = useState(false)
     const [pokemonIndex, setPokemonIndex] = useState(0)
     const [selectedPokemon, setSelectedPokemon] = useState<Pokemon>()
+    const {setting} = usePokemonConst()
 
     useEffect(() => {
             setSelectedPokemon(props.pokemons[pokemonIndex])
@@ -76,10 +78,17 @@ const GrownPokemonTable = (props: { pokemons: Pokemon[] }) => {
         },
         {
             name: "name",
-            label: "ポケモン名",
+            label: setting.isUsedNickname ? "ニックネーム" : "ポケモン名",
             options: {
                 filter: true,
                 sort: true,
+                customBodyRenderLite: (dataIndex: number) => {
+                    return (
+                        <>
+                            {props.pokemons[dataIndex].nickname == "" ? props.pokemons[dataIndex].name : props.pokemons[dataIndex].nickname}
+                        </>
+                    )
+                },
             }
         },
         {

@@ -133,7 +133,8 @@ const NewPokemon = (props: { open: boolean, onClose: () => void, setPokemon: (po
             name: "",
             nature: 25,
             personalId: 0,
-            tag: []
+            tag: [],
+            nickname: ""
         }
         const sendData: PostPokemonData | GrownPokemon = props.isBuild ? {
             buildId: props.buildId,
@@ -161,7 +162,7 @@ const NewPokemon = (props: { open: boolean, onClose: () => void, setPokemon: (po
             return
         }
         const status = new PokemonStatus(bv, ev, iv, defaultValue3)
-        const newPokemon = new Pokemon(name, pokemonId, personalId!, status, nature, ability, abilities, good, [], moves)
+        const newPokemon = new Pokemon(name, pokemonId, personalId!, status, nature, ability, abilities, good, [], moves, "")
         props.setPokemon(newPokemon)
         props.onClose()
         resetValue()

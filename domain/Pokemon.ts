@@ -13,8 +13,9 @@ class Pokemon {
     tag: string[]
     moves: Moves
     effortText: string
+    nickname: string
 
-    constructor(name: string, id: number, personalId: number, status: PokemonStatus, nature: PokemonNature, ability: string, abilityList: string[], good: string, tag: string[], moves: Moves) {
+    constructor(name: string, id: number, personalId: number, status: PokemonStatus, nature: PokemonNature, ability: string, abilityList: string[], good: string, tag: string[], moves: Moves, nickname: string) {
         this.name = name
         this.id = id
         this.personalId = personalId
@@ -26,6 +27,7 @@ class Pokemon {
         this.tag = tag
         this.moves = moves
         this.effortText = this.getEffortText()
+        this.nickname = nickname
     }
 
     getEffortText(): string {

@@ -33,5 +33,6 @@ export const getPokemonFromGrownPokemonResponse = (pokemon: GrownPokemon) => {
     const natureName = natureList[pokemon.nature - 1][0]
     const move: Moves = [pokemon.moveList[0], pokemon.moveList[1], pokemon.moveList[2], pokemon.moveList[3]]
     const status = new PokemonStatus(bv, ev, iv, natureValue)
-    return new Pokemon(pokemon.name, pokemon.id, pokemon.personalId, status, natureName, pokemon.ability, pokemon.abilityList, pokemon.good, pokemon.tag, move)
+    const nickname = pokemon.nickname
+    return new Pokemon(pokemon.name, pokemon.id, pokemon.personalId, status, natureName, pokemon.ability, pokemon.abilityList, pokemon.good, pokemon.tag, move, nickname)
 }
