@@ -58,6 +58,10 @@ class Pokemon {
             scarf: {fastSpeed: scarf[1], semiSpeed: scarf[0]}
         }
     }
+
+    getIVText() {
+        return this.status.individual.h + "," + this.status.individual.a + "," + this.status.individual.b + "," + this.status.individual.c + "," + this.status.individual.d + "," + this.status.individual.s
+    }
 }
 
 export default Pokemon
