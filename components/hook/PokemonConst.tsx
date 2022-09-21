@@ -1,6 +1,7 @@
 import React, {createContext, ReactNode, useContext, useEffect, useState} from "react";
-import {KotlinTupleOfIdAndValue, PokemonConst, responseGoodList, ToastType} from "../../type/type";
+import {KotlinTupleOfIdAndValue, PokemonConst, responseGoodList, Setting, ToastType} from "../../type/type";
 import toast from "react-hot-toast";
+import useToken from "./useToken";
 
 const setToast = (message: string, type: ToastType) => {
     if (type == "error") {
@@ -15,17 +16,43 @@ const PokemonConstContext = createContext<PokemonConst>({
     tagList: ["初期表示"],
     moveList: [[0, "初期表示"]],
     isLoadingConst: false,
+    setting: {isUsedNickname: false},
+    setSetting: null,
     setToast: setToast
 })
 
 export const PokemonConstProvider = ({children}: { children: ReactNode }) => {
+    const {isAuthenticated, token} = useToken()
     const [goodList, setGoodList] = useState<[number, string][]>([[0, "なし"]])
     const [tagList, setTagList] = useState<string[]>([""])
     const [moveList, setMoveList] = useState<[number, string][]>([[0, "なし"]])
     const [isLoadingGood, setIsLoadingGood] = useState(false)
     const [isLoadingTag, setIsLoadingTag] = useState(false)
     const [isLoadingMove, setIsLoadingMove] = useState(false)
+    const [isLoadingSetting, setIsLoadingSetting] = useState(false)
+    const [setting, setSetting] = useState<Setting>({isUsedNickname: false})
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL!
+
+    useEffect(() => {
+        if (isAuthenticated && token != "") {
+            setIsLoadingSetting(true)
+            const parameter = {
+                headers: {
+                    Authorization: 'Bearer ' + token
+                },
+                method: "GET"
+            }
+            fetch(baseUrl + "/v1/user/setting", parameter)
+                .then(res => res.json())
+                .then((res: Setting) => {
+                    setSetting(res)
+                    setIsLoadingSetting(false)
+                }).catch((reason: any) => {
+                console.log(reason)
+                setIsLoadingSetting(false)
+            })
+        }
+    }, [baseUrl, isAuthenticated, token])
 
     useEffect(() => {
         setIsLoadingGood(true)
@@ -78,7 +105,9 @@ export const PokemonConstProvider = ({children}: { children: ReactNode }) => {
             goodList: goodList,
             tagList: tagList,
             moveList: moveList,
-            isLoadingConst: (isLoadingGood || isLoadingTag || isLoadingMove),
+            isLoadingConst: (isLoadingGood || isLoadingTag || isLoadingMove || isLoadingSetting),
+            setting: setting,
+            setSetting: setSetting,
             setToast: setToast
         }}>
             {children}

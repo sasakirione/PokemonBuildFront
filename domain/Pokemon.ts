@@ -13,8 +13,9 @@ class Pokemon {
     tag: string[]
     moves: Moves
     effortText: string
+    nickname: string
 
-    constructor(name: string, id: number, personalId: number, status: PokemonStatus, nature: PokemonNature, ability: string, abilityList: string[], good: string, tag: string[], moves: Moves) {
+    constructor(name: string, id: number, personalId: number, status: PokemonStatus, nature: PokemonNature, ability: string, abilityList: string[], good: string, tag: string[], moves: Moves, nickname: string) {
         this.name = name
         this.id = id
         this.personalId = personalId
@@ -26,6 +27,7 @@ class Pokemon {
         this.tag = tag
         this.moves = moves
         this.effortText = this.getEffortText()
+        this.nickname = nickname
     }
 
     getEffortText(): string {
@@ -55,6 +57,10 @@ class Pokemon {
             realSpeed: real,
             scarf: {fastSpeed: scarf[1], semiSpeed: scarf[0]}
         }
+    }
+
+    getIVText() {
+        return this.status.individual.h + "," + this.status.individual.a + "," + this.status.individual.b + "," + this.status.individual.c + "," + this.status.individual.d + "," + this.status.individual.s
     }
 }
 

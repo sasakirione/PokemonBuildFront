@@ -1,19 +1,15 @@
 import {Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
-import PokemonRow from "../atomic/PokemonRow";
 import Pokemon from "../../domain/Pokemon";
-import React, {Dispatch, SetStateAction} from "react";
-import {usePokemonConst} from "../hook/PokemonConst";
+import React from "react";
+import {PokemonRowPublic} from "../atomic/PokemonRowPublic";
 
 interface PokemonListProps {
-    pokemonList: Pokemon[],
-    pokemonListFunc: Dispatch<SetStateAction<Pokemon[]>>
-    removePokemon: (personalId: number) => void
+    pokemonList: Pokemon[]
+    isUsedNickname: boolean
 }
-
 
 const PokemonList = (props: PokemonListProps) => {
     const pokemonList = props.pokemonList
-    const {setting} = usePokemonConst()
 
     return (
         <TableContainer component={Paper}>
@@ -21,20 +17,20 @@ const PokemonList = (props: PokemonListProps) => {
                 <TableHead>
                     <TableRow>
                         <TableCell/>
-                        <TableCell>{setting.isUsedNickname ? "ニックネーム" : "ポケモン名"}</TableCell>
+                        <TableCell>{props.isUsedNickname ? "ニックネーム" : "ポケモン名"}</TableCell>
                         <TableCell>役割</TableCell>
                         <TableCell>性格</TableCell>
                         <TableCell>特性</TableCell>
                         <TableCell>道具</TableCell>
                         <TableCell>努力値</TableCell>
-                        <TableCell>S実数値</TableCell>
-                        <TableCell>削除</TableCell>
+                        <TableCell>個体値</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
                     {
                         pokemonList.map((pokemon) =>
-                            <PokemonRow key={pokemon.name} pokemon={pokemon} removePokemon={props.removePokemon}/>
+                            <PokemonRowPublic key={pokemon.name} pokemon={pokemon}
+                                              isUsedNickname={props.isUsedNickname}/>
                         )
                     }
                 </TableBody>

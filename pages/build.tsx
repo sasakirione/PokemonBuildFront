@@ -10,6 +10,7 @@ import useBuilds from "../components/hook/useBuilds";
 import {BuildList} from "../components/molecule/BuildList";
 import NewPokemon from "../components/molecule/NewPokemon";
 import PokemonList from "../components/molecule/PokemonList";
+import {BuildPrivacyEdit} from "../components/molecule/BuildPrivacyEdit";
 
 
 const BuildPage: NextPage = () => {
@@ -25,6 +26,7 @@ const BuildPage: NextPage = () => {
         setBuilds
     } = useBuilds()
     const [isOpenNewPokemonScreen, setIsOpenNewPokemonScreen] = useState(false)
+    const [isOpenPublicScreen, setIsOpenPublicScreen] = useState(false)
 
     const handleClickOpenNewPokemon = () => {
         setIsOpenNewPokemonScreen(true);
@@ -33,6 +35,14 @@ const BuildPage: NextPage = () => {
     const handleCloseNewPokemon = () => {
         setIsOpenNewPokemonScreen(false);
     };
+
+    const handleClickOpenPublic = () => {
+        setIsOpenPublicScreen(true);
+    }
+
+    const handleClosePublic = () => {
+        setIsOpenPublicScreen(false);
+    }
 
     const addPokemon = (newPokemon: Pokemon) => {
         setPokemonList([...pokemonList, newPokemon])
@@ -56,14 +66,19 @@ const BuildPage: NextPage = () => {
                         <BuildList selectBuild={selectedBuild} setSelectBuild={setSelectedBuild} builds={builds}
                                    setBuilds={setBuilds}/>
                     </div>
-                    <Button variant="outlined" color="success"
-                            onClick={handleClickOpenNewPokemon}>ポケモンを追加</Button>
+                    <div>
+                        <Button variant="outlined" color="success"
+                                onClick={handleClickOpenPublic}>構築公開設定</Button>
+                        <Button variant="outlined" color="success"
+                                onClick={handleClickOpenNewPokemon}>ポケモンを追加</Button>
+                    </div>
                 </div>
                 <PokemonList pokemonList={pokemonList} pokemonListFunc={setPokemonList}
                              removePokemon={removePokemon}></PokemonList>
                 <NewPokemon
                     open={isOpenNewPokemonScreen} onClose={handleCloseNewPokemon} setPokemon={addPokemon} isBuild={true}
                     buildId={selectedBuild.id}/>
+                <BuildPrivacyEdit open={isOpenPublicScreen} onClose={handleClosePublic} buildId={selectedBuild.id}/>
             </>
         )
     }

@@ -53,6 +53,26 @@ const NewPokemon = (props: { open: boolean, onClose: () => void, setPokemon: (po
         label
     })
 
+    const resetValue = () => {
+        setIvHp(31)
+        setIvAttack(31)
+        setIvDefense(31)
+        setIvSpAttack(31)
+        setIvSpDefense(31)
+        setIvSpeed(31)
+        setEvHp(0)
+        setEvAttack(0)
+        setEvDefense(0)
+        setEvSpAttack(0)
+        setEvSpDefense(0)
+        setEvSpeed(0)
+        setMove1([0, "選択なし"])
+        setMove2([0, "選択なし"])
+        setMove3([0, "選択なし"])
+        setMove4([0, "選択なし"])
+        setPokemonId(0)
+    }
+
     useEffect(() => {
         fetch(baseUrl + "/v1/pokemon-data/pokemons")
             .then((res: { json: () => any; }) => res.json())
@@ -113,7 +133,8 @@ const NewPokemon = (props: { open: boolean, onClose: () => void, setPokemon: (po
             name: "",
             nature: 25,
             personalId: 0,
-            tag: []
+            tag: [],
+            nickname: ""
         }
         const sendData: PostPokemonData | GrownPokemon = props.isBuild ? {
             buildId: props.buildId,
@@ -141,9 +162,10 @@ const NewPokemon = (props: { open: boolean, onClose: () => void, setPokemon: (po
             return
         }
         const status = new PokemonStatus(bv, ev, iv, defaultValue3)
-        const newPokemon = new Pokemon(name, pokemonId, personalId!, status, nature, ability, abilities, good, [], moves)
+        const newPokemon = new Pokemon(name, pokemonId, personalId!, status, nature, ability, abilities, good, [], moves, "")
         props.setPokemon(newPokemon)
         props.onClose()
+        resetValue()
         setIsLoading(false)
     }
 
