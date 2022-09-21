@@ -84,6 +84,20 @@ a {
     justify-content: center;
 }
 
+.setting-section-header {
+    margin: 5px;
+}
+
+.setting-section {
+    margin-bottom: 20px;
+    height: 300px;
+}
+
+.setting-section-contents {
+    margin-right: 10px;
+    margin-left: 10px;
+}
+
 .footer {
     color: #ebf6f7;
     background: #a9ceec;

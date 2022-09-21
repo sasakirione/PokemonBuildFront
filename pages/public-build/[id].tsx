@@ -31,6 +31,7 @@ const PublicBuild: NextPage = () => {
                     setBuild({comment: "", id: data.id, name: data.name})
                 })
                 .catch((reason: any) => {
+                    console.log(reason)
                     setToast("構築の取得に失敗しました", "error")
                 })
             setIsLoading(false)
