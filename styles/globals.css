@@ -4,6 +4,7 @@ body {
     margin: 0;
     font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+    background-color: #eaeaea;
 }
 
 .one {
@@ -85,7 +86,7 @@ a {
 }
 
 .setting-section-header {
-    margin: 5px;
+    margin: 15px;
 }
 
 .setting-section {
@@ -93,6 +94,7 @@ a {
     height: 300px;
     transition: 0.3s;
     box-shadow: 0 8px 20px -12px rgba(0, 0, 0, 0.3);
+    border-radius: 20px;
 }
 
 .setting-section-contents {
@@ -115,6 +117,8 @@ a {
     bottom: 0;
 }
 
+/*
+
 @media (prefers-color-scheme: dark) {
     html {
         color-scheme: dark;
@@ -125,3 +129,4 @@ a {
         background: black;
     }
 }
+*/

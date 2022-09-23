@@ -72,7 +72,6 @@ const SettingPage: NextPage = () => {
                         <hr/>
                         <div className={"setting-section-contents"}>認証方法</div>
                         <div className={"setting-section-contents"}>{user?.sub?.split('|')[0] ?? "設定がありません"}</div>
-                        <hr/>
                     </Card>
                 </Grid>
                 <Grid item xs={12} sm={6} lg={4}>
