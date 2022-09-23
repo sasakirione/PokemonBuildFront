@@ -16,7 +16,7 @@ const PokemonList = (props: PokemonListProps) => {
     const {setting} = usePokemonConst()
 
     return (
-        <TableContainer component={Paper}>
+        <TableContainer component={Paper} className="table-container">
             <Table aria-label="collapsible table">
                 <TableHead>
                     <TableRow>

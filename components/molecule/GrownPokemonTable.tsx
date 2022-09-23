@@ -204,7 +204,7 @@ const GrownPokemonTable = (props: { pokemons: Pokemon[] }) => {
     }
 
     return (
-        <>
+        <div className="table-container">
             <MUIDataTable
                 title={""}
                 data={props.pokemons}
@@ -221,7 +221,7 @@ const GrownPokemonTable = (props: { pokemons: Pokemon[] }) => {
                     <NicknameEdit open={isOpenNicknameEdit} onClose={closeNicknameEdit} pokemon={selectedPokemon!}/>
                 </div>
             }
-        </>
+        </div>
     )
 }
 

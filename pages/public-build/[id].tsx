@@ -46,7 +46,7 @@ const PublicBuild: NextPage = () => {
                     <HeadLineText text={build.name}/>
                 </div>
                 <div>
-                    <Button variant="contained"
+                    <Button variant="contained" className={"head-button"}
                             onClick={() => setIsUsedNickname(!isUsedNickname)}>ポケモン名/ニックネーム切替</Button>
                 </div>
             </div>

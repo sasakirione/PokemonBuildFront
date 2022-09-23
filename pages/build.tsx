@@ -67,9 +67,9 @@ const BuildPage: NextPage = () => {
                                    setBuilds={setBuilds}/>
                     </div>
                     <div>
-                        <Button variant="outlined" color="success"
+                        <Button variant="outlined" color="success" className={"head-button"}
                                 onClick={handleClickOpenPublic}>構築公開設定</Button>
-                        <Button variant="outlined" color="success"
+                        <Button variant="outlined" color="success" className={"head-button"}
                                 onClick={handleClickOpenNewPokemon}>ポケモンを追加</Button>
                     </div>
                 </div>
