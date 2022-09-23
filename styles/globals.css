@@ -71,6 +71,8 @@ a {
 
 .boxItem {
     height: 300px;
+    border-radius: 15px;
+    margin: 10px;
 }
 
 .boxContainer {
