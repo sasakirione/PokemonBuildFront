@@ -3,6 +3,7 @@ import {BuildObject, BuildResponse} from "../../type/type";
 import {getPokemonFromGrownPokemonResponse} from "../../util/converter";
 import Pokemon from "../../domain/Pokemon";
 import useToken from "./useToken";
+import {usePokemonConst} from "./PokemonConst";
 
 const useBuildPokemon = (currentBuild: BuildObject) => {
     const [isLoadingBuild, setIsLoadingBuild] = useState(false)
@@ -10,6 +11,7 @@ const useBuildPokemon = (currentBuild: BuildObject) => {
     const {isAuthenticated, token} = useToken()
     const [pokemonList, setPokemonList] = useState<Pokemon[]>([])
     const [finalBuildId, setFinalBuildId] = useState(0)
+    const {setToast} = usePokemonConst()
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL!
     const isLoadingPokemon = isLoadingBuild || isLoadingDelete
 
@@ -30,7 +32,8 @@ const useBuildPokemon = (currentBuild: BuildObject) => {
                 })
                 .catch((reason: any) => {
                         console.log(reason)
-                        setIsLoadingBuild(false)
+                    setIsLoadingBuild(false)
+                    setToast("構築の取得に失敗しました", "error")
                     }
                 )
         }
