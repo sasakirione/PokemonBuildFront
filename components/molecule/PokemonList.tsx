@@ -27,7 +27,7 @@ const PokemonList = (props: PokemonListProps) => {
                         <TableCell>特性</TableCell>
                         <TableCell>道具</TableCell>
                         <TableCell>努力値</TableCell>
-                        <TableCell>S実数値</TableCell>
+                        <TableCell>実数値</TableCell>
                         <TableCell>削除</TableCell>
                     </TableRow>
                 </TableHead>
