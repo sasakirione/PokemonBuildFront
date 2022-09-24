@@ -32,11 +32,11 @@ const useBuilds = () => {
                 })
                 .catch((reason: any) => {
                     console.log(reason)
-                    setToast("構築一覧の取得に失敗しました", "error")
+                    setToast("構築一覧の取得に失敗しました。リロードしてください。", "error")
                     setIsBuildLoading(false)
                 })
         }
-    }, [baseUrl, builds, isAuthenticated, isDone, token])
+    }, [baseUrl, builds, isAuthenticated, isDone, setToast, token])
 
     return {
         builds,

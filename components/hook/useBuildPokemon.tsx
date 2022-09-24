@@ -5,11 +5,13 @@ import Pokemon from "../../domain/Pokemon";
 import useToken from "./useToken";
 import {usePokemonConst} from "./PokemonConst";
 
+const defaultPokemonList: Pokemon[] = []
+
 const useBuildPokemon = (currentBuild: BuildObject) => {
     const [isLoadingBuild, setIsLoadingBuild] = useState(false)
     const [isLoadingDelete, setIsLoadingDelete] = useState(false)
     const {isAuthenticated, token} = useToken()
-    const [pokemonList, setPokemonList] = useState<Pokemon[]>([])
+    const [pokemonList, setPokemonList] = useState<Pokemon[]>(defaultPokemonList)
     const [finalBuildId, setFinalBuildId] = useState(0)
     const {setToast} = usePokemonConst()
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL!
@@ -32,12 +34,12 @@ const useBuildPokemon = (currentBuild: BuildObject) => {
                 })
                 .catch((reason: any) => {
                         console.log(reason)
-                    setIsLoadingBuild(false)
-                    setToast("構築の取得に失敗しました", "error")
+                        setIsLoadingBuild(false)
+                        setToast("構築の取得に失敗しました。リロードしてください。", "error")
                     }
                 )
         }
-    }, [baseUrl, currentBuild, finalBuildId, isAuthenticated, token])
+    }, [baseUrl, currentBuild, finalBuildId, isAuthenticated, setToast, token])
 
     async function removePokemon(personalId: number) {
         setIsLoadingDelete(true)

@@ -11,10 +11,15 @@ const setToast = (message: string, type: ToastType) => {
     }
 }
 
+const goodListInti: [number, string][] = [[0, "初期表示"]]
+const tagListInti = ["初期表示"]
+const moveListInti: [number, string][] = [[0, "初期表示"]]
+const defaultSetting: Setting = {isUsedNickname: false}
+
 const PokemonConstContext = createContext<PokemonConst>({
-    goodList: [[0, "初期表示"]],
-    tagList: ["初期表示"],
-    moveList: [[0, "初期表示"]],
+    goodList: goodListInti,
+    tagList: tagListInti,
+    moveList: moveListInti,
     isLoadingConst: false,
     setting: {isUsedNickname: false},
     setSetting: null,
@@ -23,14 +28,14 @@ const PokemonConstContext = createContext<PokemonConst>({
 
 export const PokemonConstProvider = ({children}: { children: ReactNode }) => {
     const {isAuthenticated, token} = useToken()
-    const [goodList, setGoodList] = useState<[number, string][]>([[0, "なし"]])
-    const [tagList, setTagList] = useState<string[]>([""])
-    const [moveList, setMoveList] = useState<[number, string][]>([[0, "なし"]])
+    const [goodList, setGoodList] = useState<[number, string][]>(goodListInti)
+    const [tagList, setTagList] = useState<string[]>(tagListInti)
+    const [moveList, setMoveList] = useState<[number, string][]>(moveListInti)
     const [isLoadingGood, setIsLoadingGood] = useState(false)
     const [isLoadingTag, setIsLoadingTag] = useState(false)
     const [isLoadingMove, setIsLoadingMove] = useState(false)
     const [isLoadingSetting, setIsLoadingSetting] = useState(false)
-    const [setting, setSetting] = useState<Setting>({isUsedNickname: false})
+    const [setting, setSetting] = useState<Setting>(defaultSetting)
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL!
 
     useEffect(() => {

@@ -11,7 +11,7 @@ interface PokemonListProps {
 }
 
 
-const PokemonList = (props: PokemonListProps) => {
+const PokemonList = React.memo(function PokemonList(props: PokemonListProps) {
     const pokemonList = props.pokemonList
     const {setting} = usePokemonConst()
 
@@ -41,6 +41,6 @@ const PokemonList = (props: PokemonListProps) => {
             </Table>
         </TableContainer>
     )
-}
+})
 
 export default PokemonList

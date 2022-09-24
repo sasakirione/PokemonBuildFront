@@ -20,7 +20,14 @@ import {Iv6V, zeroValue} from "../../domain/PokemonData";
 import {usePokemonConst} from "../hook/PokemonConst";
 import useToken from "../hook/useToken";
 
-const NewPokemon = (props: { open: boolean, onClose: () => void, setPokemon: (pokemon: Pokemon) => void, isBuild: boolean, buildId: number }) => {
+const defaultPokemonList: [number, string][] = [[0, "ポケモンの選択なし"]]
+const defaultMove: [number, string] = [0, "技の選択なし"]
+const defaultValue3: PokemonValue = {
+    a: 1, b: 1, c: 1, d: 1, h: 1, s: 1
+}
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL!
+
+const NewPokemon = React.memo(function NewPokemon(props: { open: boolean, onClose: () => void, setPokemon: (pokemon: Pokemon) => void, isBuild: boolean, buildId: number }) {
     const {token} = useToken()
     const [IvHp, setIvHp] = useState<number>(31)
     const [IvAttack, setIvAttack] = useState<number>(31)
@@ -34,19 +41,16 @@ const NewPokemon = (props: { open: boolean, onClose: () => void, setPokemon: (po
     const [EvSpAttack, setEvSpAttack] = useState<number>(0)
     const [EvSpDefense, setEvSpDefense] = useState<number>(0)
     const [EvSpeed, setEvSpeed] = useState<number>(0)
-    const [move1, setMove1] = useState<[number, string]>([0, "選択なし"])
-    const [move2, setMove2] = useState<[number, string]>([0, "選択なし"])
-    const [move3, setMove3] = useState<[number, string]>([0, "選択なし"])
-    const [move4, setMove4] = useState<[number, string]>([0, "選択なし"])
+    const [move1, setMove1] = useState<[number, string]>(defaultMove)
+    const [move2, setMove2] = useState<[number, string]>(defaultMove)
+    const [move3, setMove3] = useState<[number, string]>(defaultMove)
+    const [move4, setMove4] = useState<[number, string]>(defaultMove)
     const [pokemonId, setPokemonId] = useState<number>(0)
     const {moveList} = usePokemonConst()
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL!
     const sum = EvHp + EvAttack + EvDefense + EvSpAttack + EvSpDefense + EvSpeed
-    const [pokemonList, setPokemonList] = useState<[number, string][]>([])
+    const [pokemonList, setPokemonList] = useState<[number, string][]>(defaultPokemonList)
     const [isLoading, setIsLoading] = useState(false)
-    const defaultValue3: PokemonValue = {
-        a: 1, b: 1, c: 1, d: 1, h: 1, s: 1
-    }
+
 
     const createOption = (value: number, label: string): selectItem2 => ({
         value,
@@ -66,10 +70,10 @@ const NewPokemon = (props: { open: boolean, onClose: () => void, setPokemon: (po
         setEvSpAttack(0)
         setEvSpDefense(0)
         setEvSpeed(0)
-        setMove1([0, "選択なし"])
-        setMove2([0, "選択なし"])
-        setMove3([0, "選択なし"])
-        setMove4([0, "選択なし"])
+        setMove1(defaultMove)
+        setMove2(defaultMove)
+        setMove3(defaultMove)
+        setMove4(defaultMove)
         setPokemonId(0)
     }
 
@@ -83,7 +87,7 @@ const NewPokemon = (props: { open: boolean, onClose: () => void, setPokemon: (po
                 console.log(reason)
             }
         )
-    }, [baseUrl])
+    }, [])
 
     async function savePokemon() {
         setIsLoading(true)
@@ -215,6 +219,6 @@ const NewPokemon = (props: { open: boolean, onClose: () => void, setPokemon: (po
             <Loading isLoading={isLoading}/>
         </>
     )
-}
+})
 
 export default NewPokemon
