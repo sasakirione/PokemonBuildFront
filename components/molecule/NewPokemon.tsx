@@ -1,4 +1,15 @@
-import {Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle} from "@mui/material";
+import {
+    Button,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogContentText,
+    DialogTitle,
+    Grid,
+    List,
+    useMediaQuery,
+    useTheme
+} from "@mui/material";
 import Select from "react-select";
 import React, {useEffect, useState} from "react";
 import {
@@ -50,6 +61,8 @@ const NewPokemon = React.memo(function NewPokemon(props: { open: boolean, onClos
     const sum = EvHp + EvAttack + EvDefense + EvSpAttack + EvSpDefense + EvSpeed
     const [pokemonList, setPokemonList] = useState<[number, string][]>(defaultPokemonList)
     const [isLoading, setIsLoading] = useState(false)
+    const theme = useTheme();
+    const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
 
     const createOption = (value: number, label: string): selectItem2 => ({
@@ -179,37 +192,54 @@ const NewPokemon = React.memo(function NewPokemon(props: { open: boolean, onClos
                 open={props.open}
                 keepMounted
                 onClose={props.onClose}
-                fullWidth={true}
+                fullScreen={fullScreen}
+                maxWidth={"xl"}
+                className={"dialog-new-pokemon"}
             >
                 <DialogTitle>ポケモンを新規登録する</DialogTitle>
                 <DialogContent
-                    style={{height: '450px'}}
+                    style={{height: '500px'}}
                 >
-                    <div className="new-pokemon-contents">
-                        <DialogContentText>ポケモンの選択</DialogContentText>
-                        <Select className="pokemon-select" isSearchable
-                                options={pokemonList!.map(pokemon => createOption(pokemon[0], pokemon[1]))}
-                                onChange={row => setPokemonId(row?.value!)}></Select>
-                    </div>
-                    <div className="new-pokemon-contents">
-                        <DialogContentText>個体値</DialogContentText>
-                        <StatusForm defaultValues={Iv6V} setHp={setIvHp} setAttack={setIvAttack}
-                                    setDefense={setIvDefense}
-                                    setSpAttack={setIvSpAttack} setSpDefense={setIvSpDefense} setSpeed={setIvSpeed}
-                                    sum={0} statusType={"IV"} isTab={false} pokemon={null}/>
-                    </div>
-                    <div className="new-pokemon-contents">
-                        <DialogContentText>努力値</DialogContentText>
-                        <StatusForm defaultValues={zeroValue} setHp={setEvHp} setAttack={setEvAttack}
-                                    setDefense={setEvDefense}
-                                    setSpAttack={setEvSpAttack} setSpDefense={setEvSpDefense} setSpeed={setEvSpeed}
-                                    sum={sum} statusType={"EV"} isTab={false} pokemon={null}/>
-                    </div>
-                    <div className="new-pokemon-contents">
-                        <DialogContentText>わざ</DialogContentText>
-                        <MoveForm moveList={moveList} moves={[move1, move2, move3, move4]}
-                                  setMoves={[setMove1, setMove2, setMove3, setMove4]}/>
-                    </div>
+                    <Grid container spacing={2} direction="row" justifyContent="center" alignItems="stretch">
+                        <Grid item xs={12} sm={6}>
+                            <div className="new-pokemon-contents">
+                                <DialogContentText>ポケモンの選択</DialogContentText>
+                                <List>
+                                    <Select className="pokemon-select" isSearchable
+                                            options={pokemonList!.map(pokemon => createOption(pokemon[0], pokemon[1]))}
+                                            onChange={row => setPokemonId(row?.value!)}></Select>
+                                </List>
+                            </div>
+                        </Grid>
+                        <Grid item xs={12} sm={6}>
+                            <div className="new-pokemon-contents">
+                                <DialogContentText>わざ</DialogContentText>
+                                <MoveForm moveList={moveList} moves={[move1, move2, move3, move4]}
+                                          setMoves={[setMove1, setMove2, setMove3, setMove4]}/>
+                            </div>
+                        </Grid>
+                        <Grid item xs={12} sm={6}>
+                            <div className="new-pokemon-contents">
+                                <DialogContentText>個体値</DialogContentText>
+                                <StatusForm defaultValues={Iv6V} setHp={setIvHp} setAttack={setIvAttack}
+                                            setDefense={setIvDefense}
+                                            setSpAttack={setIvSpAttack} setSpDefense={setIvSpDefense}
+                                            setSpeed={setIvSpeed}
+                                            sum={0} statusType={"IV"} isTab={false} pokemon={null}/>
+                            </div>
+                        </Grid>
+                        <Grid item xs={12} sm={6}>
+                            <div className="new-pokemon-contents">
+                                <DialogContentText>努力値</DialogContentText>
+                                <StatusForm defaultValues={zeroValue} setHp={setEvHp} setAttack={setEvAttack}
+                                            setDefense={setEvDefense}
+                                            setSpAttack={setEvSpAttack} setSpDefense={setEvSpDefense}
+                                            setSpeed={setEvSpeed}
+                                            sum={sum} statusType={"EV"} isTab={false} pokemon={null}/>
+                            </div>
+                        </Grid>
+
+                    </Grid>
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={props.onClose}>Cancel</Button>

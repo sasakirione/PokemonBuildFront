@@ -48,40 +48,40 @@ const BuildPage: NextPage = () => {
         setPokemonList([...pokemonList, newPokemon])
     }
 
-    if (isLoading || isLoadingPokemon || selectedBuild.id == 0) {
-        return (<Loading isLoading={true}/>)
-    }
-
     if (!isAuthenticated) {
         return (<div>
             ログインが必要です！
         </div>)
-    } else {
-        return (
-            <>
-                <PokeBuildHead title="構築"/>
-                <div className="left_right">
-                    <div className="boxContainer">
-                        <HeadLineText text={selectedBuild.name}/>
-                        <BuildList selectBuild={selectedBuild} setSelectBuild={setSelectedBuild} builds={builds}
-                                   setBuilds={setBuilds}/>
-                    </div>
-                    <div>
-                        <Button variant="outlined" color="success" className={"head-button"}
-                                onClick={handleClickOpenPublic}>構築公開設定</Button>
-                        <Button variant="outlined" color="success" className={"head-button"}
-                                onClick={handleClickOpenNewPokemon}>ポケモンを追加</Button>
-                    </div>
-                </div>
-                <PokemonList pokemonList={pokemonList} pokemonListFunc={setPokemonList}
-                             removePokemon={removePokemon}></PokemonList>
-                <NewPokemon
-                    open={isOpenNewPokemonScreen} onClose={handleCloseNewPokemon} setPokemon={addPokemon} isBuild={true}
-                    buildId={selectedBuild.id}/>
-                <BuildPrivacyEdit open={isOpenPublicScreen} onClose={handleClosePublic} buildId={selectedBuild.id}/>
-            </>
-        )
     }
+
+    if (isLoading || isLoadingPokemon || selectedBuild.id == 0) {
+        return (<Loading isLoading={true}/>)
+    }
+
+    return (
+        <>
+            <PokeBuildHead title="構築"/>
+            <div className="left_right">
+                <div className="boxContainer">
+                    <HeadLineText text={selectedBuild.name}/>
+                    <BuildList selectBuild={selectedBuild} setSelectBuild={setSelectedBuild} builds={builds}
+                               setBuilds={setBuilds}/>
+                </div>
+                <div>
+                    <Button variant="outlined" color="success" className={"head-button"}
+                            onClick={handleClickOpenPublic}>構築公開設定</Button>
+                    <Button variant="outlined" color="success" className={"head-button"}
+                            onClick={handleClickOpenNewPokemon}>ポケモンを追加</Button>
+                </div>
+            </div>
+            <PokemonList pokemonList={pokemonList} pokemonListFunc={setPokemonList}
+                         removePokemon={removePokemon}></PokemonList>
+            <NewPokemon
+                open={isOpenNewPokemonScreen} onClose={handleCloseNewPokemon} setPokemon={addPokemon} isBuild={true}
+                buildId={selectedBuild.id}/>
+            <BuildPrivacyEdit open={isOpenPublicScreen} onClose={handleClosePublic} buildId={selectedBuild.id}/>
+        </>
+    )
 }
 
 export default BuildPage

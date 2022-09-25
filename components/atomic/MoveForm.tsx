@@ -16,16 +16,20 @@ export const MoveForm = (props: {
         <List>
             <Select isSearchable options={moveList?.map(move => createOption(move[0], move[1]))}
                     value={createOption(moves[0][0], moves[0][1])}
-                    onChange={value => setMoves[0]([value?.value!, value?.label!])}/>
+                    onChange={value => setMoves[0]([value?.value!, value?.label!])}
+                    styles={{menu: provided => ({...provided, zIndex: 9999})}}/>
             <Select isSearchable options={moveList?.map(move => createOption(move[0], move[1]))}
                     value={createOption(moves[1][0], moves[1][1])}
-                    onChange={value => setMoves[1]([value?.value!, value?.label!])}/>
+                    onChange={value => setMoves[1]([value?.value!, value?.label!])}
+                    styles={{menu: provided => ({...provided, zIndex: 9999})}}/>
             <Select isSearchable options={moveList?.map(move => createOption(move[0], move[1]))}
                     value={createOption(moves[2][0], moves[2][1])}
-                    onChange={value => setMoves[2]([value?.value!, value?.label!])}/>
+                    onChange={value => setMoves[2]([value?.value!, value?.label!])}
+                    styles={{menu: provided => ({...provided, zIndex: 9999})}}/>
             <Select isSearchable options={moveList?.map(move => createOption(move[0], move[1]))}
                     value={createOption(moves[3][0], moves[3][1])}
-                    onChange={value => setMoves[3]([value?.value!, value?.label!])}/>
+                    onChange={value => setMoves[3]([value?.value!, value?.label!])}
+                    styles={{menu: provided => ({...provided, zIndex: 9999})}}/>
         </List>
     )
 }

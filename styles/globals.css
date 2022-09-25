@@ -36,6 +36,10 @@ a {
     z-index: 2 !important;
 }
 
+.under-elements {
+    z-index: -1;
+}
+
 .new-pokemon-contents {
     margin-bottom: 30px !important;
 }
@@ -126,6 +130,10 @@ a {
     font-size: 120% !important;
 }
 
+.dialog-new-pokemon {
+    max-width: 100% !important;
+}
+
 .footer {
     color: #ebf6f7;
     background: #a9ceec;
@@ -135,7 +143,6 @@ a {
 }
 
 /*
-
 @media (prefers-color-scheme: dark) {
     html {
         color-scheme: dark;
