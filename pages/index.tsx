@@ -17,11 +17,12 @@ const Home: NextPage = () => {
                             <Typography variant="h5" component="div">
                                 ぽけっとビルドとは
                             </Typography>
-                            <div>
-                                ぽけっとビルドはポケモンの構築作成や育成済みポケモンの管理を支援するためのWebサービスです。<br/>
-                                まだ機能は少ないですが、これからどんどん機能を追加予定です。<br/>
-                                <br/>
-                            </div>
+                            <List>
+                                <ListItem>
+                                    ぽけっとビルドはポケモン対戦を支援するためのWebサービスです。<br/>
+                                    まだ機能は少ないですが、これからどんどん機能を追加予定です。
+                                </ListItem>
+                            </List>
                         </CardContent>
                     </Card>
                 </Grid>
@@ -52,14 +53,15 @@ const Home: NextPage = () => {
                             <Typography variant="h5" component="div">
                                 連絡先等
                             </Typography>
-                            <div>
-                                管理人Twitter：@sasakirione2 (不具合の報告、要望等はこちらまで)<br/>
-                                Git(フロントエンド)：<a
-                                href="https://github.com/sasakirione/PokemonBuildFront">PokemonBuildFront</a><br/>
-                                Git(バックエンド)：<a
-                                href="https://github.com/sasakirione/PokemonBuildBack">PokemonBuildBack</a><br/>
-                                ドキュメント：<a href="https://www.notion.so/9b55f8e9212c42c89be59e61b622b1fa">ぽけっとビルド</a><br/>
-                            </div>
+                            <List>
+                                <ListItem>管理人Twitter：@sasakirione2 (不具合の報告、要望等はこちらまで)</ListItem>
+                                <ListItem>Git(フロントエンド)：<a
+                                    href="https://github.com/sasakirione/PokemonBuildFront">PokemonBuildFront</a></ListItem>
+                                <ListItem>Git(バックエンド)：<a
+                                    href="https://github.com/sasakirione/PokemonBuildBack">PokemonBuildBack</a></ListItem>
+                                <ListItem>ドキュメント：<a
+                                    href="https://www.notion.so/9b55f8e9212c42c89be59e61b622b1fa">ぽけっとビルド</a></ListItem>
+                            </List>
                         </CardContent>
                     </Card>
                 </Grid>

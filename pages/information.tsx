@@ -75,6 +75,20 @@ const Information: NextPage = () => {
                     </CardContent>
                 </Card>
             </Grid>
+            <Grid item xs={12} lg={6}>
+                <Card className="info-card" variant="outlined">
+                    <Typography variant="h5" component="div" className="card-title">
+                        技術スタック
+                    </Typography>
+                    <CardContent>
+                        <List>
+                            <ListItem>フロントエンド： TypeScript, Next.js, Material-UI</ListItem>
+                            <ListItem>バックエンド： Kotlin, Ktor, Exposed, PostgreSQL</ListItem>
+                            <ListItem>クラウド： Auth0, Cloud SQL, Cloud Build, Cloud Run</ListItem>
+                        </List>
+                    </CardContent>
+                </Card>
+            </Grid>
         </Grid>
         {
             isOpenHistoryDetail && <Dialog open={isOpenHistoryDetail} onClose={handleCloseHistoryDetail}>
