@@ -48,13 +48,15 @@ const BuildPage: NextPage = () => {
         setPokemonList([...pokemonList, newPokemon])
     }
 
+    if (isLoading || isLoadingPokemon) {
+        return (<Loading isLoading={true}/>)
+    }
+
     if (!isAuthenticated) {
         return (<div>
             ログインが必要です！
         </div>)
-    }
-
-    if (isLoading || isLoadingPokemon || selectedBuild.id == 0) {
+    } else if (selectedBuild.id == 0) {
         return (<Loading isLoading={true}/>)
     }
 

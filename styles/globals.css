@@ -104,6 +104,7 @@ a {
     width: 95% !important;
     margin-left: auto !important;
     margin-right: auto !important;
+    border-radius: 20px !important;
 }
 
 .setting-section-header {
