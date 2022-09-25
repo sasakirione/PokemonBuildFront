@@ -135,6 +135,11 @@ a {
     max-width: 100% !important;
 }
 
+.move-list {
+    margin-left: 20px !important;
+    margin-bottom: 10px !important;
+}
+
 .footer-space {
     height: 30px !important;
 }

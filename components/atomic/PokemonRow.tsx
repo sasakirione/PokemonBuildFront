@@ -120,7 +120,7 @@ const PokemonList: NextPage<Props> = (props: Props) => {
             <TableRow>
                 <TableCell style={{paddingBottom: 0, paddingTop: 0}} colSpan={8}>
                     <Collapse in={openMoveList} timeout="auto" unmountOnExit>
-                        <Box>
+                        <Box className={"move-list"}>
                             <h4>わざ</h4>
                             {pokemon.moves.map(move => <Button variant="outlined" color="success"
                                                                key={move}>{move}</Button>)}
