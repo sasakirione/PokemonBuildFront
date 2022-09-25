@@ -20,6 +20,7 @@ function MyApp({Component, pageProps}: AppProps) {
             <PokemonConstProvider>
                 <Header/>
                 <Component {...pageProps} />
+                <div className="footer-space"></div>
                 <Footer/>
                 <Toaster/>
             </PokemonConstProvider>
