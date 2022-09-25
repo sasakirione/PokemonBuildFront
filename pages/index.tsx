@@ -1,8 +1,9 @@
 import Card from '@mui/material/Card';
 import type {NextPage} from 'next'
 import {PokeBuildHead} from "../components/atomic/PokeBuildHead";
-import {CardContent, Grid, Typography} from "@mui/material";
+import {CardContent, Grid, List, ListItem, ListItemText, Typography} from "@mui/material";
 import Image from "next/image";
+import React from "react";
 
 const Home: NextPage = () => {
     return (
@@ -10,63 +11,52 @@ const Home: NextPage = () => {
             <PokeBuildHead title="TOP"/>
             <Image src={"/back1.png"} width="1980px" height="400px" alt="山の上にぽけもんこうちくしえんの文字" layout='responsive'/>
             <Grid container spacing={2} direction="row" justifyContent="space-evenly" alignItems="stretch">
-                <Grid item xs={12} sm={6} lg={3}>
-                    <Card className="boxItem" variant="outlined">
-                        <CardContent>
-                            <Typography variant="h5" component="div">
-                                更新履歴
-                            </Typography>
-                            <div>
-                                2022/08/25：サービス開始<br/>
-                                2022/09/17: 機能追加<br/>
-                                {/* 育成済みポケモン一覧機能、S調整機能、複数構築機能を追加 */}
-                                2022/09/20: 機能追加<br/>
-                                {/* ニックネーム機能を追加、公開シェア機能を追加 */}
-                                2022/xx/xx: UIや動作を改善<br/>
-                            </div>
-                        </CardContent>
-                    </Card>
-                </Grid>
-                <Grid item xs={12} sm={6} lg={3}>
+                <Grid item xs={12} sm={6} lg={4}>
                     <Card className="boxItem" variant="outlined">
                         <CardContent>
                             <Typography variant="h5" component="div">
                                 ぽけっとビルドとは
                             </Typography>
                             <div>
-                                ぽけっとビルドはポケモンの構築作成を支援するためのWebサービスです。現在は育成済みポケモンの追加、構築の作成、Sの調整補助、構築公開、ニックネーム管理等の機能があります。<br/>
+                                ぽけっとビルドはポケモンの構築作成や育成済みポケモンの管理を支援するためのWebサービスです。<br/>
                                 まだ機能は少ないですが、これからどんどん機能を追加予定です。<br/>
                                 <br/>
                             </div>
                         </CardContent>
                     </Card>
                 </Grid>
-                <Grid item xs={12} sm={6} lg={3}>
+                <Grid item xs={12} sm={6} lg={4}>
                     <Card className="boxItem" variant="outlined">
                         <CardContent>
                             <Typography variant="h5" component="div">
-                                使用方法
+                                機能
                             </Typography>
-                            <div>
-                                1. 右上のログインボタンからログインを行う<br/>
-                                2. 構築画面が表示されたら右上のポケモンを追加ボタンを押す<br/>
-                                3. 必要項目を入力しOKを押すと保存されます<br/>
-                                4. 登録された構築情報は該当の項目をクリックすると編集画面がでます<br/>
-                            </div>
+                            <List>
+                                <ListItem>
+                                    <ListItemText primary="構築管理" secondary="複数構築の管理、構築のシェア"/>
+                                </ListItem>
+                                <ListItem>
+                                    <ListItemText primary="育成済みポケモン管理"
+                                                  secondary="3値や性格・道具・特性・ニックネーム・技の管理"/>
+                                </ListItem>
+                                <ListItem>
+                                    <ListItemText primary="調整支援" secondary="S調整支援"/>
+                                </ListItem>
+                            </List>
                         </CardContent>
                     </Card>
                 </Grid>
-                <Grid item xs={12} sm={6} lg={3}>
+                <Grid item xs={12} sm={6} lg={4}>
                     <Card className="boxItem" variant="outlined">
                         <CardContent>
                             <Typography variant="h5" component="div">
                                 連絡先等
                             </Typography>
                             <div>
-                                管理人Twitter：@sasakirione2<br/>
-                                Git(Front)：<a
+                                管理人Twitter：@sasakirione2 (不具合の報告、要望等はこちらまで)<br/>
+                                Git(フロントエンド)：<a
                                 href="https://github.com/sasakirione/PokemonBuildFront">PokemonBuildFront</a><br/>
-                                Git(Back)：<a
+                                Git(バックエンド)：<a
                                 href="https://github.com/sasakirione/PokemonBuildBack">PokemonBuildBack</a><br/>
                                 ドキュメント：<a href="https://www.notion.so/9b55f8e9212c42c89be59e61b622b1fa">ぽけっとビルド</a><br/>
                             </div>

@@ -74,9 +74,19 @@ a {
 }
 
 .boxItem {
-    height: 300px !important;
+    height: 350px !important;
     border-radius: 15px !important;
     margin: 10px !important;
+}
+
+.info-card {
+    height: 380px !important;
+    border-radius: 15px !important;
+    margin: 10px !important;
+}
+
+.card-title {
+    margin: 15px 0 0 15px !important;
 }
 
 .boxContainer {
