@@ -78,10 +78,11 @@ const BuildPage: NextPage = () => {
             </div>
             <PokemonList pokemonList={pokemonList} pokemonListFunc={setPokemonList}
                          removePokemon={removePokemon}></PokemonList>
-            <NewPokemon
-                open={isOpenNewPokemonScreen} onClose={handleCloseNewPokemon} setPokemon={addPokemon} isBuild={true}
-                buildId={selectedBuild.id}/>
-            <BuildPrivacyEdit open={isOpenPublicScreen} onClose={handleClosePublic} buildId={selectedBuild.id}/>
+            {isOpenNewPokemonScreen &&
+                <NewPokemon open={isOpenNewPokemonScreen} onClose={handleCloseNewPokemon} setPokemon={addPokemon}
+                            isBuild={true} buildId={selectedBuild.id}/>}
+            {isOpenPublicScreen &&
+                <BuildPrivacyEdit open={isOpenPublicScreen} onClose={handleClosePublic} buildId={selectedBuild.id}/>}
         </>
     )
 }

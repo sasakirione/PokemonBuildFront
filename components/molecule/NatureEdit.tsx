@@ -54,7 +54,8 @@ export function NatureEdit(props: { open: boolean, onClose: () => void, pokemon:
                 <List>
                     {getNatureList().map((nature, index) =>
                         <ListItemButton key={index} onClick={() => onClickItem(nature)}>
-                            <ListItemText primary={nature[0] + "：" + "↑" + nature[1] + " ↓" + nature[2]}></ListItemText>
+                            <ListItemText primary={nature[0]}
+                                          secondary={"↑" + nature[1] + " ↓" + nature[2]}></ListItemText>
                         </ListItemButton>
                     )}
                 </List>

@@ -29,6 +29,7 @@ function StatusForm(props: {
             semiSpeed: 0
         }, realSpeed: 0, scarf: {fastSpeed: 0, semiSpeed: 0}
     })
+    const [isHpEven, setIsHpEven] = useState(false)
 
     useEffect(() => {
             setValue(props.defaultValues)
@@ -42,6 +43,12 @@ function StatusForm(props: {
             setSpeedComparison(props.pokemon.getSpeedComparison(value.s))
         }
     }, [props.isTab, props.pokemon, tabIndex, value.s])
+
+    useEffect(() => {
+        if (props.pokemon != null) {
+            setIsHpEven(props.pokemon.isHpEven(value.h))
+        }
+    }, [props.pokemon, value.h])
 
     function setHpHandler(e: fieldType) {
         props.setHp(Number(e.target.value))
@@ -123,6 +130,7 @@ function StatusForm(props: {
                     <EffortPresetButtons onChange={setPresetValue}/>
                 }
                 {props.statusType == "EV" && sumWarning()}
+                {isHpEven && "HP実数値が偶数です。一般的にシングルバトルではHP実数値が奇数になるように調整します。"}
             </TabPanel>
             <TabPanel value="2">
                 <Grid container spacing={2}>
