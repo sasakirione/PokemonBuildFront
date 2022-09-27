@@ -88,7 +88,6 @@ const PokemonList: NextPage<Props> = (props: Props) => {
     }
 
     const clickRemove = () => {
-
         removePokemon(pokemon.personalId)
     };
 
@@ -111,7 +110,7 @@ const PokemonList: NextPage<Props> = (props: Props) => {
                 <TableCell onClick={handleClickOpenAbilityEdit}>{pokemon.ability}</TableCell>
                 <TableCell onClick={handleClickOpenGoodEdit}>{pokemon.good}</TableCell>
                 <TableCell onClick={handleClickOpenEffortEdit}>{pokemon.getEffortText()}</TableCell>
-                <TableCell>{pokemon.getRealSpeed()}</TableCell>
+                <TableCell>{pokemon.getRealText()}</TableCell>
                 <TableCell>
                     <DeleteIcon
                         onClick={clickRemove}
@@ -121,7 +120,7 @@ const PokemonList: NextPage<Props> = (props: Props) => {
             <TableRow>
                 <TableCell style={{paddingBottom: 0, paddingTop: 0}} colSpan={8}>
                     <Collapse in={openMoveList} timeout="auto" unmountOnExit>
-                        <Box>
+                        <Box className={"move-list"}>
                             <h4>わざ</h4>
                             {pokemon.moves.map(move => <Button variant="outlined" color="success"
                                                                key={move}>{move}</Button>)}

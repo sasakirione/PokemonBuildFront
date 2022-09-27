@@ -1,4 +1,15 @@
-import {Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle} from "@mui/material";
+import {
+    Button,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogContentText,
+    DialogTitle,
+    Grid,
+    List,
+    useMediaQuery,
+    useTheme
+} from "@mui/material";
 import Select from "react-select";
 import React, {useEffect, useState} from "react";
 import {
@@ -20,7 +31,14 @@ import {Iv6V, zeroValue} from "../../domain/PokemonData";
 import {usePokemonConst} from "../hook/PokemonConst";
 import useToken from "../hook/useToken";
 
-const NewPokemon = (props: { open: boolean, onClose: () => void, setPokemon: (pokemon: Pokemon) => void, isBuild: boolean, buildId: number }) => {
+const defaultPokemonList: [number, string][] = [[0, "ポケモンの選択なし"]]
+const defaultMove: [number, string] = [0, "技の選択なし"]
+const defaultValue3: PokemonValue = {
+    a: 1, b: 1, c: 1, d: 1, h: 1, s: 1
+}
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL!
+
+const NewPokemon = React.memo(function NewPokemon(props: { open: boolean, onClose: () => void, setPokemon: (pokemon: Pokemon) => void, isBuild: boolean, buildId: number }) {
     const {token} = useToken()
     const [IvHp, setIvHp] = useState<number>(31)
     const [IvAttack, setIvAttack] = useState<number>(31)
@@ -34,19 +52,18 @@ const NewPokemon = (props: { open: boolean, onClose: () => void, setPokemon: (po
     const [EvSpAttack, setEvSpAttack] = useState<number>(0)
     const [EvSpDefense, setEvSpDefense] = useState<number>(0)
     const [EvSpeed, setEvSpeed] = useState<number>(0)
-    const [move1, setMove1] = useState<[number, string]>([0, "選択なし"])
-    const [move2, setMove2] = useState<[number, string]>([0, "選択なし"])
-    const [move3, setMove3] = useState<[number, string]>([0, "選択なし"])
-    const [move4, setMove4] = useState<[number, string]>([0, "選択なし"])
+    const [move1, setMove1] = useState<[number, string]>(defaultMove)
+    const [move2, setMove2] = useState<[number, string]>(defaultMove)
+    const [move3, setMove3] = useState<[number, string]>(defaultMove)
+    const [move4, setMove4] = useState<[number, string]>(defaultMove)
     const [pokemonId, setPokemonId] = useState<number>(0)
-    const {moveList} = usePokemonConst()
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL!
+    const {moveList, setToast} = usePokemonConst()
     const sum = EvHp + EvAttack + EvDefense + EvSpAttack + EvSpDefense + EvSpeed
-    const [pokemonList, setPokemonList] = useState<[number, string][]>([])
+    const [pokemonList, setPokemonList] = useState<[number, string][]>(defaultPokemonList)
     const [isLoading, setIsLoading] = useState(false)
-    const defaultValue3: PokemonValue = {
-        a: 1, b: 1, c: 1, d: 1, h: 1, s: 1
-    }
+    const theme = useTheme();
+    const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
+
 
     const createOption = (value: number, label: string): selectItem2 => ({
         value,
@@ -66,10 +83,10 @@ const NewPokemon = (props: { open: boolean, onClose: () => void, setPokemon: (po
         setEvSpAttack(0)
         setEvSpDefense(0)
         setEvSpeed(0)
-        setMove1([0, "選択なし"])
-        setMove2([0, "選択なし"])
-        setMove3([0, "選択なし"])
-        setMove4([0, "選択なし"])
+        setMove1(defaultMove)
+        setMove2(defaultMove)
+        setMove3(defaultMove)
+        setMove4(defaultMove)
         setPokemonId(0)
     }
 
@@ -83,7 +100,7 @@ const NewPokemon = (props: { open: boolean, onClose: () => void, setPokemon: (po
                 console.log(reason)
             }
         )
-    }, [baseUrl])
+    }, [])
 
     async function savePokemon() {
         setIsLoading(true)
@@ -154,6 +171,7 @@ const NewPokemon = (props: { open: boolean, onClose: () => void, setPokemon: (po
             data.pokemonId
         )
             .catch((reason: any) => {
+                setToast("ポケモンの追加に失敗しました", "error")
                 console.log(reason)
                 return 0
             })
@@ -175,37 +193,54 @@ const NewPokemon = (props: { open: boolean, onClose: () => void, setPokemon: (po
                 open={props.open}
                 keepMounted
                 onClose={props.onClose}
-                fullWidth={true}
+                fullScreen={fullScreen}
+                maxWidth={"xl"}
+                className={"dialog-new-pokemon"}
             >
                 <DialogTitle>ポケモンを新規登録する</DialogTitle>
                 <DialogContent
-                    style={{height: '450px'}}
+                    style={{height: '500px'}}
                 >
-                    <div className="new-pokemon-contents">
-                        <DialogContentText>ポケモンの選択</DialogContentText>
-                        <Select className="pokemon-select" isSearchable
-                                options={pokemonList!.map(pokemon => createOption(pokemon[0], pokemon[1]))}
-                                onChange={row => setPokemonId(row?.value!)}></Select>
-                    </div>
-                    <div className="new-pokemon-contents">
-                        <DialogContentText>個体値</DialogContentText>
-                        <StatusForm defaultValues={Iv6V} setHp={setIvHp} setAttack={setIvAttack}
-                                    setDefense={setIvDefense}
-                                    setSpAttack={setIvSpAttack} setSpDefense={setIvSpDefense} setSpeed={setIvSpeed}
-                                    sum={0} statusType={"IV"} isTab={false} pokemon={null}/>
-                    </div>
-                    <div className="new-pokemon-contents">
-                        <DialogContentText>努力値</DialogContentText>
-                        <StatusForm defaultValues={zeroValue} setHp={setEvHp} setAttack={setEvAttack}
-                                    setDefense={setEvDefense}
-                                    setSpAttack={setEvSpAttack} setSpDefense={setEvSpDefense} setSpeed={setEvSpeed}
-                                    sum={sum} statusType={"EV"} isTab={false} pokemon={null}/>
-                    </div>
-                    <div className="new-pokemon-contents">
-                        <DialogContentText>わざ</DialogContentText>
-                        <MoveForm moveList={moveList} moves={[move1, move2, move3, move4]}
-                                  setMoves={[setMove1, setMove2, setMove3, setMove4]}/>
-                    </div>
+                    <Grid container spacing={2} direction="row" justifyContent="center" alignItems="stretch">
+                        <Grid item xs={12} sm={6}>
+                            <div className="new-pokemon-contents">
+                                <DialogContentText>ポケモンの選択</DialogContentText>
+                                <List>
+                                    <Select className="pokemon-select" isSearchable
+                                            options={pokemonList!.map(pokemon => createOption(pokemon[0], pokemon[1]))}
+                                            onChange={row => setPokemonId(row?.value!)}></Select>
+                                </List>
+                            </div>
+                        </Grid>
+                        <Grid item xs={12} sm={6}>
+                            <div className="new-pokemon-contents">
+                                <DialogContentText>わざ</DialogContentText>
+                                <MoveForm moveList={moveList} moves={[move1, move2, move3, move4]}
+                                          setMoves={[setMove1, setMove2, setMove3, setMove4]}/>
+                            </div>
+                        </Grid>
+                        <Grid item xs={12} sm={6}>
+                            <div className="new-pokemon-contents">
+                                <DialogContentText>個体値</DialogContentText>
+                                <StatusForm defaultValues={Iv6V} setHp={setIvHp} setAttack={setIvAttack}
+                                            setDefense={setIvDefense}
+                                            setSpAttack={setIvSpAttack} setSpDefense={setIvSpDefense}
+                                            setSpeed={setIvSpeed}
+                                            sum={0} statusType={"IV"} isTab={false} pokemon={null}/>
+                            </div>
+                        </Grid>
+                        <Grid item xs={12} sm={6}>
+                            <div className="new-pokemon-contents">
+                                <DialogContentText>努力値</DialogContentText>
+                                <StatusForm defaultValues={zeroValue} setHp={setEvHp} setAttack={setEvAttack}
+                                            setDefense={setEvDefense}
+                                            setSpAttack={setEvSpAttack} setSpDefense={setEvSpDefense}
+                                            setSpeed={setEvSpeed}
+                                            sum={sum} statusType={"EV"} isTab={false} pokemon={null}/>
+                            </div>
+                        </Grid>
+
+                    </Grid>
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={props.onClose}>Cancel</Button>
@@ -215,6 +250,6 @@ const NewPokemon = (props: { open: boolean, onClose: () => void, setPokemon: (po
             <Loading isLoading={isLoading}/>
         </>
     )
-}
+})
 
 export default NewPokemon

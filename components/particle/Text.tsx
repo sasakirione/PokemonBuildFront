@@ -10,6 +10,7 @@ export const HeadLineText = (props: HeadLineTextProps) => {
         <Typography
             variant="h4"
             component="h2"
+            className="headline"
         >
             {text}
         </Typography>

@@ -38,7 +38,7 @@ const PokemonPage: NextPage = () => {
                     <div className="boxContainer">
                         <HeadLineText text="育成済みポケモン一覧"/>
                     </div>
-                    <Button variant="outlined" color="success"
+                    <Button variant="outlined" color="success" className={"head-button"}
                             onClick={openNewPokemonScreen}>ポケモンを追加</Button>
                     <NewPokemon open={isOpenNew} onClose={closeNewPokemonScreen} setPokemon={reloadPokemon}
                                 isBuild={false} buildId={0}/>

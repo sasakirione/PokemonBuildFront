@@ -11,11 +11,14 @@ import {usePokemonConst} from "../../components/hook/PokemonConst";
 import PokemonListPublic from "../../components/molecule/PokemonListPublic";
 import {Loading} from "../../components/particle/Loading";
 
+const defaultBuild = {comment: "なし", id: 0, name: "デフォルトの構築"}
+const defaultPokemonList: Pokemon[] = []
+
 const PublicBuild: NextPage = () => {
     const router = useRouter()
     const {id} = router.query
-    const [build, setBuild] = useState<BuildObject>({comment: "なし", id: 0, name: "デフォルトの構築"})
-    const [pokemonList, setPokemonList] = useState<Pokemon[]>([])
+    const [build, setBuild] = useState<BuildObject>(defaultBuild)
+    const [pokemonList, setPokemonList] = useState<Pokemon[]>(defaultPokemonList)
     const [isUsedNickname, setIsUsedNickname] = useState(false)
     const [isLoading, setIsLoading] = useState(true)
     const {setToast} = usePokemonConst()
@@ -46,7 +49,7 @@ const PublicBuild: NextPage = () => {
                     <HeadLineText text={build.name}/>
                 </div>
                 <div>
-                    <Button variant="contained"
+                    <Button variant="contained" className={"head-button"}
                             onClick={() => setIsUsedNickname(!isUsedNickname)}>ポケモン名/ニックネーム切替</Button>
                 </div>
             </div>

@@ -5,6 +5,7 @@ import {Button, Dialog, DialogActions, DialogContent, DialogTitle} from "@mui/ma
 import StatusForm from "../atomic/StatusForm";
 import {Loading} from "../particle/Loading";
 import useToken from "../hook/useToken";
+import {usePokemonConst} from "../hook/PokemonConst";
 
 export function EffortEdit(props: { open: boolean, onClose: () => void, pokemon: Pokemon }) {
     const {h, a, b, c, d, s} = props.pokemon.status.effort
@@ -17,7 +18,9 @@ export function EffortEdit(props: { open: boolean, onClose: () => void, pokemon:
     const [spAttack, setSpAttack] = useState<number>(props.pokemon.status.effort.c)
     const [spDefense, setSpDefense] = useState<number>(props.pokemon.status.effort.d)
     const [speed, setSpeed] = useState<number>(props.pokemon.status.effort.s)
+    const {setToast} = usePokemonConst()
     const [isLoading, setIsLoading] = useState(false)
+
     let sum = (hp + attack + defense + spAttack + spDefense + speed)
 
     useEffect(() => {
@@ -56,7 +59,11 @@ export function EffortEdit(props: { open: boolean, onClose: () => void, pokemon:
                 itemSelect: 2
             })
         }
-        await fetch(baseUrl + "/v1/pokemon-build/grown-pokemons/" + props.pokemon.personalId, parameter)
+        await fetch(baseUrl + "/v1/pokemon-build/grown-pokemons/" + props.pokemon.personalId, parameter).catch(
+            (reason) => {
+                setToast("努力値の更新に失敗しました。", "error")
+            }
+        )
         setIsLoading(false)
     }
 

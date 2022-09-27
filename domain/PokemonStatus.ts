@@ -175,6 +175,9 @@ class PokemonStatus {
         return nature
     }
 
+    calculationHp(effort: number): number {
+        return this.calculateRealH(this.base.h, effort, this.individual.h)
+    }
 
 }
 

@@ -11,12 +11,12 @@ interface PokemonListProps {
 }
 
 
-const PokemonList = (props: PokemonListProps) => {
+const PokemonList = React.memo(function PokemonList(props: PokemonListProps) {
     const pokemonList = props.pokemonList
     const {setting} = usePokemonConst()
 
     return (
-        <TableContainer component={Paper}>
+        <TableContainer component={Paper} className="table-container">
             <Table aria-label="collapsible table">
                 <TableHead>
                     <TableRow>
@@ -27,7 +27,7 @@ const PokemonList = (props: PokemonListProps) => {
                         <TableCell>特性</TableCell>
                         <TableCell>道具</TableCell>
                         <TableCell>努力値</TableCell>
-                        <TableCell>S実数値</TableCell>
+                        <TableCell>実数値</TableCell>
                         <TableCell>削除</TableCell>
                     </TableRow>
                 </TableHead>
@@ -41,6 +41,6 @@ const PokemonList = (props: PokemonListProps) => {
             </Table>
         </TableContainer>
     )
-}
+})
 
 export default PokemonList

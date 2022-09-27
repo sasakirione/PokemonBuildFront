@@ -2,6 +2,7 @@ import {useEffect, useState} from "react";
 import {BuildObject} from "../../type/type";
 import useBuildPokemon from "./useBuildPokemon";
 import useToken from "./useToken";
+import {usePokemonConst} from "./PokemonConst";
 
 const useBuilds = () => {
     const [builds, setBuilds] = useState<BuildObject[]>([{comment: "なし", id: 0, name: "デフォルトの構築"}])
@@ -10,6 +11,7 @@ const useBuilds = () => {
     const {isAuthenticated, token} = useToken()
     const [isBuildLoading, setIsBuildLoading] = useState(false)
     const [isDone, setIsDone] = useState(false)
+    const {setToast} = usePokemonConst()
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL!
 
     useEffect(() => {
@@ -30,10 +32,11 @@ const useBuilds = () => {
                 })
                 .catch((reason: any) => {
                     console.log(reason)
+                    setToast("構築一覧の取得に失敗しました。リロードしてください。", "error")
                     setIsBuildLoading(false)
                 })
         }
-    }, [baseUrl, builds, isAuthenticated, isDone, token])
+    }, [baseUrl, builds, isAuthenticated, isDone, setToast, token])
 
     return {
         builds,

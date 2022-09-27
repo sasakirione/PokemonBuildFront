@@ -59,7 +59,8 @@ const SettingPage: NextPage = () => {
                     <HeadLineText text="ユーザー設定"/>
                 </div>
             </div>
-            <Grid container spacing={2} direction="row" justifyContent="center" alignItems="stretch">
+            <Grid container spacing={2} direction="column" justifyContent="center" alignItems="stretch"
+                  className="setting-container">
                 <Grid item xs={12} sm={6} lg={4}>
                     <Card className={"setting-section"} variant="outlined">
                         <Typography variant={"h4"} className={"setting-section-header"}>ユーザー情報設定</Typography>
@@ -68,6 +69,9 @@ const SettingPage: NextPage = () => {
                         <hr/>
                         <div className={"setting-section-contents"}>メールアドレス</div>
                         <div className={"setting-section-contents"}>{user?.email ?? "メールアドレスの設定がありません"}</div>
+                        <hr/>
+                        <div className={"setting-section-contents"}>認証方法</div>
+                        <div className={"setting-section-contents"}>{user?.sub?.split('|')[0] ?? "設定がありません"}</div>
                     </Card>
                 </Grid>
                 <Grid item xs={12} sm={6} lg={4}>
@@ -76,20 +80,22 @@ const SettingPage: NextPage = () => {
                         <FormControlLabel
                             control={<Switch checked={isUsedNickname} onChange={changeUsedNickname}/>}
                             label="ニックネームを使う" className={"setting-section-contents"}/>
-                        <div className={"setting-section-contents"}>ポケモンの表示に使う名前をポケモン名からニックネームに変更します。</div>
-                        <div
-                            className={"setting-section-contents"}>ニックネームに切り替えた場合でもニックネームが設定されていない場合は従来通りポケモン名で表示します。
+                        <div className={"setting-section-contents"}>
+                            ポケモンの表示に使う名前をポケモン名からニックネームに変更します。
+                        </div>
+                        <div className={"setting-section-contents"}>
+                            ニックネームに切り替えた場合でもニックネームが設定されていない場合は従来通りポケモン名で表示します。
                         </div>
                         <hr/>
                         <FormControlLabel
                             control={<Switch/>}
-                            label="〇〇を使用する"
+                            label="俗称を使用する(調整中)"
                             className={"setting-section-contents"}/>
-                        <div className={"setting-section-contents"}>××時に〇〇を使用します。</div>
+                        <div className={"setting-section-contents"}>ポケモンの名前を俗称にします。現在調整中。</div>
                     </Card>
                 </Grid>
+                <Button onClick={clickSave}>Save</Button>
             </Grid>
-            <Button onClick={clickSave}>Save</Button>
         </>)
     } else {
         return (<div>ログインが必要です！</div>)

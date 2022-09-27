@@ -62,6 +62,14 @@ class Pokemon {
     getIVText() {
         return this.status.individual.h + "," + this.status.individual.a + "," + this.status.individual.b + "," + this.status.individual.c + "," + this.status.individual.d + "," + this.status.individual.s
     }
+
+    getRealText() {
+        return this.status.real.h + "," + this.status.real.a + "," + this.status.real.b + "," + this.status.real.c + "," + this.status.real.d + "," + this.getRealSpeed()
+    }
+
+    isHpEven(effort: number): boolean {
+        return this.status.calculationHp(effort) % 2 == 0
+    }
 }
 
 export default Pokemon

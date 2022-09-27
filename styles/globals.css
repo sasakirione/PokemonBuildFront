@@ -4,6 +4,7 @@ body {
     margin: 0;
     font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+    background-color: #eaeaea;
 }
 
 .one {
@@ -32,19 +33,23 @@ a {
 }
 
 .pokemon-select {
-    z-index: 2;
+    z-index: 2 !important;
+}
+
+.under-elements {
+    z-index: -1;
 }
 
 .new-pokemon-contents {
-    margin-bottom: 30px;
+    margin-bottom: 30px !important;
 }
 
 .value-preset-button {
-    margin-right: 5px;
+    margin-right: 5px !important;
 }
 
 .logo {
-    margin-right: 15px;
+    margin-right: 15px !important;
 }
 
 .left_right {
@@ -69,11 +74,19 @@ a {
 }
 
 .boxItem {
-    height: 300px;
+    height: 350px !important;
+    border-radius: 15px !important;
+    margin: 10px !important;
+}
+
+.info-card {
+    height: 400px !important;
+    border-radius: 15px !important;
+    margin: 10px !important;
 }
 
 .boxContainer {
-    display: flex;
+    display: flex !important;
 }
 
 .mainPage {
@@ -84,18 +97,57 @@ a {
     justify-content: center;
 }
 
+.headline {
+    margin: 20px !important;
+}
+
+.head-button {
+    margin-top: 20px !important;
+    margin-bottom: 20px !important;
+}
+
+.table-container {
+    width: 95% !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    border-radius: 20px !important;
+}
+
 .setting-section-header {
-    margin: 5px;
+    margin: 15px !important;
 }
 
 .setting-section {
-    margin-bottom: 20px;
-    height: 300px;
+    margin-bottom: 20px !important;
+    height: 300px !important;
+    transition: 0.3s !important;
+    box-shadow: 0 8px 20px -12px rgba(0, 0, 0, 0.3) !important;
+    border-radius: 20px !important;
 }
 
 .setting-section-contents {
-    margin-right: 10px;
-    margin-left: 10px;
+    margin-right: 10px !important;
+    margin-left: 10px !important;
+}
+
+.setting-container {
+    width: 80% !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    font-size: 120% !important;
+}
+
+.dialog-new-pokemon {
+    max-width: 100% !important;
+}
+
+.move-list {
+    margin-left: 20px !important;
+    margin-bottom: 10px !important;
+}
+
+.footer-space {
+    height: 30px !important;
 }
 
 .footer {
@@ -104,8 +156,10 @@ a {
     width: 100%;
     position: fixed;
     bottom: 0;
+
 }
 
+/*
 @media (prefers-color-scheme: dark) {
     html {
         color-scheme: dark;
@@ -116,3 +170,4 @@ a {
         background: black;
     }
 }
+*/

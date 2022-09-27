@@ -1,32 +1,39 @@
 import useToken from "../hook/useToken";
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle} from "@mui/material";
 import {Loading} from "../particle/Loading";
+import {usePokemonConst} from "../hook/PokemonConst";
 
-export const BuildPrivacyEdit = (props: { open: boolean, onClose: () => void, buildId: number }) => {
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL!
+
+export const BuildPrivacyEdit = React.memo(function BuildPrivacyEdit(props: { open: boolean, onClose: () => void, buildId: number }) {
     const {token} = useToken()
     const [isLoading, setIsLoading] = useState(false)
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL!
     const [privacy, setPrivacy] = useState(false)
+    const {setToast} = usePokemonConst()
+    const {open, onClose, buildId} = props
 
     useEffect(() => {
-        setIsLoading(true)
-        fetch(baseUrl + "/v1/public-build/" + props.buildId + "/is-public")
-            .then((res: { json: () => any; }) => res.json())
-            .then((data: boolean) => {
-                setPrivacy(data)
-                setIsLoading(false)
-            }).catch(
-            (reason: any) => {
-                console.log(reason)
-                setIsLoading(false)
-            }
-        )
-    }, [props.open, props.buildId, baseUrl])
+        if (buildId != 0) {
+            setIsLoading(true)
+            fetch(baseUrl + "/v1/public-build/" + buildId + "/is-public")
+                .then((res: { json: () => any; }) => res.json())
+                .then((data: boolean) => {
+                    setPrivacy(data)
+                    setIsLoading(false)
+                }).catch(
+                (reason: any) => {
+                    setToast("公開設定の取得に失敗しました。", "error")
+                    console.log(reason)
+                    setIsLoading(false)
+                }
+            )
+        }
+    }, [buildId, setToast])
 
     async function onClickItem() {
         await sendData()
-        props.onClose()
+        onClose()
     }
 
     async function sendData() {
@@ -38,24 +45,28 @@ export const BuildPrivacyEdit = (props: { open: boolean, onClose: () => void, bu
             },
             method: "POST"
         }
-        await fetch(baseUrl + "/v1/public-build/" + props.buildId + "/" + (privacy ? "off" : "on"), parameter)
+        await fetch(baseUrl + "/v1/public-build/" + buildId + "/" + (privacy ? "off" : "on"), parameter).catch(
+            (reason: any) => {
+                setToast("公開設定の更新に失敗しました。", "error")
+            }
+        )
         setIsLoading(false)
     }
 
     return (<>
         <Dialog
-            open={props.open}
+            open={open}
             keepMounted
-            onClose={props.onClose}
+            onClose={onClose}
         >
             <DialogTitle>公開設定を変更する</DialogTitle>
             <DialogContent>
                 <DialogContentText>現在の公開設定：{privacy ? "公開中" : "非公開"}</DialogContentText>
                 <DialogContentText>公開URL(公開設定を公開にしないとアクセスできません)：</DialogContentText>
-                <DialogContentText>https:/pokebuild.sasakirione.com/public-build/{props.buildId}</DialogContentText>
+                <DialogContentText>https:/pokebuild.sasakirione.com/public-build/{buildId}</DialogContentText>
             </DialogContent>
             <DialogActions>
-                <Button onClick={props.onClose} color="primary">
+                <Button onClick={onClose} color="primary">
                     キャンセル
                 </Button>
                 <Button onClick={onClickItem} color="primary">
@@ -65,4 +76,4 @@ export const BuildPrivacyEdit = (props: { open: boolean, onClose: () => void, bu
         </Dialog>
         {isLoading && <Loading isLoading={true}/>}
     </>)
-}
+})
