@@ -18,7 +18,7 @@ const useBuildPokemon = (currentBuild: BuildObject) => {
     const isLoadingPokemon = isLoadingBuild || isLoadingDelete
 
     useEffect(() => {
-        if (isAuthenticated && token != "" && (finalBuildId != currentBuild.id) && currentBuild.id != 0) {
+        if (isAuthenticated && token != "" && (finalBuildId != currentBuild?.id ?? 0) && (currentBuild?.id ?? 0) != 0) {
             setIsLoadingBuild(true)
             const parameter = {
                 headers: {
