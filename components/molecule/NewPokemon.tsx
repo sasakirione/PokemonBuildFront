@@ -57,7 +57,7 @@ const NewPokemon = React.memo(function NewPokemon(props: { open: boolean, onClos
     const [move3, setMove3] = useState<[number, string]>(defaultMove)
     const [move4, setMove4] = useState<[number, string]>(defaultMove)
     const [pokemonId, setPokemonId] = useState<number>(0)
-    const {moveList} = usePokemonConst()
+    const {moveList, setToast} = usePokemonConst()
     const sum = EvHp + EvAttack + EvDefense + EvSpAttack + EvSpDefense + EvSpeed
     const [pokemonList, setPokemonList] = useState<[number, string][]>(defaultPokemonList)
     const [isLoading, setIsLoading] = useState(false)
@@ -171,6 +171,7 @@ const NewPokemon = React.memo(function NewPokemon(props: { open: boolean, onClos
             data.pokemonId
         )
             .catch((reason: any) => {
+                setToast("ポケモンの追加に失敗しました", "error")
                 console.log(reason)
                 return 0
             })

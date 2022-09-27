@@ -17,7 +17,7 @@ import useToken from "../hook/useToken";
 
 export function GoodEdit(props: { open: boolean, onClose: () => void, pokemon: Pokemon }) {
     const {token} = useToken()
-    const {goodList} = usePokemonConst()
+    const {goodList, setToast} = usePokemonConst()
     const [isLoading, setIsLoading] = useState(false)
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL!
 
@@ -37,7 +37,11 @@ export function GoodEdit(props: { open: boolean, onClose: () => void, pokemon: P
             method: "PUT",
             body: JSON.stringify({ids: [id], itemSelect: 3})
         }
-        await fetch(baseUrl + "/v1/pokemon-build/grown-pokemons/" + props.pokemon.personalId, parameter)
+        await fetch(baseUrl + "/v1/pokemon-build/grown-pokemons/" + props.pokemon.personalId, parameter).catch(
+            (reason) => {
+                setToast("道具の更新に失敗しました。", "error")
+            }
+        )
         setIsLoading(false)
     }
 

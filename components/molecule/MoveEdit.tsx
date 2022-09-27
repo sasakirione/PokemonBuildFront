@@ -15,7 +15,7 @@ export function MoveEdit(props: { open: boolean, onClose: () => void, pokemon: P
     const [move3, setMove3] = useState<[number, string]>([0, props.pokemon.moves[2]])
     const [move4, setMove4] = useState<[number, string]>([0, props.pokemon.moves[3]])
     const [isLoading, setIsLoading] = useState(false)
-    const {moveList} = usePokemonConst()
+    const {moveList, setToast} = usePokemonConst()
 
     async function saveMove() {
         const moves: Moves = [move1[1], move2[1], move3[1], move4[1]]
@@ -34,7 +34,11 @@ export function MoveEdit(props: { open: boolean, onClose: () => void, pokemon: P
             method: "PUT",
             body: JSON.stringify({values: moves, itemSelect: 4})
         }
-        await fetch(baseUrl + "/v1/pokemon-build/grown-pokemons/" + props.pokemon.personalId + "/value", parameter)
+        await fetch(baseUrl + "/v1/pokemon-build/grown-pokemons/" + props.pokemon.personalId + "/value", parameter).catch(
+            (reason) => {
+                setToast("技の更新に失敗しました。", "error")
+            }
+        )
         setIsLoading(false)
     }
 

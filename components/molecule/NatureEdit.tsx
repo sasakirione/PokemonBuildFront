@@ -15,11 +15,13 @@ import {
 import {getNatureList} from "../../domain/PokemonData";
 import {Loading} from "../particle/Loading";
 import useToken from "../hook/useToken";
+import {usePokemonConst} from "../hook/PokemonConst";
 
 export function NatureEdit(props: { open: boolean, onClose: () => void, pokemon: Pokemon }) {
     const {token} = useToken()
     const [isLoading, setIsLoading] = useState(false)
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL!
+    const {setToast} = usePokemonConst()
 
     async function onClickItem(nature: [PokemonNature, string, string, PokemonValue]) {
         await sendData(nature[0])
@@ -38,7 +40,11 @@ export function NatureEdit(props: { open: boolean, onClose: () => void, pokemon:
             method: "PUT",
             body: JSON.stringify({values: [nature], itemSelect: 5})
         }
-        await fetch(baseUrl + "/v1/pokemon-build/grown-pokemons/" + props.pokemon.personalId + "/value", parameter)
+        await fetch(baseUrl + "/v1/pokemon-build/grown-pokemons/" + props.pokemon.personalId + "/value", parameter).catch(
+            (reason: any) => {
+                setToast("性格の変更に失敗しました。エラーコード：" + reason.status, "error")
+            }
+        )
         setIsLoading(false)
     }
 

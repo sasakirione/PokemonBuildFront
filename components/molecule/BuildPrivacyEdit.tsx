@@ -2,6 +2,7 @@ import useToken from "../hook/useToken";
 import React, {useEffect, useState} from "react";
 import {Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle} from "@mui/material";
 import {Loading} from "../particle/Loading";
+import {usePokemonConst} from "../hook/PokemonConst";
 
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL!
 
@@ -9,6 +10,7 @@ export const BuildPrivacyEdit = React.memo(function BuildPrivacyEdit(props: { op
     const {token} = useToken()
     const [isLoading, setIsLoading] = useState(false)
     const [privacy, setPrivacy] = useState(false)
+    const {setToast} = usePokemonConst()
     const {open, onClose, buildId} = props
 
     useEffect(() => {
@@ -21,12 +23,13 @@ export const BuildPrivacyEdit = React.memo(function BuildPrivacyEdit(props: { op
                     setIsLoading(false)
                 }).catch(
                 (reason: any) => {
+                    setToast("公開設定の取得に失敗しました。", "error")
                     console.log(reason)
                     setIsLoading(false)
                 }
             )
         }
-    }, [buildId])
+    }, [buildId, setToast])
 
     async function onClickItem() {
         await sendData()
@@ -42,7 +45,11 @@ export const BuildPrivacyEdit = React.memo(function BuildPrivacyEdit(props: { op
             },
             method: "POST"
         }
-        await fetch(baseUrl + "/v1/public-build/" + buildId + "/" + (privacy ? "off" : "on"), parameter)
+        await fetch(baseUrl + "/v1/public-build/" + buildId + "/" + (privacy ? "off" : "on"), parameter).catch(
+            (reason: any) => {
+                setToast("公開設定の更新に失敗しました。", "error")
+            }
+        )
         setIsLoading(false)
     }
 

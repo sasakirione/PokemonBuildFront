@@ -13,11 +13,13 @@ import {
 } from "@mui/material";
 import {Loading} from "../particle/Loading";
 import useToken from "../hook/useToken";
+import {usePokemonConst} from "../hook/PokemonConst";
 
 export function AbilityEdit(props: { open: boolean, onClose: () => void, pokemon: Pokemon }) {
     const {token} = useToken()
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL!
     const [isLoading, setIsLoading] = useState(false)
+    const {setToast} = usePokemonConst()
 
     async function onClickItem(ability: string) {
         setIsLoading(true)
@@ -37,6 +39,10 @@ export function AbilityEdit(props: { open: boolean, onClose: () => void, pokemon
             body: JSON.stringify({values: [ability], itemSelect: 1})
         }
         await fetch(baseUrl + "/v1/pokemon-build/grown-pokemons/" + props.pokemon.personalId + "/value", parameter)
+            .catch((reason) => {
+                console.log(reason)
+                setToast("特性の更新に失敗しました。", "error")
+            })
     }
 
 

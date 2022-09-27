@@ -3,11 +3,13 @@ import {Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogT
 import useToken from "../hook/useToken";
 import React, {useEffect, useState} from "react";
 import {Loading} from "../particle/Loading";
+import {usePokemonConst} from "../hook/PokemonConst";
 
 export const NicknameEdit = (props: { open: boolean, onClose: () => void, pokemon: Pokemon }) => {
     const {token} = useToken()
     const [isLoading, setIsLoading] = useState(false)
     const [nickname, setNickname] = useState(props.pokemon.nickname)
+    const {setToast} = usePokemonConst()
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL!
 
     useEffect(() => {
@@ -30,7 +32,11 @@ export const NicknameEdit = (props: { open: boolean, onClose: () => void, pokemo
             method: "PUT",
             body: JSON.stringify({values: [nickname], itemSelect: 7})
         }
-        await fetch(baseUrl + "/v1/pokemon-build/grown-pokemons/" + props.pokemon.personalId + "/value", parameter)
+        await fetch(baseUrl + "/v1/pokemon-build/grown-pokemons/" + props.pokemon.personalId + "/value", parameter).catch(
+            (reason: any) => {
+                setToast("ニックネームの変更に失敗しました。エラーコード：" + reason.status, "error")
+            }
+        )
         setIsLoading(false)
     }
 

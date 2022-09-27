@@ -24,7 +24,7 @@ export function TagEdit(props: { open: boolean, onClose: () => void, pokemon: Po
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL!
     const [tag, setTag] = useState<string[]>(props.pokemon.tag);
     const [isLoading, setIsLoading] = useState(false)
-    const {tagList} = usePokemonConst()
+    const {tagList, setToast} = usePokemonConst()
 
     useEffect(() => {
             setTag(props.pokemon.tag)
@@ -67,7 +67,11 @@ export function TagEdit(props: { open: boolean, onClose: () => void, pokemon: Po
             method: "PUT",
             body: JSON.stringify({values: tags, itemSelect: 6})
         }
-        await fetch(baseUrl + "/v1/pokemon-build/grown-pokemons/" + props.pokemon.personalId + "/value", parameter)
+        await fetch(baseUrl + "/v1/pokemon-build/grown-pokemons/" + props.pokemon.personalId + "/value", parameter).catch(
+            (reason: any) => {
+                setToast("タグの変更に失敗しました。エラーコード：" + reason.status, "error")
+            }
+        )
         setIsLoading(false)
     }
 
