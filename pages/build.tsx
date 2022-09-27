@@ -56,7 +56,7 @@ const BuildPage: NextPage = () => {
         return (<div>
             ログインが必要です！
         </div>)
-    } else if (selectedBuild.id == 0) {
+    } else if (selectedBuild == undefined || selectedBuild.id == 0) {
         return (<Loading isLoading={true}/>)
     }
 
