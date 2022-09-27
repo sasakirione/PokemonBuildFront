@@ -1,8 +1,8 @@
 export const siteHistory = {
   "historyList": [
     {
-      "date": "2022-xx-xx",
-      "content": "UIや動作を改善"
+      "date": "2022-09-27",
+      "content": "UIや動作を改善、HP偶数警告を追加"
     },
     {
       "date": "2022-09-20",
