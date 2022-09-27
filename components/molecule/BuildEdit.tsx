@@ -51,7 +51,7 @@ export const BuildEdit = (props: {
                 newBuild.id = data
                 props.editBuilds(newBuild)
                 props.setSelectBuild(newBuild)
-                    setToast("構築の新規追加が完了しました！", "normal")
+                setToast("構築の新規追加が完了しました！", "normal")
                 props.onClose()
                 }
             )
