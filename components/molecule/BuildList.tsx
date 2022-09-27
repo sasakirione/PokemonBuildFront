@@ -107,7 +107,7 @@ export const BuildList = (
             </Dialog>
             <BuildEdit selectBuild={props.selectBuild} setSelectBuild={props.setSelectBuild} builds={builds}
                        isOpen={isOpenEdit} onClose={closeEdit} isNew={isEditNew} editBuilds={editBuilds}/>
-            <Button hidden={isOpen} onClick={onOpen}>構築選択</Button>
+            <Button hidden={isOpen} onClick={onOpen}>構築選択/編集</Button>
         </>
     )
 }

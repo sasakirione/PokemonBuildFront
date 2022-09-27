@@ -81,7 +81,7 @@ const SettingPage: NextPage = () => {
                             control={<Switch checked={isUsedNickname} onChange={changeUsedNickname}/>}
                             label="ニックネームを使う" className={"setting-section-contents"}/>
                         <div className={"setting-section-contents"}>
-                            ポケモンの表示に使う名前をポケモン名からニックネームに変更します。
+                            構築のポケモンの表示に使う名前をポケモン名からニックネームに変更します。
                         </div>
                         <div className={"setting-section-contents"}>
                             ニックネームに切り替えた場合でもニックネームが設定されていない場合は従来通りポケモン名で表示します。
