@@ -1,45 +1,21 @@
-import {useRouter} from "next/router";
-import {NextPage} from "next";
+import {GetStaticPaths, GetStaticProps, NextPage} from "next";
 import {PokeBuildHead} from "../../components/atomic/PokeBuildHead";
 import {HeadLineText} from "../../components/particle/Text";
 import {Button} from "@mui/material";
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import {BuildObject, BuildResponse} from "../../type/type";
 import {getPokemonFromGrownPokemonResponse} from "../../util/converter";
 import Pokemon from "../../domain/Pokemon";
-import {usePokemonConst} from "../../components/hook/PokemonConst";
 import PokemonListPublic from "../../components/molecule/PokemonListPublic";
-import {Loading} from "../../components/particle/Loading";
 
 const defaultBuild = {comment: "なし", id: 0, name: "デフォルトの構築"}
 const defaultPokemonList: Pokemon[] = []
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL!
 
-const PublicBuild: NextPage = () => {
-    const router = useRouter()
-    const {id} = router.query
-    const [build, setBuild] = useState<BuildObject>(defaultBuild)
-    const [pokemonList, setPokemonList] = useState<Pokemon[]>(defaultPokemonList)
+const PublicBuild: NextPage<PublicBuildProps> = (props) => {
+    const [build, setBuild] = useState<BuildObject>(props.build)
+    const [pokemonList, setPokemonList] = useState<Pokemon[]>(props.pokemonList)
     const [isUsedNickname, setIsUsedNickname] = useState(false)
-    const [isLoading, setIsLoading] = useState(true)
-    const {setToast} = usePokemonConst()
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL!
-
-    useEffect(() => {
-        if (id != undefined) {
-            setIsLoading(true)
-            fetch(baseUrl + "/v1/public-build/" + id)
-                .then((res: { json: () => any; }) => res.json())
-                .then((data: BuildResponse) => {
-                    setPokemonList(data.pokemons.map(pokemon => getPokemonFromGrownPokemonResponse(pokemon)))
-                    setBuild({comment: "", id: data.id, name: data.name})
-                })
-                .catch((reason: any) => {
-                    console.log(reason)
-                    setToast("構築の取得に失敗しました", "error")
-                })
-            setIsLoading(false)
-        }
-    }, [baseUrl, id, setToast])
 
     return (
         <>
@@ -55,9 +31,53 @@ const PublicBuild: NextPage = () => {
             </div>
             {build.id != 0 &&
                 <PokemonListPublic isUsedNickname={isUsedNickname} pokemonList={pokemonList}></PokemonListPublic>}
-            {isLoading && <Loading isLoading={true}/>}
+            {build.id == 0 && <div>非公開の構築です</div>}
         </>
     )
+}
+
+export const getStaticProps: GetStaticProps<PublicBuildProps> = async ({params}) => {
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL!
+    const publicId = params?.id ?? "0"
+    const {build, pokemonList} = await getBuild(publicId[0])
+
+    return {
+        props: {
+            build: build,
+            pokemonList: pokemonList
+        },
+        revalidate: 60 * 15,
+    }
+}
+
+export const getStaticPaths: GetStaticPaths = async () => {
+    return {
+        paths: [],
+        fallback: 'blocking',
+    };
+};
+
+const getBuild = async (id: string) => {
+    let build: BuildObject = defaultBuild
+    let pokemonList: Pokemon[] = defaultPokemonList
+
+    if (id != undefined) {
+        fetch(baseUrl + "/v1/public-build/" + id)
+            .then((res: { json: () => any; }) => res.json())
+            .then((data: BuildResponse) => {
+                build = {comment: "", id: data.id, name: data.name}
+                pokemonList = data.pokemons.map(pokemon => getPokemonFromGrownPokemonResponse(pokemon))
+            })
+            .catch((reason: any) => {
+                console.log(reason)
+            })
+    }
+    return {build, pokemonList}
+}
+
+type PublicBuildProps = {
+    build: BuildObject,
+    pokemonList: Pokemon[]
 }
 
 export default PublicBuild
