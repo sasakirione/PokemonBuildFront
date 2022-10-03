@@ -58,6 +58,7 @@ const NewPokemon = React.memo(function NewPokemon(props: { open: boolean, onClos
     const [move4, setMove4] = useState<[number, string]>(defaultMove)
     const [pokemonId, setPokemonId] = useState<number>(0)
     const {moveList, setToast} = usePokemonConst()
+    const [moveList2, setMoveList2] = useState<[number, string][]>(moveList)
     const sum = EvHp + EvAttack + EvDefense + EvSpAttack + EvSpDefense + EvSpeed
     const [pokemonList, setPokemonList] = useState<[number, string][]>(defaultPokemonList)
     const [isLoading, setIsLoading] = useState(false)
@@ -101,6 +102,23 @@ const NewPokemon = React.memo(function NewPokemon(props: { open: boolean, onClos
             }
         )
     }, [])
+
+    useEffect(() => {
+        fetch(baseUrl + "/v1/pokemon-data/pokemons/" + pokemonId + "/moves").then(
+            async (res) => {
+                if (res.ok) {
+                    const data = await res.json()
+                    if (data[0] == 0) {
+                        setMoveList2(moveList)
+                    } else {
+                        setMoveList2(moveList.filter((move) => data.includes(move[0])))
+                    }
+                } else {
+                    setToast("通信エラー", "error")
+                }
+            }
+        )
+    }, [moveList, pokemonId, setToast])
 
     async function savePokemon() {
         setIsLoading(true)
@@ -215,7 +233,7 @@ const NewPokemon = React.memo(function NewPokemon(props: { open: boolean, onClos
                         <Grid item xs={12} sm={6}>
                             <div className="new-pokemon-contents">
                                 <DialogContentText>わざ</DialogContentText>
-                                <MoveForm moveList={moveList} moves={[move1, move2, move3, move4]}
+                                <MoveForm moveList={moveList2} moves={[move1, move2, move3, move4]}
                                           setMoves={[setMove1, setMove2, setMove3, setMove4]}/>
                             </div>
                         </Grid>
