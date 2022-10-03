@@ -78,13 +78,20 @@ const getPublicBuildIdList = async () => {
 const getBuild = async (id: string) => {
     let res
 
-    if (id != undefined) {
+    if (id != undefined && id != "0") {
         res = await fetch(baseUrl + "/v1/public-build/" + id)
             .then((res: { json: () => any; }) => res.json())
             .catch((reason: any) => {
                 console.log(reason)
             })
+    } else {
+        res = {
+            id: 0,
+            name: "非公開の構築",
+            pokemons: []
+        }
     }
+
     return {res}
 }
 
