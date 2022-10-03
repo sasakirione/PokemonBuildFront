@@ -33,7 +33,7 @@ const Header: NextPage = () => {
                         <MenuItem><a href="./build">編成</a></MenuItem>
                         <MenuItem><a href="./pokemon">ポケモン一覧</a></MenuItem>
                         <MenuItem><a>ポケモンデータ</a></MenuItem>
-                        <MenuItem><a>情報</a></MenuItem>
+                        <MenuItem><a href="./information">情報</a></MenuItem>
                     </Menu></div>}
                 <Typography
                     variant="h6"

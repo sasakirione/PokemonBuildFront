@@ -8,7 +8,6 @@ import {GoodEdit} from "./GoodEdit";
 import {AbilityEdit} from "./AbilityEdit";
 import {NatureEdit} from "./NatureEdit";
 import {GrownPokemonTableSelectMenu} from "../atomic/GrownPokemonTableSelectMenu";
-import {usePokemonConst} from "../hook/PokemonConst";
 import {NicknameEdit} from "./NicknameEdit";
 
 const GrownPokemonTable = (props: { pokemons: Pokemon[] }) => {
@@ -20,7 +19,6 @@ const GrownPokemonTable = (props: { pokemons: Pokemon[] }) => {
     const [isOpenNicknameEdit, setIsOpenNicknameEdit] = useState(false)
     const [pokemonIndex, setPokemonIndex] = useState(0)
     const [selectedPokemon, setSelectedPokemon] = useState<Pokemon>()
-    const {setting} = usePokemonConst()
     const isOpenEditMenu = isOpenNatureEdit || isOpenAbilityEdit || isOpenTagEdit || isOpenEvEdit || isOpenGoodEdit || isOpenNicknameEdit
 
     useEffect(() => {
@@ -90,7 +88,15 @@ const GrownPokemonTable = (props: { pokemons: Pokemon[] }) => {
         },
         {
             name: "name",
-            label: setting.isUsedNickname ? "ニックネーム" : "ポケモン名",
+            label: "ポケモン名",
+            options: {
+                filter: true,
+                sort: true
+            }
+        },
+        {
+            name: "nickname",
+            label: "ニックネーム",
             options: {
                 filter: true,
                 sort: true,
@@ -98,7 +104,7 @@ const GrownPokemonTable = (props: { pokemons: Pokemon[] }) => {
                     return (
                         <>
                             <div onClick={() => openNicknameEdit(dataIndex)}>
-                                {props.pokemons[dataIndex].nickname == "" ? props.pokemons[dataIndex].name : props.pokemons[dataIndex].nickname}
+                                {props.pokemons[dataIndex].nickname}
                             </div>
                         </>
                     )

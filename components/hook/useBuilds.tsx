@@ -15,7 +15,7 @@ const useBuilds = () => {
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL!
 
     useEffect(() => {
-        if (isAuthenticated && token != "" && builds[0].id == 0) {
+        if (isAuthenticated && token != "" && (builds[0]?.id ?? 0) == 0) {
             setIsBuildLoading(true)
             const parameter = {
                 headers: {

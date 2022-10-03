@@ -47,6 +47,7 @@ export const BuildPrivacyEdit = React.memo(function BuildPrivacyEdit(props: { op
         }
         await fetch(baseUrl + "/v1/public-build/" + buildId + "/" + (privacy ? "off" : "on"), parameter).catch(
             (reason: any) => {
+                console.log(reason)
                 setToast("公開設定の更新に失敗しました。", "error")
             }
         )
@@ -63,7 +64,7 @@ export const BuildPrivacyEdit = React.memo(function BuildPrivacyEdit(props: { op
             <DialogContent>
                 <DialogContentText>現在の公開設定：{privacy ? "公開中" : "非公開"}</DialogContentText>
                 <DialogContentText>公開URL(公開設定を公開にしないとアクセスできません)：</DialogContentText>
-                <DialogContentText>https:/pokebuild.sasakirione.com/public-build/{buildId}</DialogContentText>
+                <DialogContentText>https://pokebuild.sasakirione.com/public-build/{buildId}</DialogContentText>
             </DialogContent>
             <DialogActions>
                 <Button onClick={onClose} color="primary">
