@@ -217,7 +217,7 @@ const NewPokemon = React.memo(function NewPokemon(props: { open: boolean, onClos
             >
                 <DialogTitle>ポケモンを新規登録する</DialogTitle>
                 <DialogContent
-                    style={{height: '500px'}}
+                    style={{height: '560px'}}
                 >
                     <Grid container spacing={2} direction="row" justifyContent="center" alignItems="stretch">
                         <Grid item xs={12} sm={6}>

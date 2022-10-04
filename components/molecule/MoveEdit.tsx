@@ -67,12 +67,10 @@ export function MoveEdit(props: { open: boolean, onClose: () => void, pokemon: P
             open={props.open}
             keepMounted
             onClose={props.onClose}
-            fullWidth={true}
+            fullWidth={false}
         >
             <DialogTitle>技を変更する</DialogTitle>
-            <DialogContent
-                style={{height: '450px'}}
-            >
+            <DialogContent>
                 <MoveForm moveList={moveList2} moves={[move1, move2, move3, move4]}
                           setMoves={[setMove1, setMove2, setMove3, setMove4]}/>
             </DialogContent>
