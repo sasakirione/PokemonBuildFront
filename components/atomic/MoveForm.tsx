@@ -1,6 +1,5 @@
-import {selectItem2, SetterOfIdAndValue} from "../../type/type";
-import {List} from "@mui/material";
-import Select from "react-select";
+import {SetterOfIdAndValue} from "../../type/type";
+import {Autocomplete, List, TextField} from "@mui/material";
 import React from "react";
 
 export const MoveForm = (props: {
@@ -8,28 +7,50 @@ export const MoveForm = (props: {
     setMoves: [SetterOfIdAndValue, SetterOfIdAndValue, SetterOfIdAndValue, SetterOfIdAndValue]
 }) => {
     const {moveList, moves, setMoves} = props
-    const createOption = (value: number, label: string): selectItem2 => ({
-        value,
-        label,
-    })
+
+    const styleWithoutOne = {width: 400, marginTop: 2};
     return (
         <List>
-            <Select isSearchable options={moveList?.map(move => createOption(move[0], move[1]))}
-                    value={createOption(moves[0][0], moves[0][1])}
-                    onChange={value => setMoves[0]([value?.value!, value?.label!])}
-                    styles={{menu: provided => ({...provided, zIndex: 9999})}}/>
-            <Select isSearchable options={moveList?.map(move => createOption(move[0], move[1]))}
-                    value={createOption(moves[1][0], moves[1][1])}
-                    onChange={value => setMoves[1]([value?.value!, value?.label!])}
-                    styles={{menu: provided => ({...provided, zIndex: 9999})}}/>
-            <Select isSearchable options={moveList?.map(move => createOption(move[0], move[1]))}
-                    value={createOption(moves[2][0], moves[2][1])}
-                    onChange={value => setMoves[2]([value?.value!, value?.label!])}
-                    styles={{menu: provided => ({...provided, zIndex: 9999})}}/>
-            <Select isSearchable options={moveList?.map(move => createOption(move[0], move[1]))}
-                    value={createOption(moves[3][0], moves[3][1])}
-                    onChange={value => setMoves[3]([value?.value!, value?.label!])}
-                    styles={{menu: provided => ({...provided, zIndex: 9999})}}/>
+            <Autocomplete
+                disableClearable
+                value={moves[0][1]}
+                onChange={(event, newValue) => {
+                    setMoves[0](moveList.filter(move => move[1] === newValue)[0])
+                }}
+                options={moveList!.map(move => move[1])}
+                sx={{width: 400}}
+                renderInput={(params) => <TextField {...params} label="わざ1"/>}
+            />
+            <Autocomplete
+                disableClearable
+                value={moves[1][1]}
+                onChange={(event, newValue) => {
+                    setMoves[1](moveList.filter(move => move[1] === newValue)[0])
+                }}
+                options={moveList!.map(move => move[1])}
+                sx={styleWithoutOne}
+                renderInput={(params) => <TextField {...params} label="わざ2"/>}
+            />
+            <Autocomplete
+                disableClearable
+                value={moves[2][1]}
+                onChange={(event, newValue) => {
+                    setMoves[2](moveList.filter(move => move[1] === newValue)[0])
+                }}
+                options={moveList!.map(move => move[1])}
+                sx={styleWithoutOne}
+                renderInput={(params) => <TextField {...params} label="わざ3"/>}
+            />
+            <Autocomplete
+                disableClearable
+                value={moves[3][1]}
+                onChange={(event, newValue) => {
+                    setMoves[3](moveList.filter(move => move[1] === newValue)[0])
+                }}
+                options={moveList!.map(move => move[1])}
+                sx={styleWithoutOne}
+                renderInput={(params) => <TextField {...params} label="わざ4"/>}
+            />
         </List>
     )
 }
