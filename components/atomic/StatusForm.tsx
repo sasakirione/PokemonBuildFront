@@ -82,7 +82,7 @@ function StatusForm(props: {
 
     function sumWarning() {
         return props.sum > 508 ?
-            (<div>努力値の合計が508を超えています！{props.sum - 508}減らしてください！</div>) :
+            (<div data-test-id="status-form-sum-over">努力値の合計が508を超えています！{props.sum - 508}減らしてください！</div>) :
             (<div>残り努力値：{508 - props.sum}</div>)
     }
 
@@ -109,8 +109,8 @@ function StatusForm(props: {
         <TabContext value={tabIndex}>
             <Box sx={{borderBottom: 1, borderColor: 'divider'}}>
                 <TabList onChange={changeTab}>
-                    <Tab label="入力" value="1"/>
-                    <Tab label="S調整" value="2"/>
+                    <Tab label="入力" value="1" data-test-id="status-form-input-tab"/>
+                    <Tab label="S調整" value="2" data-test-id="status-form-speed-tab"/>
                 </TabList>
             </Box>
             <TabPanel value="1">
@@ -130,7 +130,8 @@ function StatusForm(props: {
                     <EffortPresetButtons onChange={setPresetValue}/>
                 }
                 {props.statusType == "EV" && sumWarning()}
-                {isHpEven && "HP実数値が偶数です。一般的にシングルバトルではHP実数値が奇数になるように調整します。"}
+                {isHpEven && <div
+                    data-test-id="status-form-hp-even">HP実数値が偶数です。一般的にシングルバトルではHP実数値が奇数になるように調整します。</div>}
             </TabPanel>
             <TabPanel value="2">
                 <Grid container spacing={2}>

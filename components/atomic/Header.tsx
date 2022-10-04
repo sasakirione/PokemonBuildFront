@@ -45,10 +45,10 @@ const Header: NextPage = () => {
                     ぽけっとビルド
                 </Typography>
                 {!isSmartphone && <div className="boxContainer">
-                    <Button href="./build" color="inherit">編成</Button>
-                    <Button href="./pokemon" color="inherit">ポケモン一覧</Button>
-                    <Button href="./build" color="inherit" disabled={true}>ポケモンデータ</Button>
-                    <Button href="./information" color="inherit">情報</Button>
+                    <Button href="/build" color="inherit">編成</Button>
+                    <Button href="/pokemon" color="inherit">ポケモン一覧</Button>
+                    <Button href="/build" color="inherit" disabled={true}>ポケモンデータ</Button>
+                    <Button href="/information" color="inherit">情報</Button>
                 </div>}
                 <AuthButton/>
             </Toolbar>
