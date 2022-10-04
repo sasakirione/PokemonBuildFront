@@ -130,7 +130,8 @@ function StatusForm(props: {
                     <EffortPresetButtons onChange={setPresetValue}/>
                 }
                 {props.statusType == "EV" && sumWarning()}
-                {isHpEven && "HP実数値が偶数です。一般的にシングルバトルではHP実数値が奇数になるように調整します。"}
+                {isHpEven && <div
+                    data-test-id="status-form-hp-even">HP実数値が偶数です。一般的にシングルバトルではHP実数値が奇数になるように調整します。</div>}
             </TabPanel>
             <TabPanel value="2">
                 <Grid container spacing={2}>

@@ -1,6 +1,7 @@
 import StatusForm from "../../components/atomic/StatusForm";
 import {configure, shallow} from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
+import {pokemon1} from "../../mock/PokemonData";
 
 configure({adapter: new Adapter()});
 
@@ -26,7 +27,7 @@ const setSpeed = (s: number) => {
 }
 let sum = 0
 
-const pokemon = null
+const pokemon = pokemon1
 
 describe("StatusFormの努力値部分のテスト", () => {
     const statusType = "EV"
@@ -52,7 +53,7 @@ describe("StatusFormの努力値部分のテスト", () => {
         expect(wrapper.find('[data-test-id="status-form-speed-tab"]').exists()).toBeFalsy()
     });
 
-    test("努力値オーバー警告が表示される", () => {
+    test("努力値オーバー警告の表示非表示", () => {
         sum = 509
         const isTab = false
         const wrapper = shallow(<StatusForm defaultValues={defaultValues} setHp={setHp} setAttack={setAttack}
@@ -62,10 +63,13 @@ describe("StatusFormの努力値部分のテスト", () => {
                                             pokemon={pokemon}/>)
         // @ts-ignore
         expect(wrapper.find('[data-test-id="status-form-sum-over"]').exists()).toBeTruthy()
+
+        wrapper.setProps({sum: 508})
+        // @ts-ignore
+        expect(wrapper.find('[data-test-id="status-form-sum-over"]').exists()).toBeFalsy()
     });
 
-    test("努力値オーバー警告が表示されない", () => {
-        sum = 508
+    test("HP実数値偶数警告", () => {
         const isTab = false
         const wrapper = shallow(<StatusForm defaultValues={defaultValues} setHp={setHp} setAttack={setAttack}
                                             setDefense={setDefense} setSpAttack={setSpAttack}
@@ -73,7 +77,8 @@ describe("StatusFormの努力値部分のテスト", () => {
                                             setSpeed={setSpeed} sum={sum} statusType={statusType} isTab={isTab}
                                             pokemon={pokemon}/>)
         // @ts-ignore
-        expect(wrapper.find('[data-test-id="status-form-sum-over"]').exists()).toBeFalsy()
+        expect(wrapper.find('[data-test-id="status-form-hp-even"]').exists()).toBeFalsy()
+
     });
 });
 
