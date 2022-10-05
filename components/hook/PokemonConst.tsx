@@ -31,41 +31,27 @@ const PokemonConstContext = createContext<PokemonConst>({
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL!
 
 export const PokemonConstProvider = ({children}: { children: ReactNode }) => {
-    const {isAuthenticated, token} = useToken()
+    const {token, isGetToken} = useToken()
     const fetcher = (url: string) => axios.get(url).then(res => res.data)
+    const fetcherWithToken = (url: string) => axios.get(url, {headers: {Authorization: `Bearer ${token}`}}).then(res => res.data)
     const {data: goodList} = useSWR<responseGoodList>(() => `${baseUrl}/v1/pokemon-data/goods`, fetcher)
     const {data: tagList} = useSWR<string[]>(() => `${baseUrl}/v1/pokemon-data/tags`, fetcher)
     const {data: moveList} = useSWR<KotlinTupleOfIdAndValue[]>(() => `${baseUrl}/v1/pokemon-data/moves`, fetcher)
-    const [isLoadingSetting, setIsLoadingSetting] = useState(false)
+    const {data: settingRaw} = useSWR<Setting>(() => isGetToken ? `${baseUrl}/v1/pokemon-data/settings` : null, fetcherWithToken)
     const [setting, setSetting] = useState<Setting>(defaultSetting)
 
     useEffect(() => {
-        if (isAuthenticated && token != "") {
-            setIsLoadingSetting(true)
-            const parameter = {
-                headers: {
-                    Authorization: 'Bearer ' + token
-                },
-                method: "GET"
-            }
-            fetch(baseUrl + "/v1/user/setting", parameter)
-                .then(res => res.json())
-                .then((res: Setting) => {
-                    setSetting(res)
-                    setIsLoadingSetting(false)
-                }).catch((reason: any) => {
-                console.log(reason)
-                setIsLoadingSetting(false)
-            })
+        if (settingRaw != undefined) {
+            setSetting(settingRaw)
         }
-    }, [isAuthenticated, token])
+    }, [settingRaw])
 
     return (
         <PokemonConstContext.Provider value={{
             goodList: goodList ? goodList.goods.map(good => [good.id, good.name]) : goodListInti,
             tagList: tagList ? tagList : tagListInti,
             moveList: moveList ? moveList.map(move => [move.first, move.second]) : moveListInti,
-            isLoadingConst: (isLoadingSetting),
+            isLoadingConst: false,
             setting: setting,
             setSetting: setSetting,
             setToast: setToast

@@ -4,6 +4,7 @@ import {useEffect, useState} from "react";
 const useToken = () => {
     const {isAuthenticated, getAccessTokenSilently, getIdTokenClaims} = useAuth0()
     const [token, setToken] = useState("")
+    let isGetToken = token != "" && isAuthenticated
 
     useEffect(() => {
         (
@@ -16,7 +17,7 @@ const useToken = () => {
             })()
     }, [getAccessTokenSilently, getIdTokenClaims, isAuthenticated])
 
-    return {token, isAuthenticated}
+    return {token, isAuthenticated, isGetToken}
 }
 
 export default useToken
