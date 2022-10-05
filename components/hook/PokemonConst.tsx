@@ -2,6 +2,8 @@ import React, {createContext, ReactNode, useContext, useEffect, useState} from "
 import {KotlinTupleOfIdAndValue, PokemonConst, responseGoodList, Setting, ToastType} from "../../type/type";
 import toast from "react-hot-toast";
 import useToken from "./useToken";
+import axios from "axios";
+import useSWR from "swr";
 
 const setToast = (message: string, type: ToastType) => {
     if (type == "error") {
@@ -11,9 +13,9 @@ const setToast = (message: string, type: ToastType) => {
     }
 }
 
-const goodListInti: [number, string][] = [[0, "初期表示"]]
-const tagListInti = ["初期表示"]
-const moveListInti: [number, string][] = [[0, "初期表示"]]
+const goodListInti: [number, string][] = [[0, "道具一覧の取得に失敗しました"]]
+const tagListInti = ["タグ一覧の取得に失敗しました"]
+const moveListInti: [number, string][] = [[0, "技一覧の取得に失敗しました"]]
 const defaultSetting: Setting = {isUsedNickname: false}
 
 const PokemonConstContext = createContext<PokemonConst>({
@@ -26,17 +28,16 @@ const PokemonConstContext = createContext<PokemonConst>({
     setToast: setToast
 })
 
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL!
+
 export const PokemonConstProvider = ({children}: { children: ReactNode }) => {
     const {isAuthenticated, token} = useToken()
-    const [goodList, setGoodList] = useState<[number, string][]>(goodListInti)
-    const [tagList, setTagList] = useState<string[]>(tagListInti)
-    const [moveList, setMoveList] = useState<[number, string][]>(moveListInti)
-    const [isLoadingGood, setIsLoadingGood] = useState(false)
-    const [isLoadingTag, setIsLoadingTag] = useState(false)
-    const [isLoadingMove, setIsLoadingMove] = useState(false)
+    const fetcher = (url: string) => axios.get(url).then(res => res.data)
+    const {data: goodList} = useSWR<responseGoodList>(() => `${baseUrl}/v1/pokemon-data/goods`, fetcher)
+    const {data: tagList} = useSWR<string[]>(() => `${baseUrl}/v1/pokemon-data/tags`, fetcher)
+    const {data: moveList} = useSWR<KotlinTupleOfIdAndValue[]>(() => `${baseUrl}/v1/pokemon-data/moves`, fetcher)
     const [isLoadingSetting, setIsLoadingSetting] = useState(false)
     const [setting, setSetting] = useState<Setting>(defaultSetting)
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL!
 
     useEffect(() => {
         if (isAuthenticated && token != "") {
@@ -57,60 +58,14 @@ export const PokemonConstProvider = ({children}: { children: ReactNode }) => {
                 setIsLoadingSetting(false)
             })
         }
-    }, [baseUrl, isAuthenticated, token])
-
-    useEffect(() => {
-        setIsLoadingGood(true)
-        fetch(baseUrl + "/v1/pokemon-data/goods")
-            .then((res: { json: () => any; }) => res.json())
-            .then((data: responseGoodList) => {
-                    setGoodList(data.goods.map(good => [good.id, good.name]))
-                    setIsLoadingGood(false)
-                }
-            ).catch(
-            (reason: any) => {
-                console.log(reason)
-                setIsLoadingGood(false)
-            }
-        )
-    }, [baseUrl])
-
-    useEffect(() => {
-        setIsLoadingTag(true)
-        fetch(baseUrl + "/v1/pokemon-data/tags")
-            .then((res: { json: () => any; }) => res.json())
-            .then((data: string[]) => {
-                setTagList(data)
-                setIsLoadingTag(false)
-            }).catch(
-            (reason: any) => {
-                console.log(reason)
-                setIsLoadingTag(false)
-            }
-        )
-    }, [baseUrl])
-
-    useEffect(() => {
-        setIsLoadingMove(true)
-        fetch(baseUrl + "/v1/pokemon-data/moves")
-            .then((res: { json: () => any; }) => res.json())
-            .then((data: KotlinTupleOfIdAndValue[]) => {
-                setMoveList(data.map(move => [move.first, move.second]))
-                setIsLoadingMove(false)
-            }).catch(
-            (reason: any) => {
-                console.log(reason)
-                setIsLoadingMove(false)
-            }
-        )
-    }, [baseUrl])
+    }, [isAuthenticated, token])
 
     return (
         <PokemonConstContext.Provider value={{
-            goodList: goodList,
-            tagList: tagList,
-            moveList: moveList,
-            isLoadingConst: (isLoadingGood || isLoadingTag || isLoadingMove || isLoadingSetting),
+            goodList: goodList ? goodList.goods.map(good => [good.id, good.name]) : goodListInti,
+            tagList: tagList ? tagList : tagListInti,
+            moveList: moveList ? moveList.map(move => [move.first, move.second]) : moveListInti,
+            isLoadingConst: (isLoadingSetting),
             setting: setting,
             setSetting: setSetting,
             setToast: setToast
