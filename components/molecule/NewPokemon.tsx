@@ -30,6 +30,8 @@ import {Loading} from "../particle/Loading";
 import {Iv6V, zeroValue} from "../../domain/PokemonData";
 import {usePokemonConst} from "../hook/PokemonConst";
 import useToken from "../hook/useToken";
+import useSWR from "swr";
+import axios from "axios";
 
 const defaultPokemonList: [number, string][] = [[0, "ポケモンの選択なし"]]
 const defaultMove: [number, string] = [0, "技の選択なし"]
@@ -64,6 +66,8 @@ const NewPokemon = React.memo(function NewPokemon(props: { open: boolean, onClos
     const [isLoading, setIsLoading] = useState(false)
     const theme = useTheme();
     const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
+    const fetcher = (url: string) => axios.get(url).then(res => res.data)
+    const {data: pokemonListRow} = useSWR<KotlinTupleOfIdAndValue[]>(baseUrl + "/v1/pokemon-data/pokemons", fetcher)
 
 
     const createOption = (value: number, label: string): selectItem2 => ({
@@ -92,16 +96,10 @@ const NewPokemon = React.memo(function NewPokemon(props: { open: boolean, onClos
     }
 
     useEffect(() => {
-        fetch(baseUrl + "/v1/pokemon-data/pokemons")
-            .then((res: { json: () => any; }) => res.json())
-            .then((data: KotlinTupleOfIdAndValue[]) => {
-                    setPokemonList(data.map(pokemon => [pokemon.first, pokemon.second]))
-                }
-            ).catch((reason: any) => {
-                console.log(reason)
-            }
-        )
-    }, [])
+        if (pokemonListRow) {
+            setPokemonList(pokemonListRow.map((row) => [row.first, row.second]))
+        }
+    }, [pokemonListRow])
 
     useEffect(() => {
         fetch(baseUrl + "/v1/pokemon-data/pokemons/" + pokemonId + "/moves").then(
