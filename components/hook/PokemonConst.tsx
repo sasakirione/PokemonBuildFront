@@ -37,7 +37,7 @@ export const PokemonConstProvider = ({children}: { children: ReactNode }) => {
     const {data: goodList} = useSWR<responseGoodList>(() => `${baseUrl}/v1/pokemon-data/goods`, fetcher)
     const {data: tagList} = useSWR<string[]>(() => `${baseUrl}/v1/pokemon-data/tags`, fetcher)
     const {data: moveList} = useSWR<KotlinTupleOfIdAndValue[]>(() => `${baseUrl}/v1/pokemon-data/moves`, fetcher)
-    const {data: settingRaw} = useSWR<Setting>(() => isGetToken ? `${baseUrl}/v1/pokemon-data/settings` : null, fetcherWithToken)
+    const {data: settingRaw} = useSWR<Setting>(() => isGetToken ? `${baseUrl}/v1/user/setting` : null, fetcherWithToken)
     const [setting, setSetting] = useState<Setting>(defaultSetting)
 
     useEffect(() => {

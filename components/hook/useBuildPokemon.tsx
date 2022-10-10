@@ -3,7 +3,8 @@ import {BuildObject, BuildResponse} from "../../type/type";
 import {getPokemonFromGrownPokemonResponse} from "../../util/converter";
 import Pokemon from "../../domain/Pokemon";
 import useToken from "./useToken";
-import {usePokemonConst} from "./PokemonConst";
+import useSWR from "swr";
+import axios from "axios";
 
 const defaultPokemonList: Pokemon[] = []
 
@@ -12,34 +13,28 @@ const useBuildPokemon = (currentBuild: BuildObject) => {
     const [isLoadingDelete, setIsLoadingDelete] = useState(false)
     const {isAuthenticated, token} = useToken()
     const [pokemonList, setPokemonList] = useState<Pokemon[]>(defaultPokemonList)
-    const [finalBuildId, setFinalBuildId] = useState(0)
-    const {setToast} = usePokemonConst()
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL!
     const isLoadingPokemon = isLoadingBuild || isLoadingDelete
+    const canBuildDownloading = isAuthenticated && token != "" && (currentBuild?.id ?? 0) != 0
+    const fetcherWithToken = (url: string) => axios.get(url, {headers: {Authorization: `Bearer ${token}`}}).then(res => res.data)
+    const {
+        data: rawBuild,
+        error
+    } = useSWR<BuildResponse>(() => canBuildDownloading ? `${baseUrl}/v1/pokemon-build/builds/${currentBuild.id}` : null, fetcherWithToken)
 
     useEffect(() => {
-        if (isAuthenticated && token != "" && (finalBuildId != currentBuild?.id ?? 0) && (currentBuild?.id ?? 0) != 0) {
+        if (isAuthenticated && rawBuild == undefined && error == undefined) {
             setIsLoadingBuild(true)
-            const parameter = {
-                headers: {
-                    Authorization: 'Bearer ' + token
-                }
-            }
-            fetch(baseUrl + "/v1/pokemon-build/builds/" + currentBuild.id, parameter)
-                .then((res: { json: () => any; }) => res.json())
-                .then((data: BuildResponse) => {
-                    setFinalBuildId(data.id)
-                    setPokemonList(data.pokemons.map(pokemon => getPokemonFromGrownPokemonResponse(pokemon)))
-                    setIsLoadingBuild(false)
-                })
-                .catch((reason: any) => {
-                        console.log(reason)
-                        setIsLoadingBuild(false)
-                        setToast("構築の取得に失敗しました。リロードしてください。", "error")
-                    }
-                )
+        } else {
+            setIsLoadingBuild(false)
         }
-    }, [baseUrl, currentBuild, finalBuildId, isAuthenticated, setToast, token])
+    }, [error, isAuthenticated, rawBuild])
+
+    useEffect(() => {
+        if (rawBuild != undefined) {
+            setPokemonList(rawBuild.pokemons.map(pokemon => getPokemonFromGrownPokemonResponse(pokemon)))
+        }
+    }, [rawBuild])
 
     async function removePokemon(personalId: number) {
         setIsLoadingDelete(true)
