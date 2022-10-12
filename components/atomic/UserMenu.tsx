@@ -6,9 +6,9 @@ const UserMenu = () => {
 
     return (
         <Box sx={{flexGrow: 0}}>
-            <Tooltip title="Open user settings">
+            <Tooltip title="ユーザー設定を開く">
                 <IconButton sx={{p: 0}} href="./setting">
-                    <Avatar alt="Remy Sharp" src={user?.picture}/>
+                    <Avatar alt="User Icon" src={user?.picture}/>
                 </IconButton>
             </Tooltip>
         </Box>
