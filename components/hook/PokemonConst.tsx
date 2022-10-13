@@ -23,7 +23,7 @@ const PokemonConstContext = createContext<PokemonConst>({
     tagList: tagListInti,
     moveList: moveListInti,
     isLoadingConst: false,
-    setting: {isUsedNickname: false},
+    setting: defaultSetting,
     setSetting: null,
     setToast: setToast
 })
