@@ -5,8 +5,8 @@ import {Auth0Provider} from "@auth0/auth0-react";
 import {Footer} from "../components/atomic/Footer";
 import {PokemonConstProvider} from "../components/hook/PokemonConst";
 import toast, {Toaster} from "react-hot-toast";
-import SWRConfig from "swr/dist/utils/config-context";
 import axios from "axios";
+import {SWRConfig} from 'swr'
 
 function MyApp({Component, pageProps}: AppProps) {
     const redirectUrl = process.env.NEXT_PUBLIC_AUTH0_REDIRECT_URL!
