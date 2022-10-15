@@ -1,8 +1,12 @@
 {
+  "plugins": [
+    "cypress"
+  ],
   "extends": "next/core-web-vitals",
   "globals": {
     "shallow": true,
     "render": true,
-    "mount": true
+    "mount": true,
+    "cy": true
   }
 }
