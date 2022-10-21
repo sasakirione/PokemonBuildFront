@@ -1,3 +1,4 @@
+/*
 describe('ログインせずにいける部分', function () {
     it('TOPページ', () => {
         cy.visit('/')
@@ -6,3 +7,4 @@ describe('ログインせずにいける部分', function () {
     });
 
 });
+*/
