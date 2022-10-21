@@ -1,10 +1,5 @@
 import React from "react";
 
-export type basicHtmlElements = {
-    htmlId: string,
-    testElementsId: string
-}
-
 export type PokemonValue = {
     h: number
     a: number
