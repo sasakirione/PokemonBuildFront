@@ -151,7 +151,8 @@ const NewPokemon = React.memo(function NewPokemon(props: { open: boolean, onClos
             nature: 25,
             personalId: 0,
             tag: [],
-            nickname: ""
+            nickname: "",
+            terastal: null
         }
         const sendData: PostPokemonData | GrownPokemon = props.isBuild ? {
             buildId: props.buildId,
