@@ -73,7 +73,8 @@ export type GrownPokemon = {
     moveList: string[],
     good: string,
     tag: string[],
-    nickname: string
+    nickname: string,
+    terastal: string | null
 }
 
 export type BuildResponse = {
