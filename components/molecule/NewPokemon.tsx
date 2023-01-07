@@ -181,7 +181,7 @@ const NewPokemon = React.memo(function NewPokemon(props: { open: boolean, onClos
             return
         }
         const status = new PokemonStatus(bv, ev, iv, defaultValue3)
-        const newPokemon = new Pokemon(name, pokemonId, personalId!, status, nature, ability, abilities, good, [], moves, "")
+        const newPokemon = new Pokemon(name, pokemonId, personalId!, status, nature, ability, abilities, good, [], moves, "", "設定なし")
         props.setPokemon(newPokemon)
         props.onClose()
         resetValue()
