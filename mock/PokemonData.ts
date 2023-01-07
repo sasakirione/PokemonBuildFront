@@ -59,7 +59,8 @@ export const pokemon1 = new Pokemon("ムゲンダイナ",
     "いのちのたま",
     ["禁伝", "特殊アタッカー"],
     ["ダイマックスほう", "かえんほうしゃ", "ヘドロばくだん", "じこさいせい"],
-    "")
+    "",
+    "設定なし")
 export const pokemon2 = new Pokemon("レジエレキ",
     1006,
     2,
@@ -89,7 +90,8 @@ export const pokemon2 = new Pokemon("レジエレキ",
     "ひかりのねんど",
     ["特殊アタッカー", "壁"],
     ["10まんボルト", "ボルトチェンジ", "ひかりのかべ", "リフレクター"],
-    "")
+    "",
+    "設定なし")
 export const pokemon3 = new Pokemon("インテレオン",
     923,
     3,
@@ -112,7 +114,8 @@ export const pokemon3 = new Pokemon("インテレオン",
     "ピントレンズ",
     ["特殊アタッカー", "ダイマ"],
     ["ねらいうち", "エアスラッシュ", "れいとうビーム", "きあいだめ"],
-    ""
+    "",
+    "設定なし"
 )
 
 export const pokemon4 = pokemon1

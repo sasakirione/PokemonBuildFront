@@ -18,7 +18,7 @@ const AuthButton = () => {
                 </div>
             )}
             {!isAuthenticated && (
-                <Button color="inherit" onClick={() => loginWithRedirect()}>Login</Button>
+                <Button color="inherit" onClick={() => loginWithRedirect()} data-test-id="button-login">Login</Button>
             )}
         </div>
     )

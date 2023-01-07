@@ -1,10 +1,5 @@
 import React from "react";
 
-export type basicHtmlElements = {
-    htmlId: string,
-    testElementsId: string
-}
-
 export type PokemonValue = {
     h: number
     a: number
@@ -73,7 +68,8 @@ export type GrownPokemon = {
     moveList: string[],
     good: string,
     tag: string[],
-    nickname: string
+    nickname: string,
+    terastal: string | null
 }
 
 export type BuildResponse = {

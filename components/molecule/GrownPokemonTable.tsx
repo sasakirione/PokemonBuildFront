@@ -9,6 +9,7 @@ import {AbilityEdit} from "./AbilityEdit";
 import {NatureEdit} from "./NatureEdit";
 import {GrownPokemonTableSelectMenu} from "../atomic/GrownPokemonTableSelectMenu";
 import {NicknameEdit} from "./NicknameEdit";
+import {TerastypeEdit} from "./TerastypeEdit";
 
 const GrownPokemonTable = (props: { pokemons: Pokemon[] }) => {
     const [isOpenTagEdit, setIsOpenTagEdit] = useState(false)
@@ -17,9 +18,11 @@ const GrownPokemonTable = (props: { pokemons: Pokemon[] }) => {
     const [isOpenAbilityEdit, setIsOpenAbilityEdit] = useState(false)
     const [isOpenNatureEdit, setIsOpenNatureEdit] = useState(false)
     const [isOpenNicknameEdit, setIsOpenNicknameEdit] = useState(false)
+    const [isOpenTerastypeEdit, setIsOpenTerastypeEdit] = useState(false)
     const [pokemonIndex, setPokemonIndex] = useState(0)
     const [selectedPokemon, setSelectedPokemon] = useState<Pokemon>()
-    const isOpenEditMenu = isOpenNatureEdit || isOpenAbilityEdit || isOpenTagEdit || isOpenEvEdit || isOpenGoodEdit || isOpenNicknameEdit
+    const isOpenEditMenu = isOpenNatureEdit || isOpenAbilityEdit || isOpenTagEdit || isOpenEvEdit || isOpenGoodEdit ||
+        isOpenNicknameEdit || isOpenTerastypeEdit
 
     useEffect(() => {
             setSelectedPokemon(props.pokemons[pokemonIndex])
@@ -80,6 +83,15 @@ const GrownPokemonTable = (props: { pokemons: Pokemon[] }) => {
         setIsOpenNatureEdit(true)
     }
 
+    function openTerastypeEdit(pokemonIndex: number) {
+        setPokemonIndex(pokemonIndex)
+        setIsOpenTerastypeEdit(true)
+    }
+
+    function closeTerastypeEdit() {
+        setIsOpenTerastypeEdit(false)
+    }
+
     const columns = [
         {
             name: "personalId",
@@ -105,6 +117,23 @@ const GrownPokemonTable = (props: { pokemons: Pokemon[] }) => {
                         <>
                             <div onClick={() => openNicknameEdit(dataIndex)}>
                                 {props.pokemons[dataIndex].nickname}
+                            </div>
+                        </>
+                    )
+                },
+            }
+        },
+        {
+            name: "terastype",
+            label: "テラスタイプ",
+            options: {
+                filter: true,
+                sort: true,
+                customBodyRenderLite: (dataIndex: number) => {
+                    return (
+                        <>
+                            <div onClick={() => openTerastypeEdit(dataIndex)}>
+                                {props.pokemons[dataIndex].telastype}
                             </div>
                         </>
                     )
@@ -225,6 +254,7 @@ const GrownPokemonTable = (props: { pokemons: Pokemon[] }) => {
                     <AbilityEdit open={isOpenAbilityEdit} onClose={closeAbilityEdit} pokemon={selectedPokemon!}/>
                     <NatureEdit open={isOpenNatureEdit} onClose={closeNatureEdit} pokemon={selectedPokemon!}/>
                     <NicknameEdit open={isOpenNicknameEdit} onClose={closeNicknameEdit} pokemon={selectedPokemon!}/>
+                    <TerastypeEdit open={isOpenTerastypeEdit} onClose={closeTerastypeEdit} pokemon={selectedPokemon!}/>
                 </div>
             }
         </div>

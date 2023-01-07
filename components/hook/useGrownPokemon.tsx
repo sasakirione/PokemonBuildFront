@@ -3,40 +3,36 @@ import Pokemon from "../../domain/Pokemon";
 import useToken from "./useToken";
 import {GrownPokemon} from "../../type/type";
 import {getPokemonFromGrownPokemonResponse} from "../../util/converter";
+import useSWR from "swr";
+import axios from "axios";
 
 export const useGrownPokemon = () => {
-    const {isAuthenticated, token} = useToken()
+    const {token, isGetToken} = useToken()
     const [isLoadingPokemonList, setIsLoadingPokemonList] = useState(false)
     const [pokemonList, setPokemonList] = useState<Pokemon[]>([])
-    const [canReload, setCanReload] = useState(true)
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL!
+    const fetcherWithToken = (url: string) => axios.get(url, {headers: {Authorization: `Bearer ${token}`}}).then(res => res.data)
+    const {
+        data,
+        mutate
+    } = useSWR<GrownPokemon[]>(isGetToken ? baseUrl + "/v1/pokemon-build/grown-pokemons" : null, fetcherWithToken)
 
     useEffect(() => {
-        if (isAuthenticated && token != "" && canReload) {
-            setIsLoadingPokemonList(true)
-            const parameter = {
-                headers: {
-                    Authorization: 'Bearer ' + token
-                }
-            }
-            fetch(baseUrl + "/v1/pokemon-build/grown-pokemons", parameter)
-                .then((res: { json: () => any; }) => res.json())
-                .then((data: GrownPokemon[]) => {
-                    setPokemonList(data.map(pokemon => getPokemonFromGrownPokemonResponse(pokemon)))
-                    setIsLoadingPokemonList(false)
-                    setCanReload(false)
-                })
-                .catch((reason: any) => {
-                        console.log(reason)
-                        setIsLoadingPokemonList(false)
-                    }
-                )
+        if (data != undefined) {
+            setPokemonList(data.map(pokemon => getPokemonFromGrownPokemonResponse(pokemon)))
         }
+    }, [data])
 
-    }, [baseUrl, canReload, isAuthenticated, token])
+    useEffect(() => {
+        if (data == undefined) {
+            setIsLoadingPokemonList(true)
+        } else {
+            setIsLoadingPokemonList(false)
+        }
+    }, [data])
 
-    function reloadPokemon() {
-        setCanReload(true)
+    async function reloadPokemon() {
+        await mutate()
     }
 
     return {isLoadingPokemonList, pokemonList, reloadPokemon}

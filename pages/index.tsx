@@ -14,7 +14,7 @@ const Home: NextPage = () => {
                 <Grid item xs={12} sm={6} lg={4}>
                     <Card className="boxItem" variant="outlined">
                         <CardContent>
-                            <Typography variant="h5" component="div">
+                            <Typography variant="h5" component="div" data-test-id="top-card-first-title">
                                 ぽけっとビルドとは
                             </Typography>
                             <List>

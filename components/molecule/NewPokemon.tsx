@@ -32,6 +32,7 @@ import {usePokemonConst} from "../hook/PokemonConst";
 import useToken from "../hook/useToken";
 import useSWR from "swr";
 import axios from "axios";
+import {usePokemonMove} from "../hook/usePokemonMove";
 
 const defaultPokemonList: [number, string][] = [[0, "ポケモンの選択なし"]]
 const defaultMove: [number, string] = [0, "技の選択なし"]
@@ -59,8 +60,7 @@ const NewPokemon = React.memo(function NewPokemon(props: { open: boolean, onClos
     const [move3, setMove3] = useState<[number, string]>(defaultMove)
     const [move4, setMove4] = useState<[number, string]>(defaultMove)
     const [pokemonId, setPokemonId] = useState<number>(0)
-    const {moveList, setToast} = usePokemonConst()
-    const [moveList2, setMoveList2] = useState<[number, string][]>(moveList)
+    const {setToast} = usePokemonConst()
     const sum = EvHp + EvAttack + EvDefense + EvSpAttack + EvSpDefense + EvSpeed
     const [pokemonList, setPokemonList] = useState<[number, string][]>(defaultPokemonList)
     const [isLoading, setIsLoading] = useState(false)
@@ -68,6 +68,7 @@ const NewPokemon = React.memo(function NewPokemon(props: { open: boolean, onClos
     const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
     const fetcher = (url: string) => axios.get(url).then(res => res.data)
     const {data: pokemonListRow} = useSWR<KotlinTupleOfIdAndValue[]>(baseUrl + "/v1/pokemon-data/pokemons", fetcher)
+    const {moveList} = usePokemonMove(pokemonId)
 
 
     const createOption = (value: number, label: string): selectItem2 => ({
@@ -100,23 +101,6 @@ const NewPokemon = React.memo(function NewPokemon(props: { open: boolean, onClos
             setPokemonList(pokemonListRow.map((row) => [row.first, row.second]))
         }
     }, [pokemonListRow])
-
-    useEffect(() => {
-        fetch(baseUrl + "/v1/pokemon-data/pokemons/" + pokemonId + "/moves").then(
-            async (res) => {
-                if (res.ok) {
-                    const data = await res.json()
-                    if (data[0] == 0) {
-                        setMoveList2(moveList)
-                    } else {
-                        setMoveList2(moveList.filter((move) => data.includes(move[0])))
-                    }
-                } else {
-                    setToast("通信エラー", "error")
-                }
-            }
-        )
-    }, [moveList, pokemonId, setToast])
 
     async function savePokemon() {
         setIsLoading(true)
@@ -167,7 +151,8 @@ const NewPokemon = React.memo(function NewPokemon(props: { open: boolean, onClos
             nature: 25,
             personalId: 0,
             tag: [],
-            nickname: ""
+            nickname: "",
+            terastal: null
         }
         const sendData: PostPokemonData | GrownPokemon = props.isBuild ? {
             buildId: props.buildId,
@@ -196,7 +181,7 @@ const NewPokemon = React.memo(function NewPokemon(props: { open: boolean, onClos
             return
         }
         const status = new PokemonStatus(bv, ev, iv, defaultValue3)
-        const newPokemon = new Pokemon(name, pokemonId, personalId!, status, nature, ability, abilities, good, [], moves, "")
+        const newPokemon = new Pokemon(name, pokemonId, personalId!, status, nature, ability, abilities, good, [], moves, "", "設定なし")
         props.setPokemon(newPokemon)
         props.onClose()
         resetValue()
@@ -231,7 +216,7 @@ const NewPokemon = React.memo(function NewPokemon(props: { open: boolean, onClos
                         <Grid item xs={12} sm={6}>
                             <div className="new-pokemon-contents">
                                 <DialogContentText>わざ</DialogContentText>
-                                <MoveForm moveList={moveList2} moves={[move1, move2, move3, move4]}
+                                <MoveForm moveList={moveList} moves={[move1, move2, move3, move4]}
                                           setMoves={[setMove1, setMove2, setMove3, setMove4]}/>
                             </div>
                         </Grid>

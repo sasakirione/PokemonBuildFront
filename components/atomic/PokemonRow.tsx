@@ -11,6 +11,7 @@ import {AbilityEdit} from "../molecule/AbilityEdit";
 import {NatureEdit} from "../molecule/NatureEdit";
 import {usePokemonConst} from "../hook/PokemonConst";
 import {NicknameEdit} from "../molecule/NicknameEdit";
+import {TerastypeEdit} from "../molecule/TerastypeEdit";
 
 interface Props {
     pokemon: Pokemon
@@ -27,6 +28,7 @@ const PokemonList: NextPage<Props> = (props: Props) => {
     const [openEffortEdit, setOpenEffortEdit] = useState(false)
     const [openMoveEdit, setOpenMoveEdit] = useState(false)
     const [openNicknameEdit, setOpenNicknameEdit] = useState(false)
+    const [openTerastypeEdit, setOpenTerastypeEdit] = useState(false)
     const {setting} = usePokemonConst()
     const nickname = pokemon.nickname == "" ? pokemon.name : pokemon.nickname
     const name = setting.isUsedNickname ? nickname : pokemon.name
@@ -87,6 +89,14 @@ const PokemonList: NextPage<Props> = (props: Props) => {
         setOpenNicknameEdit(false);
     }
 
+    const handleClickOpenTerastype = () => {
+        setOpenTerastypeEdit(true);
+    }
+
+    const handleCloseTerastype = () => {
+        setOpenTerastypeEdit(false);
+    }
+
     const clickRemove = () => {
         removePokemon(pokemon.personalId)
     };
@@ -104,6 +114,7 @@ const PokemonList: NextPage<Props> = (props: Props) => {
                     </IconButton>
                 </TableCell>
                 <TableCell onClick={handleClickOpenNicknameEdit}>{name}</TableCell>
+                <TableCell onClick={handleClickOpenTerastype}>{pokemon.telastype}</TableCell>
                 <TableCell onClick={handleClickOpenTagEdit}>{pokemon.tag.map(tag => <Button variant="outlined"
                                                                                             key={tag}>{tag}</Button>)}</TableCell>
                 <TableCell onClick={handleClickOpenNatureEdit}>{pokemon.nature}</TableCell>
@@ -139,6 +150,7 @@ const PokemonList: NextPage<Props> = (props: Props) => {
             {openNatureEdit && <NatureEdit open={openNatureEdit} onClose={handleCloseNatureEdit} pokemon={pokemon}/>}
             {openTagEdit && <TagEdit open={openTagEdit} onClose={handleCloseTagEdit} pokemon={pokemon}/>}
             {openMoveEdit && <MoveEdit open={openMoveEdit} onClose={handleCloseMoveEdit} pokemon={pokemon}/>}
+            {openTerastypeEdit && <TerastypeEdit open={openTerastypeEdit} onClose={handleCloseTerastype} pokemon={pokemon}/>}
         </React.Fragment>
     )
 }
