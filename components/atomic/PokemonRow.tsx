@@ -104,6 +104,7 @@ const PokemonList: NextPage<Props> = (props: Props) => {
                     </IconButton>
                 </TableCell>
                 <TableCell onClick={handleClickOpenNicknameEdit}>{name}</TableCell>
+                <TableCell>{pokemon.telastype}</TableCell>
                 <TableCell onClick={handleClickOpenTagEdit}>{pokemon.tag.map(tag => <Button variant="outlined"
                                                                                             key={tag}>{tag}</Button>)}</TableCell>
                 <TableCell onClick={handleClickOpenNatureEdit}>{pokemon.nature}</TableCell>

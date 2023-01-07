@@ -34,5 +34,6 @@ export const getPokemonFromGrownPokemonResponse = (pokemon: GrownPokemon) => {
     const move: Moves = [pokemon.moveList[0], pokemon.moveList[1], pokemon.moveList[2], pokemon.moveList[3]]
     const status = new PokemonStatus(bv, ev, iv, natureValue)
     const nickname = pokemon.nickname
-    return new Pokemon(pokemon.name, pokemon.id, pokemon.personalId, status, natureName, pokemon.ability, pokemon.abilityList, pokemon.good, pokemon.tag, move, nickname)
+    const telastype = pokemon.terastal ?? "設定なし"
+    return new Pokemon(pokemon.name, pokemon.id, pokemon.personalId, status, natureName, pokemon.ability, pokemon.abilityList, pokemon.good, pokemon.tag, move, nickname, telastype)
 }

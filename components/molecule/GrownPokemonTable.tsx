@@ -112,6 +112,23 @@ const GrownPokemonTable = (props: { pokemons: Pokemon[] }) => {
             }
         },
         {
+            name: "telastype",
+            label: "テラスタイプ",
+            options: {
+                filter: true,
+                sort: true,
+                customBodyRenderLite: (dataIndex: number) => {
+                    return (
+                        <>
+                            <div onClick={() => openNicknameEdit(dataIndex)}>
+                                {props.pokemons[dataIndex].telastype}
+                            </div>
+                        </>
+                    )
+                },
+            }
+        },
+        {
             name: "tag",
             label: "タグ",
             options: {
