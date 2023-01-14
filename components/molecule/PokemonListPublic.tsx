@@ -18,6 +18,7 @@ const PokemonList = (props: PokemonListProps) => {
                     <TableRow>
                         <TableCell/>
                         <TableCell>{props.isUsedNickname ? "ニックネーム" : "ポケモン名"}</TableCell>
+                        <TableCell>テラスタイプ</TableCell>
                         <TableCell>役割</TableCell>
                         <TableCell>性格</TableCell>
                         <TableCell>特性</TableCell>

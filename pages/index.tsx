@@ -9,7 +9,7 @@ const Home: NextPage = () => {
     return (
         <>
             <PokeBuildHead title="TOP"/>
-            <Image src={"/back1.png"} width="1980px" height="400px" alt="山の上にぽけもんこうちくしえんの文字" layout='responsive'/>
+            <Image src={"/back1.png"} width="1980" height="400" alt="山の上にぽけもんこうちくしえんの文字" />
             <Grid container spacing={2} direction="row" justifyContent="space-evenly" alignItems="stretch">
                 <Grid item xs={12} sm={6} lg={4}>
                     <Card className="boxItem" variant="outlined">
@@ -44,7 +44,7 @@ const Home: NextPage = () => {
                                 </ListItem>
                                 <ListItem>
                                     <ListItemText primary="育成済みポケモン管理"
-                                                  secondary="3値や性格・道具・特性・ニックネーム・技の管理"/>
+                                                  secondary="3値や性格・道具・特性・ニックネーム・技・テラスタイプの管理"/>
                                 </ListItem>
                                 <ListItem>
                                     <ListItemText primary="調整支援" secondary="S調整支援"/>

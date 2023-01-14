@@ -21,6 +21,7 @@ export const PokemonRowPublic = (props: { pokemon: Pokemon, isUsedNickname: bool
                     </IconButton>
                 </TableCell>
                 <TableCell>{name}</TableCell>
+                <TableCell>{pokemon.telastype}</TableCell>
                 <TableCell>{pokemon.tag.map(tag => <Button variant="outlined" key={tag}>{tag}</Button>)}</TableCell>
                 <TableCell>{pokemon.nature}</TableCell>
                 <TableCell>{pokemon.ability}</TableCell>
