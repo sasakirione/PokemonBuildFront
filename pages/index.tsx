@@ -9,7 +9,7 @@ const Home: NextPage = () => {
     return (
         <>
             <PokeBuildHead title="TOP"/>
-            <Image src={"/back1.png"} width="1980px" height="400px" alt="山の上にぽけもんこうちくしえんの文字" layout='responsive'/>
+            <Image src={"/back1.png"} width="1980" height="400" alt="山の上にぽけもんこうちくしえんの文字" />
             <Grid container spacing={2} direction="row" justifyContent="space-evenly" alignItems="stretch">
                 <Grid item xs={12} sm={6} lg={4}>
                     <Card className="boxItem" variant="outlined">
