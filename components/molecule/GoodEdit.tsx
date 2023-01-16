@@ -57,7 +57,7 @@ export function GoodEdit(props: { open: boolean, onClose: () => void, pokemon: P
                 <List>
                     {goodList?.map((good) =>
                         <ListItemButton key={good[0]} onClick={() => onClickItem(good[0], good[1])}>
-                            <ListItemText primary={good[1]}></ListItemText>
+                            <ListItemText primary={good[1]} secondary={good[2]}></ListItemText>
                         </ListItemButton>
                     )}
                 </List>
