@@ -1,6 +1,10 @@
 export const siteHistory = {
     "historyList": [
         {
+            "date": "2023-01-16",
+            "content": "道具の詳細表示に対応"
+        },
+        {
             "date": "2023-01-07",
             "content": "SVの新ポケモンや技、テラスタイプに対応"
         },

@@ -22,6 +22,7 @@ export type responseGoodList = {
 export type responseGood = {
     id: number,
     name: string
+    detail: string
 }
 
 export type StatusType = "EV" | "IV"
@@ -127,7 +128,7 @@ export type BuildObject = {
 export type RestType = "GET" | "POST"
 
 export type PokemonConst = {
-    goodList: [number, string][],
+    goodList: [number, string, string][],
     tagList: string[],
     moveList: [number, string][],
     isLoadingConst: boolean,

@@ -13,7 +13,7 @@ const setToast = (message: string, type: ToastType) => {
     }
 }
 
-const goodListInti: [number, string][] = [[0, "道具一覧の取得に失敗しました"]]
+const goodListInti: [number, string, string][] = [[0, "道具一覧の取得に失敗しました", ""]]
 const tagListInti = ["タグ一覧の取得に失敗しました"]
 const moveListInti: [number, string][] = [[0, "技一覧の取得に失敗しました"]]
 const defaultSetting: Setting = {isUsedNickname: false}
@@ -48,7 +48,7 @@ export const PokemonConstProvider = ({children}: { children: ReactNode }) => {
 
     return (
         <PokemonConstContext.Provider value={{
-            goodList: goodList ? goodList.goods.map(good => [good.id, good.name]) : goodListInti,
+            goodList: goodList ? goodList.goods.map(good => [good.id, good.name, good.detail]) : goodListInti,
             tagList: tagList ? tagList : tagListInti,
             moveList: moveList ? moveList.map(move => [move.first, move.second]) : moveListInti,
             isLoadingConst: false,
