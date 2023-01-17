@@ -60,7 +60,8 @@ const NewPokemon = React.memo(function NewPokemon(props: { open: boolean, onClos
     const [move3, setMove3] = useState<[number, string]>(defaultMove)
     const [move4, setMove4] = useState<[number, string]>(defaultMove)
     const [pokemonId, setPokemonId] = useState<number>(0)
-    const {setToast} = usePokemonConst()
+    const [goodName, setGoodName] = useState<string>("選択なし")
+    const {setToast, goodList} = usePokemonConst()
     const sum = EvHp + EvAttack + EvDefense + EvSpAttack + EvSpDefense + EvSpeed
     const [pokemonList, setPokemonList] = useState<[number, string][]>(defaultPokemonList)
     const [isLoading, setIsLoading] = useState(false)
@@ -107,7 +108,7 @@ const NewPokemon = React.memo(function NewPokemon(props: { open: boolean, onClos
         const ev: PokemonValue = {a: EvAttack, b: EvDefense, c: EvSpAttack, d: EvSpDefense, h: EvHp, s: EvSpeed}
         const iv: PokemonValue = {a: IvAttack, b: IvDefense, c: IvSpAttack, d: IvSpDefense, h: IvHp, s: IvSpeed}
         const moves: Moves = [move1[1], move2[1], move3[1], move4[1]]
-        const good = "選択なし"
+        const good = goodName
         const nature: PokemonNature = "まじめ"
         let abilities: string[]
         let ability: string = ""
@@ -210,6 +211,14 @@ const NewPokemon = React.memo(function NewPokemon(props: { open: boolean, onClos
                                     <Select className="pokemon-select" isSearchable
                                             options={pokemonList!.map(pokemon => createOption(pokemon[0], pokemon[1]))}
                                             onChange={row => setPokemonId(row?.value!)}></Select>
+                                </List>
+                            </div>
+                            <div className="new-pokemon-contents">
+                                <DialogContentText>ポケモンの道具</DialogContentText>
+                                <List>
+                                    <Select className="pokemon-select" isSearchable
+                                            options={goodList.map(good => createOption(good[0], good[1]))}
+                                            onChange={row => setGoodName(row?.label!)}></Select>
                                 </List>
                             </div>
                         </Grid>
