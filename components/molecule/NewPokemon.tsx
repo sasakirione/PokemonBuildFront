@@ -94,6 +94,7 @@ const NewPokemon = React.memo(function NewPokemon(props: { open: boolean, onClos
         setMove2(defaultMove)
         setMove3(defaultMove)
         setMove4(defaultMove)
+        setGoodName("選択なし")
         setPokemonId(0)
     }
 
