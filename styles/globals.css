@@ -33,6 +33,14 @@ a {
 }
 
 .pokemon-select {
+    z-index: 6 !important;
+}
+
+.good-select {
+    z-index: 4 !important;
+}
+
+.type-select {
     z-index: 2 !important;
 }
 
