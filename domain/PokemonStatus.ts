@@ -43,6 +43,19 @@ class PokemonStatus {
             this.calculationFastSpeedOfSuggest(real, fastSpeedSuggest)]
     }
 
+    public calculationScarfSpeed(real: number): [number, number] {
+        const realDecimal = new Decimal(real)
+        const semiSpeed = realDecimal.dividedBy(1.5).round().toNumber() - 53
+        const fastSpeed = realDecimal.dividedBy(1.65).round().toNumber() - 53
+        return [
+            this.calculationScarfSpeedOfSuggest(real, semiSpeed, 1),
+            this.calculationScarfSpeedOfSuggest(real, fastSpeed, 1.1)]
+    }
+
+    calculationHp(effort: number): number {
+        return this.calculateRealH(this.base.h, effort, this.individual.h)
+    }
+
     private calculationLatestSpeedOfSuggest(real: number, suggest: number): number {
         const suggestHigh = this.calculateRealWithoutH(suggest + 1, 0, 0, 0.9)
         const suggestMiddle = this.calculateRealWithoutH(suggest, 0, 0, 0.9)
@@ -73,15 +86,6 @@ class PokemonStatus {
         } else {
             return suggest - 2
         }
-    }
-
-    public calculationScarfSpeed(real: number): [number, number] {
-        const realDecimal = new Decimal(real)
-        const semiSpeed = realDecimal.dividedBy(1.5).round().toNumber() - 53
-        const fastSpeed = realDecimal.dividedBy(1.65).round().toNumber() - 53
-        return [
-            this.calculationScarfSpeedOfSuggest(real, semiSpeed, 1),
-            this.calculationScarfSpeedOfSuggest(real, fastSpeed, 1.1)]
     }
 
     private calculationScarfSpeedOfSuggest(real: number, suggest: number, nature: number): number {
@@ -173,10 +177,6 @@ class PokemonStatus {
                 break;
         }
         return nature
-    }
-
-    calculationHp(effort: number): number {
-        return this.calculateRealH(this.base.h, effort, this.individual.h)
     }
 
 }
