@@ -21,6 +21,11 @@ a {
     box-sizing: border-box;
 }
 
+.logo-image {
+    width: 100%;
+    height: 20vw;
+}
+
 .loading-screen {
     width: 100vw;
     height: 100vh;
