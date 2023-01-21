@@ -150,7 +150,8 @@ const PokemonList: NextPage<Props> = (props: Props) => {
             {openNatureEdit && <NatureEdit open={openNatureEdit} onClose={handleCloseNatureEdit} pokemon={pokemon}/>}
             {openTagEdit && <TagEdit open={openTagEdit} onClose={handleCloseTagEdit} pokemon={pokemon}/>}
             {openMoveEdit && <MoveEdit open={openMoveEdit} onClose={handleCloseMoveEdit} pokemon={pokemon}/>}
-            {openTerastypeEdit && <TerastypeEdit open={openTerastypeEdit} onClose={handleCloseTerastype} pokemon={pokemon}/>}
+            {openTerastypeEdit &&
+                <TerastypeEdit open={openTerastypeEdit} onClose={handleCloseTerastype} pokemon={pokemon}/>}
         </React.Fragment>
     )
 }

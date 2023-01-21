@@ -95,9 +95,10 @@ const SettingPage: NextPage = () => {
                             control={<Switch/>}
                             label="HP偶数警告の無効化 (調整中)"
                             className={"setting-section-contents"}/>
-                        <div className={"setting-section-contents"}>ダブルバトル用にHP偶数警告の機能の無効化をします。現在調整中。</div>
-                        </Card>
-                    </Grid>
+                        <div className={"setting-section-contents"}>ダブルバトル用にHP偶数警告の機能の無効化をします。現在調整中。
+                        </div>
+                    </Card>
+                </Grid>
                 <Button onClick={clickSave}>Save</Button>
             </Grid>
         </>)

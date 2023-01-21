@@ -19,7 +19,8 @@ import {
     PokemonNature,
     PokemonResponse,
     PokemonValue,
-    PostPokemonData, selectItem,
+    PostPokemonData,
+    selectItem,
     selectItem2
 } from "../../type/type";
 import StatusForm from "../atomic/StatusForm";
@@ -232,7 +233,8 @@ const NewPokemon = React.memo(function NewPokemon(props: { open: boolean, onClos
                             <div className="new-pokemon-contents">
                                 <DialogContentText>ポケモンのテラスタイプ</DialogContentText>
                                 <List>
-                                    <Select className="type-select" isSearchable defaultValue={createOption2("選択なし", "選択なし")}
+                                    <Select className="type-select" isSearchable
+                                            defaultValue={createOption2("選択なし", "選択なし")}
                                             options={PokemonTypeList.map(pokemonType => createOption2(pokemonType, pokemonType))}
                                             onChange={row => setTerastype(row?.label!)}></Select>
                                 </List>
