@@ -1,6 +1,10 @@
 export const siteHistory = {
     "historyList": [
         {
+            "date": "2023-01-20",
+            "content": "新規ポケモン追加画面の微改修"
+        },
+        {
             "date": "2023-01-16",
             "content": "道具の詳細表示に対応"
         },
