@@ -86,14 +86,18 @@ const SettingPage: NextPage = () => {
                         <div className={"setting-section-contents"}>
                             ニックネームに切り替えた場合でもニックネームが設定されていない場合は従来通りポケモン名で表示します。
                         </div>
-                        <hr/>
-                        <FormControlLabel
-                            control={<Switch/>}
-                            label="俗称を使用する(調整中)"
-                            className={"setting-section-contents"}/>
-                        <div className={"setting-section-contents"}>ポケモンの名前を俗称にします。現在調整中。</div>
                     </Card>
                 </Grid>
+                <Grid item xs={12} sm={6} lg={4}>
+                    <Card className={"setting-section"} variant="outlined">
+                        <Typography variant={"h4"} className={"setting-section-header"}>シングル用機能設定</Typography>
+                        <FormControlLabel
+                            control={<Switch/>}
+                            label="HP偶数警告の無効化 (調整中)"
+                            className={"setting-section-contents"}/>
+                        <div className={"setting-section-contents"}>ダブルバトル用にHP偶数警告の機能の無効化をします。現在調整中。</div>
+                        </Card>
+                    </Grid>
                 <Button onClick={clickSave}>Save</Button>
             </Grid>
         </>)
