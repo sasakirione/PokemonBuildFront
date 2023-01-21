@@ -1,6 +1,6 @@
 {
   "name": "pokemon_build",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -26,7 +26,8 @@
     "react-hot-toast": "2.4.0",
     "react-select": "5.7.0",
     "swr": "2.0.0",
-    "axios": "1.2.2"
+    "axios": "1.2.2",
+    "@vercel/analytics": "0.1.0"
   },
   "devDependencies": {
     "@types/enzyme": "^3.10.12",

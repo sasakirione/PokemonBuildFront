@@ -21,6 +21,11 @@ a {
     box-sizing: border-box;
 }
 
+.logo-image {
+    width: 100%;
+    height: 20vw;
+}
+
 .loading-screen {
     width: 100vw;
     height: 100vh;
@@ -33,6 +38,14 @@ a {
 }
 
 .pokemon-select {
+    z-index: 6 !important;
+}
+
+.good-select {
+    z-index: 4 !important;
+}
+
+.type-select {
     z-index: 2 !important;
 }
 

@@ -32,6 +32,27 @@ export function getNatureList(): [PokemonNature, string, string, PokemonValue][]
     )
 }
 
+export const PokemonTypeList: string[] = [
+    "ノーマル",
+    "ほのお",
+    "みず",
+    "でんき",
+    "くさ",
+    "こおり",
+    "かくとう",
+    "どく",
+    "じめん",
+    "ひこう",
+    "エスパー",
+    "むし",
+    "いわ",
+    "フェアリー",
+    "ドラゴン",
+    "あく",
+    "はがね",
+    "ゴースト"
+]
+
 export const EffortAS: PokemonValue = {
     h: 4, a: 252, b: 0, c: 0, d: 0, s: 252
 }

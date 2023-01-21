@@ -19,7 +19,7 @@ import {
     PokemonNature,
     PokemonResponse,
     PokemonValue,
-    PostPokemonData,
+    PostPokemonData, selectItem,
     selectItem2
 } from "../../type/type";
 import StatusForm from "../atomic/StatusForm";
@@ -27,7 +27,7 @@ import {MoveForm} from "../atomic/MoveForm";
 import Pokemon from "../../domain/Pokemon";
 import PokemonStatus from "../../domain/PokemonStatus";
 import {Loading} from "../particle/Loading";
-import {Iv6V, zeroValue} from "../../domain/PokemonData";
+import {Iv6V, PokemonTypeList, zeroValue} from "../../domain/PokemonData";
 import {usePokemonConst} from "../hook/PokemonConst";
 import useToken from "../hook/useToken";
 import useSWR from "swr";
@@ -60,7 +60,9 @@ const NewPokemon = React.memo(function NewPokemon(props: { open: boolean, onClos
     const [move3, setMove3] = useState<[number, string]>(defaultMove)
     const [move4, setMove4] = useState<[number, string]>(defaultMove)
     const [pokemonId, setPokemonId] = useState<number>(0)
-    const {setToast} = usePokemonConst()
+    const [goodName, setGoodName] = useState<string>("選択なし")
+    const [terastype, setTerastype] = useState<string>("選択なし")
+    const {setToast, goodList} = usePokemonConst()
     const sum = EvHp + EvAttack + EvDefense + EvSpAttack + EvSpDefense + EvSpeed
     const [pokemonList, setPokemonList] = useState<[number, string][]>(defaultPokemonList)
     const [isLoading, setIsLoading] = useState(false)
@@ -72,6 +74,11 @@ const NewPokemon = React.memo(function NewPokemon(props: { open: boolean, onClos
 
 
     const createOption = (value: number, label: string): selectItem2 => ({
+        value,
+        label
+    })
+
+    const createOption2 = (value: string, label: string): selectItem => ({
         value,
         label
     })
@@ -93,7 +100,9 @@ const NewPokemon = React.memo(function NewPokemon(props: { open: boolean, onClos
         setMove2(defaultMove)
         setMove3(defaultMove)
         setMove4(defaultMove)
+        setGoodName("選択なし")
         setPokemonId(0)
+        setTerastype("選択なし")
     }
 
     useEffect(() => {
@@ -107,7 +116,7 @@ const NewPokemon = React.memo(function NewPokemon(props: { open: boolean, onClos
         const ev: PokemonValue = {a: EvAttack, b: EvDefense, c: EvSpAttack, d: EvSpDefense, h: EvHp, s: EvSpeed}
         const iv: PokemonValue = {a: IvAttack, b: IvDefense, c: IvSpAttack, d: IvSpDefense, h: IvHp, s: IvSpeed}
         const moves: Moves = [move1[1], move2[1], move3[1], move4[1]]
-        const good = "選択なし"
+        const good = goodName
         const nature: PokemonNature = "まじめ"
         let abilities: string[]
         let ability: string = ""
@@ -152,7 +161,7 @@ const NewPokemon = React.memo(function NewPokemon(props: { open: boolean, onClos
             personalId: 0,
             tag: [],
             nickname: "",
-            terastal: null
+            terastal: "選択なし"
         }
         const sendData: PostPokemonData | GrownPokemon = props.isBuild ? {
             buildId: props.buildId,
@@ -181,7 +190,7 @@ const NewPokemon = React.memo(function NewPokemon(props: { open: boolean, onClos
             return
         }
         const status = new PokemonStatus(bv, ev, iv, defaultValue3)
-        const newPokemon = new Pokemon(name, pokemonId, personalId!, status, nature, ability, abilities, good, [], moves, "", "設定なし")
+        const newPokemon = new Pokemon(name, pokemonId, personalId!, status, nature, ability, abilities, good, [], moves, "", terastype)
         props.setPokemon(newPokemon)
         props.onClose()
         resetValue()
@@ -210,6 +219,22 @@ const NewPokemon = React.memo(function NewPokemon(props: { open: boolean, onClos
                                     <Select className="pokemon-select" isSearchable
                                             options={pokemonList!.map(pokemon => createOption(pokemon[0], pokemon[1]))}
                                             onChange={row => setPokemonId(row?.value!)}></Select>
+                                </List>
+                            </div>
+                            <div className="new-pokemon-contents">
+                                <DialogContentText>ポケモンの道具</DialogContentText>
+                                <List>
+                                    <Select className="good-select" isSearchable
+                                            options={goodList.map(good => createOption(good[0], good[1]))}
+                                            onChange={row => setGoodName(row?.label!)}></Select>
+                                </List>
+                            </div>
+                            <div className="new-pokemon-contents">
+                                <DialogContentText>ポケモンのテラスタイプ</DialogContentText>
+                                <List>
+                                    <Select className="type-select" isSearchable defaultValue={createOption2("選択なし", "選択なし")}
+                                            options={PokemonTypeList.map(pokemonType => createOption2(pokemonType, pokemonType))}
+                                            onChange={row => setTerastype(row?.label!)}></Select>
                                 </List>
                             </div>
                         </Grid>

@@ -1439,6 +1439,11 @@
     "@typescript-eslint/types" "5.48.1"
     eslint-visitor-keys "^3.3.0"
 
+"@vercel/analytics@0.1.0":
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/@vercel/analytics/-/analytics-0.1.0.tgz#3b7158188335547a2b837473d2c8453b5c2fea3d"
+  integrity sha512-u3nRtJniHh7Z5VKFshXZLIh2sFmb/AQh5+0RB7WSrnmBC6zxsy7MQYqxQl/gJ3UxU75Ce9u1R36CY15Wz9gkqA==
+
 abab@^2.0.6:
   version "2.0.6"
   resolved "https://registry.yarnpkg.com/abab/-/abab-2.0.6.tgz#41b80f2c871d19686216b82309231cfd3cb3d291"
