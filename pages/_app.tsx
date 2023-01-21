@@ -7,6 +7,7 @@ import {PokemonConstProvider} from "../components/hook/PokemonConst";
 import toast, {Toaster} from "react-hot-toast";
 import axios from "axios";
 import {SWRConfig} from 'swr'
+import {Analytics} from "@vercel/analytics/react";
 
 function MyApp({Component, pageProps}: AppProps) {
     const redirectUrl = process.env.NEXT_PUBLIC_AUTH0_REDIRECT_URL!
@@ -45,6 +46,7 @@ function MyApp({Component, pageProps}: AppProps) {
                     <Footer/>
                     <Toaster/>
                 </PokemonConstProvider>
+                <Analytics />
             </SWRConfig>
         </Auth0Provider>
     )
