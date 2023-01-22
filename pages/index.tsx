@@ -47,7 +47,7 @@ const Home: NextPage = () => {
                                                   secondary="3値や性格・道具・特性・ニックネーム・技・テラスタイプの管理"/>
                                 </ListItem>
                                 <ListItem>
-                                    <ListItemText primary="調整支援" secondary="S調整支援"/>
+                                    <ListItemText primary="調整支援" secondary="S調整支援、HP偶数警告"/>
                                 </ListItem>
                             </List>
                         </CardContent>
