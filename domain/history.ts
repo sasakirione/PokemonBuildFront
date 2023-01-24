@@ -1,6 +1,10 @@
 export const siteHistory = {
     "historyList": [
         {
+            "date": "2023-01-x",
+            "content": "LINEログインに対応、HP偶数警告の非表示に対応"
+        },
+        {
             "date": "2023-01-20",
             "content": "新規ポケモン追加画面の微改修"
         },
