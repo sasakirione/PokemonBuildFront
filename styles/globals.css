@@ -215,4 +215,13 @@ a {
     .pokemon-table TableRow:last-child {
         border-bottom: solid 1px #ccc !important;
     }
+
+    .left_right {
+        display: block !important;
+        width: 100% !important;
+    }
+
+    .head-button {
+        width: 50% !important;
+    }
 }
