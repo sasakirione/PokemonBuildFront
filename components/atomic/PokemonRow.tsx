@@ -33,7 +33,7 @@ const PokemonList: NextPage<Props> = (props: Props) => {
     const {setting} = usePokemonConst()
     const nickname = pokemon.nickname == "" ? pokemon.name : pokemon.nickname
     const name = setting.isUsedNickname ? nickname : pokemon.name
-    const isSmartPhone = useMediaQuery({ query: `(max-width: 640px)` });
+    const isSmartPhone = useMediaQuery({query: `(max-width: 640px)`});
 
     useEffect(() => {
         setOpenMoveList(isSmartPhone)
@@ -125,7 +125,8 @@ const PokemonList: NextPage<Props> = (props: Props) => {
                            onClick={handleClickOpenTerastype}>{pokemon.telastype}</TableCell>
                 <TableCell className={"pokemon-table-body-item"} data-label={"タグ"}
                            onClick={handleClickOpenTagEdit}>
-                    {pokemon.tag.map(tag => <Button className={"pokemon-tag-button"} variant="outlined" key={tag}>{tag}</Button>)}</TableCell>
+                    {pokemon.tag.map(tag => <Button className={"pokemon-tag-button"} variant="outlined"
+                                                    key={tag}>{tag}</Button>)}</TableCell>
                 <TableCell className={"pokemon-table-body-item"} data-label={"性格"}
                            onClick={handleClickOpenNatureEdit}>{pokemon.nature}</TableCell>
                 <TableCell className={"pokemon-table-body-item"} data-label={"特性"}
@@ -148,7 +149,8 @@ const PokemonList: NextPage<Props> = (props: Props) => {
                     <Collapse in={openMoveList} timeout="auto" unmountOnExit>
                         <Box className={"move-list"}>
                             {!isSmartPhone && <h4>わざ</h4>}
-                            {pokemon.moves.map(move => <Button variant="outlined" color="success" className={"pokemon-tag-button"}
+                            {pokemon.moves.map(move => <Button variant="outlined" color="success"
+                                                               className={"pokemon-tag-button"}
                                                                key={move}>{move}</Button>)}
                             <Button onClick={handleClickOpenMoveEdit}>編集</Button>
                             <br/>
@@ -156,7 +158,7 @@ const PokemonList: NextPage<Props> = (props: Props) => {
                     </Collapse>
                 </TableCell>
             </TableRow>
-            {isSmartPhone && <hr />}
+            {isSmartPhone && <hr/>}
             {openNicknameEdit &&
                 <NicknameEdit pokemon={pokemon} onClose={handleCloseNicknameEdit} open={openNicknameEdit}/>}
             {openGoodEdit && <GoodEdit open={openGoodEdit} onClose={handleCloseGoodEdit} pokemon={pokemon}/>}

@@ -21,7 +21,8 @@ const PokemonList = React.memo(function PokemonList(props: PokemonListProps) {
                 <TableHead>
                     <TableRow>
                         <TableCell className={"pokemon-table-head-item"}/>
-                        <TableCell className={"pokemon-table-head-item"}>{setting.isUsedNickname ? "ニックネーム" : "ポケモン名"}</TableCell>
+                        <TableCell
+                            className={"pokemon-table-head-item"}>{setting.isUsedNickname ? "ニックネーム" : "ポケモン名"}</TableCell>
                         <TableCell className={"pokemon-table-head-item"}>テラスタイプ</TableCell>
                         <TableCell className={"pokemon-table-head-item"}>役割</TableCell>
                         <TableCell className={"pokemon-table-head-item"}>性格</TableCell>
