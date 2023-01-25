@@ -17,19 +17,19 @@ const PokemonList = React.memo(function PokemonList(props: PokemonListProps) {
 
     return (
         <TableContainer component={Paper} className="table-container">
-            <Table aria-label="collapsible table">
+            <Table aria-label="collapsible table pokemon-table">
                 <TableHead>
                     <TableRow>
-                        <TableCell/>
-                        <TableCell>{setting.isUsedNickname ? "ニックネーム" : "ポケモン名"}</TableCell>
-                        <TableCell>テラスタイプ</TableCell>
-                        <TableCell>役割</TableCell>
-                        <TableCell>性格</TableCell>
-                        <TableCell>特性</TableCell>
-                        <TableCell>道具</TableCell>
-                        <TableCell>努力値</TableCell>
-                        <TableCell>実数値</TableCell>
-                        <TableCell>削除</TableCell>
+                        <TableCell className={"pokemon-table-head-item"}/>
+                        <TableCell className={"pokemon-table-head-item"}>{setting.isUsedNickname ? "ニックネーム" : "ポケモン名"}</TableCell>
+                        <TableCell className={"pokemon-table-head-item"}>テラスタイプ</TableCell>
+                        <TableCell className={"pokemon-table-head-item"}>役割</TableCell>
+                        <TableCell className={"pokemon-table-head-item"}>性格</TableCell>
+                        <TableCell className={"pokemon-table-head-item"}>特性</TableCell>
+                        <TableCell className={"pokemon-table-head-item"}>道具</TableCell>
+                        <TableCell className={"pokemon-table-head-item"}>努力値</TableCell>
+                        <TableCell className={"pokemon-table-head-item"}>実数値</TableCell>
+                        <TableCell className={"pokemon-table-head-item"}>削除</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>

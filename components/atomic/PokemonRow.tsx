@@ -1,6 +1,6 @@
 import {NextPage} from "next";
 import Pokemon from "../../domain/Pokemon";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Box, Button, Collapse, IconButton, TableCell, TableRow} from "@mui/material";
 import {MoveEdit} from "../molecule/MoveEdit";
 import {TagEdit} from "../molecule/TagEdit";
@@ -12,6 +12,7 @@ import {NatureEdit} from "../molecule/NatureEdit";
 import {usePokemonConst} from "../hook/PokemonConst";
 import {NicknameEdit} from "../molecule/NicknameEdit";
 import {TerastypeEdit} from "../molecule/TerastypeEdit";
+import {useMediaQuery} from "react-responsive";
 
 interface Props {
     pokemon: Pokemon
@@ -32,6 +33,11 @@ const PokemonList: NextPage<Props> = (props: Props) => {
     const {setting} = usePokemonConst()
     const nickname = pokemon.nickname == "" ? pokemon.name : pokemon.nickname
     const name = setting.isUsedNickname ? nickname : pokemon.name
+    const isSmartPhone = useMediaQuery({ query: `(max-width: 640px)` });
+
+    useEffect(() => {
+        setOpenMoveList(isSmartPhone)
+    }, [isSmartPhone])
 
     const handleClickOpenGoodEdit = () => {
         setOpenGoodEdit(true);
@@ -104,7 +110,7 @@ const PokemonList: NextPage<Props> = (props: Props) => {
     return (
         <React.Fragment>
             <TableRow sx={{'& > *': {borderBottom: 'unset'}}}>
-                <TableCell>
+                {(!isSmartPhone && <TableCell className={"pokemon-table-body-item"}>
                     <IconButton
                         aria-label="expand row"
                         size="small"
@@ -112,28 +118,37 @@ const PokemonList: NextPage<Props> = (props: Props) => {
                     >
                         {openMoveList ? "↑" : "↓"}
                     </IconButton>
-                </TableCell>
-                <TableCell onClick={handleClickOpenNicknameEdit}>{name}</TableCell>
-                <TableCell onClick={handleClickOpenTerastype}>{pokemon.telastype}</TableCell>
-                <TableCell onClick={handleClickOpenTagEdit}>{pokemon.tag.map(tag => <Button variant="outlined"
-                                                                                            key={tag}>{tag}</Button>)}</TableCell>
-                <TableCell onClick={handleClickOpenNatureEdit}>{pokemon.nature}</TableCell>
-                <TableCell onClick={handleClickOpenAbilityEdit}>{pokemon.ability}</TableCell>
-                <TableCell onClick={handleClickOpenGoodEdit}>{pokemon.good}</TableCell>
-                <TableCell onClick={handleClickOpenEffortEdit}>{pokemon.getEffortText()}</TableCell>
-                <TableCell>{pokemon.getRealText()}</TableCell>
-                <TableCell>
+                </TableCell>)}
+                <TableCell className={"pokemon-table-body-item"} data-label={"名前"}
+                           onClick={handleClickOpenNicknameEdit}>{name}</TableCell>
+                <TableCell className={"pokemon-table-body-item"} data-label={"テラスタイプ"}
+                           onClick={handleClickOpenTerastype}>{pokemon.telastype}</TableCell>
+                <TableCell className={"pokemon-table-body-item"} data-label={"タグ"}
+                           onClick={handleClickOpenTagEdit}>
+                    {pokemon.tag.map(tag => <Button className={"pokemon-tag-button"} variant="outlined" key={tag}>{tag}</Button>)}</TableCell>
+                <TableCell className={"pokemon-table-body-item"} data-label={"性格"}
+                           onClick={handleClickOpenNatureEdit}>{pokemon.nature}</TableCell>
+                <TableCell className={"pokemon-table-body-item"} data-label={"特性"}
+                           onClick={handleClickOpenAbilityEdit}>{pokemon.ability}</TableCell>
+                <TableCell className={"pokemon-table-body-item"} data-label={"道具"}
+                           onClick={handleClickOpenGoodEdit}>{pokemon.good}</TableCell>
+                <TableCell className={"pokemon-table-body-item"} data-label={"努力値"}
+                           onClick={handleClickOpenEffortEdit}>{pokemon.getEffortText()}</TableCell>
+                <TableCell className={"pokemon-table-body-item"}
+                           data-label={"実数値"}>{pokemon.getRealText()}</TableCell>
+                {!isSmartPhone && <TableCell className={"pokemon-table-body-item"}>
                     <DeleteIcon
                         onClick={clickRemove}
                     />
-                </TableCell>
+                </TableCell>}
             </TableRow>
             <TableRow>
-                <TableCell style={{paddingBottom: 0, paddingTop: 0}} colSpan={8}>
+                <TableCell className={"pokemon-table-body-item-move"}
+                           data-label={"わざ"} style={{paddingBottom: 0, paddingTop: 0}} colSpan={8}>
                     <Collapse in={openMoveList} timeout="auto" unmountOnExit>
                         <Box className={"move-list"}>
-                            <h4>わざ</h4>
-                            {pokemon.moves.map(move => <Button variant="outlined" color="success"
+                            {!isSmartPhone && <h4>わざ</h4>}
+                            {pokemon.moves.map(move => <Button variant="outlined" color="success" className={"pokemon-tag-button"}
                                                                key={move}>{move}</Button>)}
                             <Button onClick={handleClickOpenMoveEdit}>編集</Button>
                             <br/>
@@ -141,6 +156,7 @@ const PokemonList: NextPage<Props> = (props: Props) => {
                     </Collapse>
                 </TableCell>
             </TableRow>
+            {isSmartPhone && <hr />}
             {openNicknameEdit &&
                 <NicknameEdit pokemon={pokemon} onClose={handleCloseNicknameEdit} open={openNicknameEdit}/>}
             {openGoodEdit && <GoodEdit open={openGoodEdit} onClose={handleCloseGoodEdit} pokemon={pokemon}/>}

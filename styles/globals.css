@@ -175,15 +175,44 @@ a {
     bottom: 0;
 }
 
-/*
-@media (prefers-color-scheme: dark) {
-    html {
-        color-scheme: dark;
+@media screen and (max-width: 640px) {
+    .pokemon-table {
+        width: 100%;
     }
 
-    body {
-        color: white;
-        background: black;
+    .pokemon-table-head-item {
+        display: none !important;
+    }
+
+    .pokemon-table-body-item {
+        display: block !important;
+        width: 100%;
+        height: 8vh;
+        border-bottom: none !important;
+    }
+
+    .pokemon-table-body-item-move {
+        display: block !important;
+        width: 100%;
+        height: 20vh;
+        border-bottom: none !important;
+    }
+
+    .pokemon-table-body-item:before, .pokemon-table-body-item-move:before {
+        content: attr(data-label);
+        font-size: .5rem;
+        font-weight:bold;
+        color: #999;
+        display: block;
+      }
+
+    .pokemon-tag-button {
+        width: 50% !important;
+        height: 100% !important;
+        border-radius: 0 !important;
+    }
+
+    .pokemon-table TableRow:last-child {
+        border-bottom: solid 1px #ccc !important;
     }
 }
-*/
