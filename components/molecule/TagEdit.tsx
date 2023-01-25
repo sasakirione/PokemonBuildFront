@@ -83,11 +83,11 @@ export function TagEdit(props: { open: boolean, onClose: () => void, pokemon: Po
         >
             <DialogTitle>タグを変更する</DialogTitle>
             <DialogContent>
-                <FormControl sx={{m: 1, width: 300}}>
+                <FormControl sx={{m: 1}}>
                     <InputLabel id="demo-multiple-chip-label">タグ</InputLabel>
                     <Select
                         labelId="demo-multiple-chip-label"
-                        id="demo-multiple-chip"
+                        id="tag-select-input"
                         multiple
                         value={tag}
                         onChange={handleChange}

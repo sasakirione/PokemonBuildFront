@@ -224,4 +224,8 @@ a {
     .head-button {
         width: 50% !important;
     }
+
+    .tag-select-input {
+        width: 100% !important;
+    }
 }
