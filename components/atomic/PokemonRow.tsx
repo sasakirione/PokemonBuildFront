@@ -13,6 +13,8 @@ import {usePokemonConst} from "../hook/PokemonConst";
 import {NicknameEdit} from "../molecule/NicknameEdit";
 import {TerastypeEdit} from "../molecule/TerastypeEdit";
 import {useMediaQuery} from "react-responsive";
+import {getPokemonTypeImagePath} from "../../util/converter";
+import Image from "next/image";
 
 interface Props {
     pokemon: Pokemon
@@ -30,6 +32,7 @@ const PokemonList: NextPage<Props> = (props: Props) => {
     const [openMoveEdit, setOpenMoveEdit] = useState(false)
     const [openNicknameEdit, setOpenNicknameEdit] = useState(false)
     const [openTerastypeEdit, setOpenTerastypeEdit] = useState(false)
+    const [pokemonTypePath, setPokemonTypePath] = useState<string>("/type/normal.png")
     const {setting} = usePokemonConst()
     const nickname = pokemon.nickname == "" ? pokemon.name : pokemon.nickname
     const name = setting.isUsedNickname ? nickname : pokemon.name
@@ -38,6 +41,11 @@ const PokemonList: NextPage<Props> = (props: Props) => {
     useEffect(() => {
         setOpenMoveList(isSmartPhone)
     }, [isSmartPhone])
+
+    useEffect(() => {
+        const path = getPokemonTypeImagePath(pokemon.telastype)
+        setPokemonTypePath(path)
+    }, [pokemon.telastype])
 
     const handleClickOpenGoodEdit = () => {
         setOpenGoodEdit(true);
@@ -122,7 +130,9 @@ const PokemonList: NextPage<Props> = (props: Props) => {
                 <TableCell className={"pokemon-table-body-item"} data-label={"名前"}
                            onClick={handleClickOpenNicknameEdit}>{name}</TableCell>
                 <TableCell className={"pokemon-table-body-item"} data-label={"テラスタイプ"}
-                           onClick={handleClickOpenTerastype}>{pokemon.telastype}</TableCell>
+                           onClick={handleClickOpenTerastype}>
+                    <Image src={pokemonTypePath} alt={""} width={32} height={32}/>
+                </TableCell>
                 <TableCell className={"pokemon-table-body-item"} data-label={"タグ"}
                            onClick={handleClickOpenTagEdit}>
                     {pokemon.tag.map(tag => <Button className={"pokemon-tag-button"} variant="outlined"
