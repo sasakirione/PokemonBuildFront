@@ -14,17 +14,23 @@ const SettingPage: NextPage = () => {
     const {token} = useToken()
     const [isLoadingSetting, setIsLoadingSetting] = React.useState(true)
     const [isUsedNickname, setIsUsedNickname] = React.useState(false);
+    const [isDoubleBattle1, setIsDoubleBattle1] = React.useState(false);
     const {setting, setSetting} = usePokemonConst()
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL!
 
     useEffect(() => {
         setIsLoadingSetting(true)
         setIsUsedNickname(setting.isUsedNickname)
+        setIsDoubleBattle1(setting.isDoubleBattle1)
         setIsLoadingSetting(false)
     }, [setting.isUsedNickname])
 
     const changeUsedNickname = () => {
         setIsUsedNickname(!isUsedNickname)
+    }
+
+    const changeDoubleBattle1 = () => {
+        setIsDoubleBattle1(!isDoubleBattle1)
     }
 
     const clickSave = async () => {
@@ -37,12 +43,13 @@ const SettingPage: NextPage = () => {
             },
             method: "POST",
             body: JSON.stringify({
-                isUsedNickname: isUsedNickname
+                isUsedNickname: isUsedNickname,
+                isDoubleBattle1: isDoubleBattle1
             })
         }
         await fetch(baseUrl + "/v1/user/setting", parameter)
         if (setting != null) {
-            setSetting?.({isUsedNickname: isUsedNickname})
+            setSetting?.({isUsedNickname: isUsedNickname, isDoubleBattle1: isDoubleBattle1})
         }
         setIsLoadingSetting(false)
     }
@@ -86,12 +93,17 @@ const SettingPage: NextPage = () => {
                         <div className={"setting-section-contents"}>
                             ニックネームに切り替えた場合でもニックネームが設定されていない場合は従来通りポケモン名で表示します。
                         </div>
-                        <hr/>
+                    </Card>
+                </Grid>
+                <Grid item xs={12} sm={6} lg={4}>
+                    <Card className={"setting-section"} variant="outlined">
+                        <Typography variant={"h4"} className={"setting-section-header"}>シングル用機能設定</Typography>
                         <FormControlLabel
-                            control={<Switch/>}
-                            label="俗称を使用する(調整中)"
+                            control={<Switch checked={isDoubleBattle1} onChange={changeDoubleBattle1}/>}
+                            label="HP偶数警告の無効化"
                             className={"setting-section-contents"}/>
-                        <div className={"setting-section-contents"}>ポケモンの名前を俗称にします。現在調整中。</div>
+                        <div className={"setting-section-contents"}>ダブルバトル用にHP偶数警告の機能の無効化をします。
+                        </div>
                     </Card>
                 </Grid>
                 <Button onClick={clickSave}>Save</Button>

@@ -153,5 +153,8 @@ export type SpeedComparison = {
 }
 
 export type Setting = {
+    // ニックネームの使用の有無
     isUsedNickname: boolean
+    // ダブルバトル用にHP偶数警告の無効化
+    isDoubleBattle1: boolean
 }

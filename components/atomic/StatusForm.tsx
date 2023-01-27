@@ -7,6 +7,7 @@ import {Box, Grid, Slider, Tab} from "@mui/material";
 import {TabContext, TabList, TabPanel} from "@mui/lab";
 import {SpeedTribeValue} from "../particle/Value";
 import Pokemon from "../../domain/Pokemon";
+import {usePokemonConst} from "../hook/PokemonConst";
 
 function StatusForm(props: {
     defaultValues: PokemonValue,
@@ -30,6 +31,7 @@ function StatusForm(props: {
         }, realSpeed: 0, scarf: {fastSpeed: 0, semiSpeed: 0}
     })
     const [isHpEven, setIsHpEven] = useState(false)
+    const {setting} = usePokemonConst()
 
     useEffect(() => {
             setValue(props.defaultValues)
@@ -130,7 +132,7 @@ function StatusForm(props: {
                     <EffortPresetButtons onChange={setPresetValue}/>
                 }
                 {props.statusType == "EV" && sumWarning()}
-                {isHpEven && <div
+                {(isHpEven && !setting.isDoubleBattle1) && <div
                     data-test-id="status-form-hp-even">HP実数値が偶数です。一般的にシングルバトルではHP実数値が奇数になるように調整します。</div>}
             </TabPanel>
             <TabPanel value="2">

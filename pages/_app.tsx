@@ -46,7 +46,7 @@ function MyApp({Component, pageProps}: AppProps) {
                     <Footer/>
                     <Toaster/>
                 </PokemonConstProvider>
-                <Analytics />
+                <Analytics/>
             </SWRConfig>
         </Auth0Provider>
     )
