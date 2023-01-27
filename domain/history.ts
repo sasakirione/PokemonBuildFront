@@ -2,7 +2,7 @@ export const siteHistory = {
     "historyList": [
         {
             "date": "2023-01-27",
-            "content": "LINEログインに対応、HP偶数警告の非表示に対応、一部スマホ用レイアウトの調整"
+            "content": "LINEログインに対応、HP偶数警告の非表示に対応、一部スマホ用レイアウトの調整、テラスタイプの表示を画像に変更"
         },
         {
             "date": "2023-01-20",
