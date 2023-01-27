@@ -77,6 +77,6 @@ export const getPokemonTypeImagePath = (type: string) => {
         case "フェアリー":
             return "/type/fairy.png"
         default:
-            return "/type/normal.png"
+            return "/type/no_type.png"
     }
 }

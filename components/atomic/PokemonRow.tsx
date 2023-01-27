@@ -32,7 +32,7 @@ const PokemonList: NextPage<Props> = (props: Props) => {
     const [openMoveEdit, setOpenMoveEdit] = useState(false)
     const [openNicknameEdit, setOpenNicknameEdit] = useState(false)
     const [openTerastypeEdit, setOpenTerastypeEdit] = useState(false)
-    const [pokemonTypePath, setPokemonTypePath] = useState<string>("/type/normal.png")
+    const [pokemonTypePath, setPokemonTypePath] = useState<string>("/type/no_type.png")
     const {setting} = usePokemonConst()
     const nickname = pokemon.nickname == "" ? pokemon.name : pokemon.nickname
     const name = setting.isUsedNickname ? nickname : pokemon.name
