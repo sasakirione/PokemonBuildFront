@@ -33,6 +33,7 @@ const PokemonList: NextPage<Props> = (props: Props) => {
     const [openNicknameEdit, setOpenNicknameEdit] = useState(false)
     const [openTerastypeEdit, setOpenTerastypeEdit] = useState(false)
     const [pokemonTypePath, setPokemonTypePath] = useState<string>("/type/no_type.png")
+    const [pokemonImagePath, setPokemonImagePath] = useState<string>("/pokemon/no_pokemon.png")
     const {setting} = usePokemonConst()
     const nickname = pokemon.nickname == "" ? pokemon.name : pokemon.nickname
     const name = setting.isUsedNickname ? nickname : pokemon.name
@@ -44,7 +45,9 @@ const PokemonList: NextPage<Props> = (props: Props) => {
 
     useEffect(() => {
         const path = getPokemonTypeImagePath(pokemon.telastype)
+        const id = pokemon.id
         setPokemonTypePath(path)
+        setPokemonImagePath(`/pokemon/normal/${id}.png`)
     }, [pokemon.telastype])
 
     const handleClickOpenGoodEdit = () => {
@@ -128,7 +131,12 @@ const PokemonList: NextPage<Props> = (props: Props) => {
                     </IconButton>
                 </TableCell>)}
                 <TableCell className={"pokemon-table-body-item"} data-label={"名前"}
-                           onClick={handleClickOpenNicknameEdit}>{name}</TableCell>
+                           onClick={handleClickOpenNicknameEdit}>
+                    <Image src={pokemonImagePath} alt={""} width={34} height={28}
+                           unoptimized={true}
+                           onError={(e) => {e.currentTarget.src = `/pokemon/no_pokemon.png`}}/>
+                    {name}
+                </TableCell>
                 <TableCell className={"pokemon-table-body-item"} data-label={"テラスタイプ"}
                            onClick={handleClickOpenTerastype}>
                     <Image src={pokemonTypePath} alt={""} width={32} height={32}/>
