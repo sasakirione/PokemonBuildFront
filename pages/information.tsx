@@ -8,7 +8,7 @@ import {
     Dialog,
     DialogContent,
     DialogTitle,
-    Grid,
+    Grid, Link,
     List,
     ListItem,
     ListItemText,
@@ -96,6 +96,8 @@ const Information: NextPage = () => {
                             <ListItem>外部サービス： Auth0, Cloud SQL, Cloud Build, Cloud Run</ListItem>
                             <ListItem>開発： IntelliJ, WebStorm, Docker, GitHub</ListItem>
                             <ListItem>過去にお世話になったサービス： Heroku</ListItem>
+                            <ListItem>ライブラリ以外でお世話になったリポジトリ： <Link
+                                href="https://github.com/msikma/pokesprite">pokesprite</Link></ListItem>
                         </List>
                     </CardContent>
                 </Card>
