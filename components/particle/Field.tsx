@@ -1,4 +1,4 @@
-import {TextField} from "@mui/material";
+import {Button, TextField} from "@mui/material";
 import {fieldType} from "../../type/type";
 import React from "react";
 
@@ -17,5 +17,17 @@ export const StatusValueField = (props: { defaultValue: number, value: number, m
         onChange={props.onChange}
         margin="normal"
         size="small"
+    />;
+}
+
+export const UrlValueFieldForCopy = (props: { value: string, clickFunction: ()=>void }) => {
+    return <TextField
+        id="outlined-required"
+        type="url"
+        InputProps={{readOnly: true,  endAdornment: <Button onClick={props.clickFunction}>Copy</Button> }}
+        value={props.value}
+        margin="normal"
+        size="small"
+        fullWidth
     />;
 }
