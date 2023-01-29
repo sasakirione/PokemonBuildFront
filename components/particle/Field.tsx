@@ -15,7 +15,6 @@ export const StatusValueField = (props: { defaultValue: number, value: number, m
         defaultValue={props.defaultValue}
         value={props.value}
         onChange={props.onChange}
-        margin="normal"
         size="small"
     />;
 }
@@ -23,10 +22,10 @@ export const StatusValueField = (props: { defaultValue: number, value: number, m
 export const UrlValueFieldForCopy = (props: { value: string, clickFunction: ()=>void }) => {
     return <TextField
         id="outlined-required"
+        className={"url-field"}
         type="url"
         InputProps={{readOnly: true,  endAdornment: <Button onClick={props.clickFunction}>Copy</Button> }}
         value={props.value}
-        margin="normal"
         size="small"
         fullWidth
     />;

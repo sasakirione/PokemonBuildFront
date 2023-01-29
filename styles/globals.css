@@ -175,6 +175,10 @@ a {
     bottom: 0;
 }
 
+.url-field {
+    margin-bottom: 10px !important;
+}
+
 @media screen and (max-width: 640px) {
     .pokemon-table {
         width: 100%;
