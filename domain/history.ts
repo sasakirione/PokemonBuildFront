@@ -2,7 +2,7 @@ export const siteHistory = {
     "historyList": [
         {
             "date": "2023-02-04",
-            "content": "ポケモン画像表示を追加"
+            "content": "ポケモン画像表示を追加、公開構築設定画面の改修"
         },
         {
             "date": "2023-01-27",
