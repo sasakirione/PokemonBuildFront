@@ -16,6 +16,7 @@ export const StatusValueField = (props: { defaultValue: number, value: number, m
         value={props.value}
         onChange={props.onChange}
         size="small"
+        margin="dense"
     />;
 }
 
