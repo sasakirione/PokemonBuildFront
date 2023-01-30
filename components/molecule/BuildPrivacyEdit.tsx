@@ -4,7 +4,7 @@ import {Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogT
 import {Loading} from "../particle/Loading";
 import {usePokemonConst} from "../hook/PokemonConst";
 import {UrlValueFieldForCopy} from "../particle/Field";
-import {LineIcon, LineShareButton, TwitterIcon, TwitterShareButton} from "react-share";
+import {LineButton, TwitterButton} from "../particle/Button";
 
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL!
 const baseUrl2 = process.env.NEXT_PUBLIC_AUTH0_REDIRECT_URL!.replace("/build", "")
@@ -84,12 +84,8 @@ export const BuildPrivacyEdit = React.memo(function BuildPrivacyEdit(props: { op
                                 value={url}
                                 clickFunction={copyTextToClipboard}/></DialogContentText>
                         <DialogContentText>
-                            <TwitterShareButton url={url} title="ポケモンの構築です">
-                                <TwitterIcon size={50} round/>
-                            </TwitterShareButton>
-                            <LineShareButton url={url} title="ポケモンの構築です">
-                                <LineIcon size={50} round/>
-                            </LineShareButton>
+                            <TwitterButton text={"私のポケモンの構築です"} url={url} />
+                            <LineButton text={"私のポケモンの構築です"} url={url} />
                         </DialogContentText></>
                     )}
             </DialogContent>
