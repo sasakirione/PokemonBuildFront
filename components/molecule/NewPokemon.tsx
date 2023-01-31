@@ -34,6 +34,7 @@ import useToken from "../hook/useToken";
 import useSWR from "swr";
 import axios from "axios";
 import {usePokemonMove} from "../hook/usePokemonMove";
+import Image from "next/image";
 
 const defaultPokemonList: [number, string][] = [[0, "ポケモンの選択なし"]]
 const defaultMove: [number, string] = [0, "技の選択なし"]
@@ -198,6 +199,21 @@ const NewPokemon = React.memo(function NewPokemon(props: { open: boolean, onClos
         setIsLoading(false)
     }
 
+    function getPokemonImageLink(pokemonId: number) {
+        if (pokemonId < 1059) {
+            return '/pokemon/normal/' + pokemonId + '.png'
+        }
+        return `/pokemon/no_pokemon.png`;
+    }
+
+    function createOption3(pokemonId: number, pokemonName: string) {
+        return {
+            value: pokemonId,
+            label: <div>
+                <Image src={getPokemonImageLink(pokemonId)} alt="" width={34} height={28}/>
+                {pokemonName}</div>}
+    }
+
     return (
         <>
             <Dialog
@@ -218,7 +234,7 @@ const NewPokemon = React.memo(function NewPokemon(props: { open: boolean, onClos
                                 <DialogContentText>ポケモンの選択</DialogContentText>
                                 <List>
                                     <Select className="pokemon-select" isSearchable
-                                            options={pokemonList!.map(pokemon => createOption(pokemon[0], pokemon[1]))}
+                                            options={pokemonList!.map(pokemon => createOption3(pokemon[0], pokemon[1]))}
                                             onChange={row => setPokemonId(row?.value!)}></Select>
                                 </List>
                             </div>
