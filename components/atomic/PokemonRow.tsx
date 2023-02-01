@@ -34,7 +34,8 @@ const PokemonList: NextPage<Props> = (props: Props) => {
     const [openTerastypeEdit, setOpenTerastypeEdit] = useState(false)
     const [pokemonTypePath, setPokemonTypePath] = useState<string>("/type/no_type.png")
     const [pokemonImagePath, setPokemonImagePath] = useState<string>("/pokemon/no_pokemon.png")
-    const {setting} = usePokemonConst()
+    const [pokemonGoodId, setPokemonGoodId] = useState<number>(0)
+    const {setting, goodList} = usePokemonConst()
     const nickname = pokemon.nickname == "" ? pokemon.name : pokemon.nickname
     const name = setting.isUsedNickname ? nickname : pokemon.name
     const isSmartPhone = useMediaQuery({query: `(max-width: 640px)`});
@@ -42,6 +43,11 @@ const PokemonList: NextPage<Props> = (props: Props) => {
     useEffect(() => {
         setOpenMoveList(isSmartPhone)
     }, [isSmartPhone])
+
+    useEffect(() => {
+        const id = goodList.find(good => good[1] == pokemon.good)?.[0] ?? 0;
+        setPokemonGoodId(id)
+    },[pokemon.good])
 
     useEffect(() => {
         const path = getPokemonTypeImagePath(pokemon.telastype)
@@ -150,7 +156,11 @@ const PokemonList: NextPage<Props> = (props: Props) => {
                 <TableCell className={"pokemon-table-body-item"} data-label={"特性"}
                            onClick={handleClickOpenAbilityEdit}>{pokemon.ability}</TableCell>
                 <TableCell className={"pokemon-table-body-item"} data-label={"道具"}
-                           onClick={handleClickOpenGoodEdit}>{pokemon.good}</TableCell>
+                           onClick={handleClickOpenGoodEdit}>
+                    <Image src={`/good/${pokemonGoodId}.png`} alt={""} width={32} height={32}
+                           unoptimized={true}
+                           onError={(e) => {e.currentTarget.src = `/good/no_item.png`}}/>
+                    {pokemon.good}</TableCell>
                 <TableCell className={"pokemon-table-body-item"} data-label={"努力値"}
                            onClick={handleClickOpenEffortEdit}>{pokemon.getEffortText()}</TableCell>
                 <TableCell className={"pokemon-table-body-item"}
