@@ -9,11 +9,12 @@ import {
     DialogContentText,
     DialogTitle,
     List,
-    ListItemButton,
+    ListItemButton, ListItemIcon,
     ListItemText
 } from "@mui/material";
 import {Loading} from "../particle/Loading";
 import useToken from "../hook/useToken";
+import Image from "next/image";
 
 export function GoodEdit(props: { open: boolean, onClose: () => void, pokemon: Pokemon }) {
     const {token} = useToken()
@@ -57,6 +58,11 @@ export function GoodEdit(props: { open: boolean, onClose: () => void, pokemon: P
                 <List>
                     {goodList?.map((good) =>
                         <ListItemButton key={good[0]} onClick={() => onClickItem(good[0], good[1])}>
+                            <ListItemIcon >
+                                <Image src={`/good/${good[0]}.png`} alt="" unoptimized={true}
+                                       onError={(e) => {e.currentTarget.src = `/good/no_item.png`}}
+                                       width={32} height={32}/>
+                            </ListItemIcon>
                             <ListItemText primary={good[1]} secondary={good[2]}></ListItemText>
                         </ListItemButton>
                     )}
