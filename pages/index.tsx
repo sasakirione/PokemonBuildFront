@@ -60,7 +60,8 @@ const Home: NextPage = () => {
                                 連絡先等
                             </Typography>
                             <List>
-                                <ListItem>管理人Twitter：@sasakirione2 (不具合の報告、要望等はこちらまで)</ListItem>
+                                <ListItem>管理人Twitter：@sasakirione2</ListItem>
+                                <ListItem>サポートメール：pokebuild@sasakirione.com (不具合の報告、要望等はこちらまで)</ListItem>
                                 <ListItem>Git(フロントエンド)：<a
                                     href="https://github.com/sasakirione/PokemonBuildFront">PokemonBuildFront</a></ListItem>
                                 <ListItem>Git(バックエンド)：<a
