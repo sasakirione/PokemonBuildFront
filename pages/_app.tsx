@@ -18,7 +18,9 @@ function MyApp({Component, pageProps}: AppProps) {
         <Auth0Provider
             domain={domain}
             clientId={clientId}
-            redirectUri={redirectUrl}
+            authorizationParams={{
+              redirect_uri: redirectUrl
+            }}
         >
             <SWRConfig value={{
                 fetcher: (url: string) => axios.get(url).then(res => res.data),
