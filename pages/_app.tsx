@@ -8,6 +8,7 @@ import toast, {Toaster} from "react-hot-toast";
 import axios from "axios";
 import {SWRConfig} from 'swr'
 import {Analytics} from "@vercel/analytics/react";
+import {Alert, Link} from "@mui/material";
 
 function MyApp({Component, pageProps}: AppProps) {
     const redirectUrl = process.env.NEXT_PUBLIC_AUTH0_REDIRECT_URL!
@@ -41,6 +42,10 @@ function MyApp({Component, pageProps}: AppProps) {
             }}>
                 <PokemonConstProvider>
                     <Header/>
+                    <Alert severity="warning" className="service-end-notice">
+                        ぽけっとビルドは2026年末を目処にサービス終了を予定しています。保存されているデータ等が必要な場合は、サポートメールまたは管理人Twitterより直接お問い合わせください。
+                        <Link href="mailto:pokebuild@sasakirione.com" className="service-end-notice-link">pokebuild@sasakirione.com</Link>
+                    </Alert>
                     <Component {...pageProps} />
                     <div className="footer-space"></div>
                     <Footer/>

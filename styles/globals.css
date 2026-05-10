@@ -163,6 +163,17 @@ a {
 
 }
 
+.service-end-notice {
+    margin: 12px auto 0 !important;
+    width: calc(100% - 24px);
+    max-width: 1200px;
+}
+
+.service-end-notice-link {
+    margin-left: 8px !important;
+    font-weight: bold !important;
+}
+
 .footer-space {
     height: 30px !important;
 }
